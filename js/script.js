@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (subDemo) {
         subDemo.addEventListener('click', () => {
-            alert('Абонемент — оптимальное решение. Заполните форму для консультации.');
+            alert('Премиум — оптимальное решение. Заполните форму для консультации.');
             scrollToForm();
         });
     }
