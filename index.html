@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Weddy — цифровые приглашения на свадьбу с учётом гостей</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Логотип + навигация -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <div class="logo">
+                <span class="logo-icon">💍</span>
+                <span class="logo-text">Weddy</span>
+            </div>
+            <div class="nav-links">
+                <a href="#problem">Проблемы</a>
+                <a href="#how-it-works">Как работает</a>
+                <a href="#pricing">Тарифы</a>
+                <a href="#demo" class="btn-small">Создать приглашение</a>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero блок -->
+        <section class="hero">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <h1>Свадьба — это радость,<br>а не бесконечные «приду-не приду»</h1>
+                    <p class="hero-subtitle">Weddy помогает собирать ответы гостей онлайн, считать бюджет и забыть про хаос в мессенджерах. Красивые цифровые приглашения за 5 минут.</p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="demoHeroBtn">Создать приглашение бесплатно</button>
+                        <button class="btn btn-outline" id="presentationBtn">Посмотреть пример</button>
+                    </div>
+                </div>
+                <div class="hero-graphic">
+                    <div class="abstract-shape"></div>
+                    <div class="abstract-shape2"></div>
+                    <div class="abstract-shape3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Проблема: 3 карточки болей невесты -->
+        <section id="problem" class="section section-bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Знакомо каждой невесте?</h2>
+                    <p>Организация свадьбы — стресс. Мы убираем главные головные боли</p>
+                </div>
+                <div class="grid-3">
+                    <div class="pain-card">
+                        <div class="pain-icon">💬😫</div>
+                        <h3>Тысяча сообщений</h3>
+                        <p>«А когда?», «А можно с +1?», «А что с детьми?» — вместо того, чтобы наслаждаться подготовкой, вы тонете в WhatsApp.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">💰📋</div>
+                        <h3>Неизвестное количество гостей</h3>
+                        <p>Вы заказываете банкет вслепую: кто-то не придёт, кто-то приведёт неожиданного +1. Перерасход бюджета или пустые места.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon">📝🤯</div>
+                        <h3>Ручной сбор ответов</h3>
+                        <p>Excel-таблицы, голосовые сообщения, забытые ответы — вы тратите часы на то, что может делать автоматика.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Решение: как работает сервис — 3 шага -->
+        <section id="how-it-works" class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Создаёте приглашение за 5 минут</h2>
+                    <p>Всё просто, как чашка утреннего кофе</p>
+                </div>
+                <div class="steps">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <h3>Выбираете дизайн</h3>
+                        <p>Загружаете фото, указываете дату, место, программу — и получаете уникальную ссылку-приглашение.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <h3>Отправляете гостям</h3>
+                        <p>Делитесь ссылкой через WhatsApp, Telegram, соцсети — гостям не нужно ничего скачивать.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <h3>Следите за ответами</h3>
+                        <p>В реальном времени видите, кто придёт, с кем, какие предпочтения по питанию. Экспорт в Excel одной кнопкой.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Ключевые возможности -->
+        <section class="section section-bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Почему невесты выбирают Weddy</h2>
+                </div>
+                <div class="features-grid">
+                    <div class="feature"><span class="check">✓</span> Гостям не нужно регистрироваться</div>
+                    <div class="feature"><span class="check">✓</span> Гость может изменить ответ до дедлайна</div>
+                    <div class="feature"><span class="check">✓</span> Сбор +1 и детей — автоматически</div>
+                    <div class="feature"><span class="check">✓</span> Вопросы по питанию (аллергии, меню)</div>
+                    <div class="feature"><span class="check">✓</span> Счётчик гостей в реальном времени</div>
+                    <div class="feature"><span class="check">✓</span> Экспорт гостевого списка в Excel/CSV</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Пример: как выглядит статистика -->
+        <section class="section">
+            <div class="container" style="text-align: center;">
+                <h2>Как выглядит ваш гостьевой список</h2>
+                <p class="section-subtitle">Понятная таблица — никакой путаницы</p>
+                <div class="stats-preview">
+                    <table class="stats-table">
+                        <thead>
+                            <tr><th>Гость</th><th>Статус</th><th>+1</th><th>Питание</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>Анна и Дмитрий</td><td>✅ Идут</td><td>Нет</td><td>Без орехов</td></tr>
+                            <tr><td>Елена С.</td><td>✅ Идут</td><td>Да</td><td>Вегетарианское</td></tr>
+                            <tr><td>Михаил П.</td><td>❌ Не идёт</td><td>-</td><td>-</td></tr>
+                            <tr><td>Татьяна В.</td><td>⏳ Ожидание</td><td>Да</td><td>Любое</td></tr>
+                        </tbody>
+                    </table>
+                    <div style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
+                        📊 Итого: 25 подтверждено, 3 ожидают ответа, 2 отказалось
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Цены (два тарифа) -->
+        <section id="pricing" class="section section-bg-light">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Цены, которые не ударят по бюджету</h2>
+                    <p>Свадьба и так стоит недешево — мы вас не разорим</p>
+                </div>
+                <div class="pricing-grid">
+                    <div class="pricing-card">
+                        <h3>Стандарт</h3>
+                        <div class="price">2 490 ₽ <small>на одно мероприятие</small></div>
+                        <ul class="pricing-list">
+                            <li>✓ До 200 гостей</li>
+                            <li>✓ Красивый дизайн-шаблон</li>
+                            <li>✓ Сбор ответов +1 и детей</li>
+                            <li>✓ Экспорт в Excel</li>
+                            <li>✓ Поддержка по чату</li>
+                        </ul>
+                        <button class="btn btn-outline w-100 demo-single">Выбрать Стандарт</button>
+                    </div>
+                    <div class="pricing-card popular">
+                        <div class="popular-badge">🔥 Любовь с первого взгляда</div>
+                        <h3>Премиум</h3>
+                        <div class="price">4 990 ₽ <small>на одно мероприятие</small></div>
+                        <ul class="pricing-list">
+                            <li>✓ Неограниченное число гостей</li>
+                            <li>✓ Индивидуальный дизайн под вашу стилистику</li>
+                            <li>✓ Кастомные вопросы (меню, аллергии)</li>
+                            <li>✓ Рассылка напоминаний гостям</li>
+                            <li>✓ Приоритетная поддержка 24/7</li>
+                        </ul>
+                        <button class="btn btn-primary w-100 demo-subscription">Выбрать Премиум</button>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 32px; font-size: 0.9rem;">🎁 Абонемент на 5 мероприятий — 12 000 ₽ (экономия 25%)</p>
+            </div>
+        </section>
+
+        <!-- Форма захвата -->
+        <section id="demo" class="section">
+            <div class="container">
+                <div class="form-card">
+                    <h2 style="text-align: center; margin-bottom: 8px;">Получите демо-доступ и готовый шаблон приглашения</h2>
+                    <p style="text-align: center; margin-bottom: 28px;">Оставьте контакты — мы пришлём пример и чек-лист невесты</p>
+                    <form id="leadForm">
+                        <div class="input-group">
+                            <input type="text" id="name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="email" id="email" placeholder="Email" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="tel" id="phone" placeholder="Телефон (для консультации)">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100" id="submitFormBtn">Получить пример приглашения</button>
+                        <p style="font-size: 12px; text-align: center; margin-top: 16px;">Никакого спама. Только полезные материалы для невест.</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="color: #EBD6B0;">💍 Weddy</div>
+                    <p>Цифровые приглашения на свадьбу, которые ваши гости полюбят</p>
+                </div>
+                <div class="footer-contacts">
+                    <h4>Контакты</h4>
+                    <p>📧 hello@weddy.ru</p>
+                    <p>📞 +7 (495) 123-45-67</p>
+                    <p>💬 Telegram: @weddy_support</p>
+                </div>
+                <div class="footer-social">
+                    <h4>Мы в соцсетях</h4>
+                    <p>Instagram | Pinterest | VK</p>
+                    <p>#weddy_wedding</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 Weddy — сервис для счастливых невест</p>
+                <p class="dev-note">⚙️ готово к интеграции с бекендом (заменить # на реальные ссылки, настроить отправку форм)</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
