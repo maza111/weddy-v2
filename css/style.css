@@ -753,28 +753,23 @@ h2 {
     opacity: 1;
 }
 
-/* тарифы */
+/* тарифы — исправленная версия */
 .pricing-grid {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 40px;
     justify-content: center;
-    align-items: center;
+    align-items: stretch;
     padding: 0 16px;
     position: relative;
     z-index: 2;
 }
 
-@media (min-width: 640px) {
-    .pricing-grid {
-        flex-direction: row;
-        flex-wrap: wrap;
-        gap: 32px;
-    }
-}
-
 @media (min-width: 768px) {
     .pricing-grid {
+        flex-direction: row;
+        align-items: center;
+        gap: 32px;
         padding: 0;
     }
 }
@@ -782,28 +777,16 @@ h2 {
 .pricing-card {
     background: var(--white);
     border-radius: var(--card-radius);
-    padding: 24px 20px;
+    padding: 28px 24px;
     flex: 1;
     min-width: 260px;
     max-width: 100%;
     width: 100%;
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s;
+    transition: all 0.25s ease;
     border: 1px solid #EFE7DD;
     position: relative;
-    overflow: hidden;
-}
-
-.pricing-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 150px;
-    height: 150px;
-    background: radial-gradient(circle, rgba(212, 165, 165, 0.05) 0%, transparent 70%);
-    pointer-events: none;
-    border-radius: 50%;
+    overflow: visible;
 }
 
 @media (min-width: 640px) {
@@ -811,6 +794,11 @@ h2 {
         max-width: 360px;
         padding: 32px 28px;
     }
+}
+
+.pricing-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
 }
 
 .pricing-card.popular {
@@ -821,27 +809,35 @@ h2 {
 @media (min-width: 768px) {
     .pricing-card.popular {
         transform: scale(1.02);
+        margin: 0;
+    }
+    
+    .pricing-card.popular:hover {
+        transform: scale(1.02) translateY(-4px);
     }
 }
 
 .popular-badge {
     position: absolute;
     top: -12px;
-    right: 16px;
+    right: 20px;
     background: var(--rose-gold);
     color: var(--deep-navy);
-    padding: 4px 12px;
+    padding: 4px 16px;
     border-radius: 40px;
     font-size: 0.7rem;
     font-weight: 600;
     font-family: 'Unbounded', sans-serif;
+    z-index: 10;
+    white-space: nowrap;
 }
 
-@media (min-width: 768px) {
+@media (max-width: 640px) {
     .popular-badge {
-        right: 24px;
-        padding: 4px 16px;
-        font-size: 0.75rem;
+        right: 16px;
+        top: -10px;
+        padding: 3px 12px;
+        font-size: 0.65rem;
     }
 }
 
@@ -867,7 +863,7 @@ h2 {
 
 @media (min-width: 768px) {
     .price {
-        font-size: 2.8rem;
+        font-size: 2.6rem;
         margin: 20px 0 8px;
     }
 }
@@ -880,7 +876,7 @@ h2 {
 
 @media (min-width: 768px) {
     .price small {
-        font-size: 1rem;
+        font-size: 0.95rem;
     }
 }
 
@@ -909,6 +905,10 @@ h2 {
         margin-bottom: 12px;
         font-size: 0.95rem;
     }
+}
+
+.pricing-card .btn {
+    margin-top: 8px;
 }
 
 /* таблица превью статистики */
