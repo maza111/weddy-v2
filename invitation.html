@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Приглашение на свадьбу | Анна + Дмитрий</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/invitation.css">
+</head>
+<body>
+    <div class="invitation-container">
+        <a href="index.html" class="back-link">← На главную</a>
+        
+        <div class="invitation-card">
+            <div class="invitation-header">
+                <div class="wedding-icon">✦</div>
+                <h1>Приглашение на свадьбу</h1>
+                <p>Мы будем рады разделить с вами этот особенный день</p>
+            </div>
+            
+            <div class="invitation-content">
+                <div class="couple-names">
+                    <h2>Анна & Дмитрий</h2>
+                    <p>СОЧЕТАЮТСЯ БРАКОМ</p>
+                </div>
+                
+                <div class="divider"></div>
+                
+                <div class="event-details">
+                    <div class="event-date">15 августа 2026</div>
+                    <div class="event-place">
+                        Загородный клуб "Берёзки"<br>
+                        Москва, Рублёво-Успенское шоссе, 25<br>
+                        Сбор гостей в 16:00 | Церемония в 17:00
+                    </div>
+                </div>
+                
+                <div class="program">
+                    <h3>Программа вечера</h3>
+                    <div class="program-item">
+                        <span class="program-time">16:00</span>
+                        <span class="program-event">Встреча гостей, аперитив</span>
+                    </div>
+                    <div class="program-item">
+                        <span class="program-time">17:00</span>
+                        <span class="program-event">Торжественная церемония</span>
+                    </div>
+                    <div class="program-item">
+                        <span class="program-time">18:00</span>
+                        <span class="program-event">Фуршет и поздравления</span>
+                    </div>
+                    <div class="program-item">
+                        <span class="program-time">19:00</span>
+                        <span class="program-event">Банкет и развлекательная программа</span>
+                    </div>
+                    <div class="program-item">
+                        <span class="program-time">23:00</span>
+                        <span class="program-event">Торт и фейерверк</span>
+                    </div>
+                </div>
+                
+                <!-- Форма ответа (RSVP) -->
+                <div class="rsvp-section">
+                    <h3>Пожалуйста, подтвердите своё присутствие</h3>
+                    <div class="rsvp-name">
+                        <input type="text" id="guestName" placeholder="Ваше имя" maxlength="50">
+                    </div>
+                    <div class="rsvp-options">
+                        <div class="rsvp-option" data-answer="yes">Приду с радостью</div>
+                        <div class="rsvp-option" data-answer="no">Не смогу прийти</div>
+                    </div>
+                    <div class="rsvp-guests" id="guestsBlock" style="display: none;">
+                        <label>Количество гостей (включая вас)</label>
+                        <select id="guestsCount">
+                            <option value="1">1 гость</option>
+                            <option value="2">2 гостя</option>
+                            <option value="3">3 гостя</option>
+                            <option value="4">4 гостя</option>
+                            <option value="5">5+ гостей</option>
+                        </select>
+                    </div>
+                    <div class="rsvp-comment" id="commentBlock" style="display: none;">
+                        <textarea id="guestComment" rows="2" placeholder="Пожелания, аллергии, особые предпочтения..."></textarea>
+                    </div>
+                    <button class="rsvp-button" id="submitRsvp">Отправить ответ</button>
+                    <div class="rsvp-result" id="rsvpResult"></div>
+                </div>
+            </div>
+            
+            <div class="invitation-footer">
+                <p>✧ Пожалуйста, подтвердите ваше присутствие до 1 августа 2026 ✧</p>
+                <p style="margin-top: 8px;">По всем вопросам: +7 (495) 123-45-67 | hello@weddy.ru</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/invitation.js"></script>
+</body>
+</html>

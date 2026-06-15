@@ -1,0 +1,368 @@
+/* Стили для страницы приглашения */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(135deg, #FEFCF8 0%, #F5F0EB 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.invitation-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+/* Карточка приглашения */
+.invitation-card {
+    background: white;
+    border-radius: 48px;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
+}
+
+.invitation-card:hover {
+    transform: translateY(-5px);
+}
+
+/* Верхняя декоративная полоса */
+.invitation-header {
+    background: linear-gradient(135deg, #1C2E4A 0%, #2C4A6E 100%);
+    padding: 40px 32px 32px;
+    text-align: center;
+    position: relative;
+}
+
+.invitation-header::before {
+    content: '✦';
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 2rem;
+    color: rgba(212, 165, 165, 0.3);
+    font-family: 'Unbounded', sans-serif;
+}
+
+.invitation-header::after {
+    content: '✦';
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: rgba(212, 165, 165, 0.3);
+    font-family: 'Unbounded', sans-serif;
+}
+
+.wedding-icon {
+    font-size: 3rem;
+    margin-bottom: 16px;
+}
+
+.invitation-header h1 {
+    font-family: 'Unbounded', sans-serif;
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 8px;
+}
+
+.invitation-header p {
+    color: rgba(255,255,255,0.8);
+    font-size: 1rem;
+}
+
+/* Основной контент */
+.invitation-content {
+    padding: 40px 32px;
+}
+
+/* Имена жениха и невесты */
+.couple-names {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.couple-names h2 {
+    font-family: 'Unbounded', sans-serif;
+    color: #1C2E4A;
+    font-size: 2rem;
+    margin-bottom: 8px;
+}
+
+.couple-names p {
+    color: #D4A5A5;
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+}
+
+.divider {
+    width: 60px;
+    height: 2px;
+    background: #D4A5A5;
+    margin: 24px auto;
+}
+
+/* Дата и место */
+.event-details {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.event-date {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.4rem;
+    color: #1C2E4A;
+    margin-bottom: 16px;
+}
+
+.event-place {
+    color: #6B7A8A;
+    line-height: 1.6;
+}
+
+/* Программа */
+.program {
+    background: #F8F5F0;
+    border-radius: 32px;
+    padding: 24px;
+    margin-bottom: 32px;
+}
+
+.program h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.1rem;
+    color: #1C2E4A;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.program-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #E8E0D5;
+}
+
+.program-item:last-child {
+    border-bottom: none;
+}
+
+.program-time {
+    font-weight: 600;
+    color: #D4A5A5;
+}
+
+.program-event {
+    color: #1C2E4A;
+}
+
+/* Форма ответа */
+.rsvp-section {
+    background: linear-gradient(135deg, #FEFCF8, #F5F0EB);
+    border-radius: 32px;
+    padding: 28px 24px;
+    margin-bottom: 24px;
+    border: 1px solid #E8E0D5;
+}
+
+.rsvp-section h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.2rem;
+    color: #1C2E4A;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.rsvp-name {
+    margin-bottom: 20px;
+}
+
+.rsvp-name input {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #E2D9CE;
+    border-radius: 60px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+}
+
+.rsvp-name input:focus {
+    outline: none;
+    border-color: #D4A5A5;
+}
+
+.rsvp-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.rsvp-option {
+    flex: 1;
+    padding: 12px 16px;
+    border: 1.5px solid #E2D9CE;
+    background: white;
+    border-radius: 60px;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: center;
+}
+
+.rsvp-option:hover {
+    border-color: #D4A5A5;
+    background: rgba(212, 165, 165, 0.05);
+}
+
+.rsvp-option.selected {
+    background: #D4A5A5;
+    border-color: #D4A5A5;
+    color: #1C2E4A;
+}
+
+.rsvp-guests {
+    margin-bottom: 24px;
+}
+
+.rsvp-guests label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #1C2E4A;
+}
+
+.rsvp-guests select {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #E2D9CE;
+    border-radius: 60px;
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    cursor: pointer;
+}
+
+.rsvp-comment {
+    margin-bottom: 24px;
+}
+
+.rsvp-comment textarea {
+    width: 100%;
+    padding: 14px 18px;
+    border: 1px solid #E2D9CE;
+    border-radius: 24px;
+    font-size: 0.9rem;
+    font-family: 'Inter', sans-serif;
+    background: white;
+    resize: vertical;
+}
+
+.rsvp-comment textarea:focus {
+    outline: none;
+    border-color: #D4A5A5;
+}
+
+.rsvp-button {
+    width: 100%;
+    padding: 16px;
+    background: #1C2E4A;
+    color: white;
+    border: none;
+    border-radius: 60px;
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.rsvp-button:hover {
+    background: #2C4A6E;
+    transform: translateY(-2px);
+}
+
+.rsvp-result {
+    margin-top: 20px;
+    padding: 16px;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 0.9rem;
+    display: none;
+}
+
+.rsvp-result.success {
+    background: rgba(212, 165, 165, 0.15);
+    color: #1C2E4A;
+    display: block;
+}
+
+/* Футер приглашения */
+.invitation-footer {
+    background: #F8F5F0;
+    padding: 24px 32px;
+    text-align: center;
+    border-top: 1px solid #E8E0D5;
+}
+
+.invitation-footer p {
+    color: #6B7A8A;
+    font-size: 0.8rem;
+}
+
+/* Навигация назад */
+.back-link {
+    display: inline-block;
+    margin-bottom: 24px;
+    color: #D4A5A5;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.back-link:hover {
+    color: #1C2E4A;
+}
+
+/* Адаптив */
+@media (max-width: 640px) {
+    body {
+        padding: 20px 16px;
+    }
+    
+    .invitation-header h1 {
+        font-size: 1.4rem;
+    }
+    
+    .couple-names h2 {
+        font-size: 1.6rem;
+    }
+    
+    .event-date {
+        font-size: 1.2rem;
+    }
+    
+    .invitation-content {
+        padding: 28px 20px;
+    }
+    
+    .rsvp-options {
+        flex-direction: column;
+    }
+    
+    .program-item {
+        flex-direction: column;
+        gap: 4px;
+    }
+    
+    .program-time {
+        margin-bottom: 4px;
+    }
+}
