@@ -88,6 +88,21 @@ h2 {
 
 .section-bg-light {
     background-color: var(--sand-bg);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Фоновые декоративные элементы для секций */
+.section-bg-light::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" opacity="0.04"><path fill="%231C2E4A" d="M20,20 L30,10 L40,20 L30,30 Z M70,70 L80,60 L90,70 L80,80 Z M45,45 L55,35 L65,45 L55,55 Z"/><circle cx="85" cy="15" r="8"/><circle cx="15" cy="85" r="12"/><polygon points="50,5 60,20 80,20 65,32 70,50 50,40 30,50 35,32 20,20 40,20"/></svg>');
+    background-repeat: repeat;
+    pointer-events: none;
 }
 
 .section-header {
@@ -95,6 +110,8 @@ h2 {
     max-width: 680px;
     margin: 0 auto 32px;
     padding: 0 16px;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 768px) {
@@ -222,7 +239,6 @@ h2 {
     font-family: 'Unbounded', sans-serif;
 }
 
-/* Мобильное меню — гамбургер */
 .nav-links {
     display: flex;
     gap: 15px;
@@ -275,10 +291,11 @@ h2 {
     }
 }
 
-/* Hero — улучшенный для мобильных */
+/* Hero */
 .hero {
     padding: 40px 0 50px;
     overflow: hidden;
+    position: relative;
 }
 
 @media (min-width: 768px) {
@@ -287,12 +304,25 @@ h2 {
     }
 }
 
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 20% 50%, rgba(212, 165, 165, 0.08) 0%, transparent 50%);
+    pointer-events: none;
+}
+
 .hero-container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
     gap: 40px;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 768px) {
@@ -430,6 +460,8 @@ h2 {
     grid-template-columns: 1fr;
     gap: 20px;
     padding: 0 16px;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 640px) {
@@ -467,14 +499,20 @@ h2 {
 }
 
 .pain-icon {
-    font-size: 2.2rem;
+    height: 40px;
     margin-bottom: 16px;
 }
 
+.pain-icon::before {
+    content: "✦";
+    font-size: 1.8rem;
+    color: var(--rose-gold);
+    display: block;
+}
+
 @media (min-width: 768px) {
-    .pain-icon {
-        font-size: 2.8rem;
-        margin-bottom: 20px;
+    .pain-icon::before {
+        font-size: 2rem;
     }
 }
 
@@ -511,6 +549,8 @@ h2 {
     flex-direction: column;
     gap: 20px;
     padding: 0 16px;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 640px) {
@@ -600,6 +640,8 @@ h2 {
     gap: 16px;
     margin: 32px 0 20px;
     padding: 0 16px;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 480px) {
@@ -646,6 +688,71 @@ h2 {
     }
 }
 
+/* секция вдохновения */
+.inspiration-section {
+    background: linear-gradient(135deg, var(--sand-bg) 0%, #fff 100%);
+    position: relative;
+}
+
+.inspiration-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    margin: 40px 0 20px;
+    position: relative;
+    z-index: 2;
+}
+
+@media (min-width: 640px) {
+    .inspiration-grid {
+        gap: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .inspiration-grid {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 24px;
+    }
+}
+
+.inspire-card {
+    aspect-ratio: 1 / 1;
+    border-radius: 24px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.inspire-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.inspire-card::before {
+    content: '✦';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: 'Unbounded', sans-serif;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .inspire-card::before {
+        font-size: 3rem;
+    }
+}
+
+.inspire-card:hover::before {
+    opacity: 1;
+}
+
 /* тарифы */
 .pricing-grid {
     display: flex;
@@ -654,6 +761,8 @@ h2 {
     justify-content: center;
     align-items: center;
     padding: 0 16px;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 640px) {
@@ -682,6 +791,19 @@ h2 {
     transition: all 0.2s;
     border: 1px solid #EFE7DD;
     position: relative;
+    overflow: hidden;
+}
+
+.pricing-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba(212, 165, 165, 0.05) 0%, transparent 70%);
+    pointer-events: none;
+    border-radius: 50%;
 }
 
 @media (min-width: 640px) {
@@ -799,6 +921,8 @@ h2 {
     margin: 32px auto 0;
     border: 1px solid #EDE5DA;
     overflow-x: auto;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 640px) {
@@ -847,6 +971,8 @@ h2 {
     max-width: 100%;
     margin: 0 auto;
     border: 1px solid #F1EBE2;
+    position: relative;
+    z-index: 2;
 }
 
 @media (min-width: 640px) {
