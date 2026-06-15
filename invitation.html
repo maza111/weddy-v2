@@ -3,99 +3,294 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Приглашение на свадьбу | Анна + Дмитрий</title>
+    <title>Анна & Дмитрий | Приглашение на свадьбу</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- CSS -->
     <link rel="stylesheet" href="css/invitation.css">
+    <!-- AOS анимации -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
-    <div class="invitation-container">
-        <a href="index.html" class="back-link">← На главную</a>
-        
-        <div class="invitation-card">
-            <div class="invitation-header">
-                <div class="wedding-icon">✦</div>
-                <h1>Приглашение на свадьбу</h1>
-                <p>Мы будем рады разделить с вами этот особенный день</p>
-            </div>
-            
-            <div class="invitation-content">
-                <div class="couple-names">
-                    <h2>Анна & Дмитрий</h2>
-                    <p>СОЧЕТАЮТСЯ БРАКОМ</p>
+    <!-- Hero секция с видео/фото -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up">
+            <span class="hero-subtitle">Мы приглашаем вас разделить с нами</span>
+            <h1 class="hero-title">Анна & Дмитрий</h1>
+            <div class="hero-date">15.08.2026</div>
+            <div class="hero-divider">✦</div>
+            <a href="#rsvp" class="hero-btn">Подтвердить присутствие</a>
+        </div>
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-delay="500">
+            <span>Листайте вниз</span>
+            <div class="scroll-mouse"></div>
+        </div>
+    </section>
+
+    <!-- Таймер до события -->
+    <section class="timer-section">
+        <div class="container">
+            <h2 data-aos="fade-up">До нашей свадьбы осталось</h2>
+            <div class="timer-grid" data-aos="fade-up" data-aos-delay="200">
+                <div class="timer-item">
+                    <div class="timer-number" id="days">00</div>
+                    <div class="timer-label">Дней</div>
                 </div>
-                
-                <div class="divider"></div>
-                
-                <div class="event-details">
-                    <div class="event-date">15 августа 2026</div>
-                    <div class="event-place">
-                        Загородный клуб "Берёзки"<br>
-                        Москва, Рублёво-Успенское шоссе, 25<br>
-                        Сбор гостей в 16:00 | Церемония в 17:00
-                    </div>
+                <div class="timer-item">
+                    <div class="timer-number" id="hours">00</div>
+                    <div class="timer-label">Часов</div>
                 </div>
-                
-                <div class="program">
-                    <h3>Программа вечера</h3>
-                    <div class="program-item">
-                        <span class="program-time">16:00</span>
-                        <span class="program-event">Встреча гостей, аперитив</span>
-                    </div>
-                    <div class="program-item">
-                        <span class="program-time">17:00</span>
-                        <span class="program-event">Торжественная церемония</span>
-                    </div>
-                    <div class="program-item">
-                        <span class="program-time">18:00</span>
-                        <span class="program-event">Фуршет и поздравления</span>
-                    </div>
-                    <div class="program-item">
-                        <span class="program-time">19:00</span>
-                        <span class="program-event">Банкет и развлекательная программа</span>
-                    </div>
-                    <div class="program-item">
-                        <span class="program-time">23:00</span>
-                        <span class="program-event">Торт и фейерверк</span>
-                    </div>
+                <div class="timer-item">
+                    <div class="timer-number" id="minutes">00</div>
+                    <div class="timer-label">Минут</div>
                 </div>
-                
-                <!-- Форма ответа (RSVP) -->
-                <div class="rsvp-section">
-                    <h3>Пожалуйста, подтвердите своё присутствие</h3>
-                    <div class="rsvp-name">
-                        <input type="text" id="guestName" placeholder="Ваше имя" maxlength="50">
-                    </div>
-                    <div class="rsvp-options">
-                        <div class="rsvp-option" data-answer="yes">Приду с радостью</div>
-                        <div class="rsvp-option" data-answer="no">Не смогу прийти</div>
-                    </div>
-                    <div class="rsvp-guests" id="guestsBlock" style="display: none;">
-                        <label>Количество гостей (включая вас)</label>
-                        <select id="guestsCount">
-                            <option value="1">1 гость</option>
-                            <option value="2">2 гостя</option>
-                            <option value="3">3 гостя</option>
-                            <option value="4">4 гостя</option>
-                            <option value="5">5+ гостей</option>
-                        </select>
-                    </div>
-                    <div class="rsvp-comment" id="commentBlock" style="display: none;">
-                        <textarea id="guestComment" rows="2" placeholder="Пожелания, аллергии, особые предпочтения..."></textarea>
-                    </div>
-                    <button class="rsvp-button" id="submitRsvp">Отправить ответ</button>
-                    <div class="rsvp-result" id="rsvpResult"></div>
+                <div class="timer-item">
+                    <div class="timer-number" id="seconds">00</div>
+                    <div class="timer-label">Секунд</div>
                 </div>
-            </div>
-            
-            <div class="invitation-footer">
-                <p>✧ Пожалуйста, подтвердите ваше присутствие до 1 августа 2026 ✧</p>
-                <p style="margin-top: 8px;">По всем вопросам: +7 (495) 123-45-67 | hello@weddy.ru</p>
             </div>
         </div>
-    </div>
+    </section>
 
+    <!-- История любви с фото -->
+    <section class="story-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Наша история</h2>
+            <div class="story-grid">
+                <div class="story-item" data-aos="fade-right">
+                    <div class="story-img">
+                        <img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop" alt="Первое свидание">
+                    </div>
+                    <div class="story-text">
+                        <h3>Первое свидание</h3>
+                        <p>Три года назад мы встретились в уютном кафе на набережной. Этот день навсегда изменил нашу жизнь.</p>
+                        <span class="story-date">15 августа 2023</span>
+                    </div>
+                </div>
+                <div class="story-item reverse" data-aos="fade-left">
+                    <div class="story-text">
+                        <h3>Предложение</h3>
+                        <p>На закате на крыше с видом на весь город я сказал "Да". Это был самый счастливый момент в моей жизни.</p>
+                        <span class="story-date">20 декабря 2024</span>
+                    </div>
+                    <div class="story-img">
+                        <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400&h=400&fit=crop" alt="Предложение">
+                    </div>
+                </div>
+                <div class="story-item" data-aos="fade-right">
+                    <div class="story-img">
+                        <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&h=400&fit=crop" alt="Помолвка">
+                    </div>
+                    <div class="story-text">
+                        <h3>Наша помолвка</h3>
+                        <p>В кругу самых близких мы отпраздновали помолвку. Теперь ждём свадьбу, чтобы разделить радость с вами.</p>
+                        <span class="story-date">15 января 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- План мероприятий -->
+    <section class="schedule-section">
+        <div class="container">
+            <h2 data-aos="fade-up">План мероприятий</h2>
+            <div class="schedule-timeline" data-aos="fade-up" data-aos-delay="200">
+                <div class="timeline-item">
+                    <div class="timeline-time">16:00</div>
+                    <div class="timeline-content">
+                        <h4>Встреча гостей</h4>
+                        <p>Аперитив и welcome-зона. Фотограф ждёт вас для первых кадров.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">17:00</div>
+                    <div class="timeline-content">
+                        <h4>Торжественная церемония</h4>
+                        <p>Самое важное событие дня. Пожалуйста, займите места заранее.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">18:00</div>
+                    <div class="timeline-content">
+                        <h4>Фуршет и поздравления</h4>
+                        <p>Легкие закуски и возможность поздравить молодожёнов.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">19:00</div>
+                    <div class="timeline-content">
+                        <h4>Банкет</h4>
+                        <p>Торжественный ужин, конкурсы и танцы до утра.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">21:00</div>
+                    <div class="timeline-content">
+                        <h4>Свадебный торт</h4>
+                        <p>Ключевой момент вечера - разрезание свадебного торта.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-time">23:00</div>
+                    <div class="timeline-content">
+                        <h4>Фейерверк</h4>
+                        <p>Яркое завершение вечера. Салют и запуск небесных фонариков.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Галерея -->
+    <section class="gallery-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Наши моменты</h2>
+            <div class="gallery-grid" data-aos="fade-up" data-aos-delay="200">
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?w=400&h=400&fit=crop" alt="Фото 1"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400&h=400&fit=crop" alt="Фото 2"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1532712933600-e7c4f5a5e6d6?w=400&h=400&fit=crop" alt="Фото 3"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?w=400&h=400&fit=crop" alt="Фото 4"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?w=400&h=400&fit=crop" alt="Фото 5"></div>
+                <div class="gallery-item"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?w=400&h=400&fit=crop" alt="Фото 6"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Место проведения + карта -->
+    <section class="venue-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Место проведения</h2>
+            <div class="venue-content">
+                <div class="venue-info" data-aos="fade-right">
+                    <h3>Загородный клуб "Берёзки"</h3>
+                    <p>Москва, Рублёво-Успенское шоссе, 25</p>
+                    <div class="venue-details">
+                        <div class="venue-detail">
+                            <span>🚗</span>
+                            <span>Бесплатная парковка для гостей</span>
+                        </div>
+                        <div class="venue-detail">
+                            <span>🏨</span>
+                            <span>Возможно размещение в коттеджах</span>
+                        </div>
+                        <div class="venue-detail">
+                            <span>🚕</span>
+                            <span>Трансфер от метро "Молодёжная" в 15:30</span>
+                        </div>
+                    </div>
+                    <button class="map-btn" id="openMapBtn">Открыть карту</button>
+                </div>
+                <div class="venue-map" data-aos="fade-left" id="map">
+                    <div class="map-placeholder">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2246.431674236273!2d37.394605!3d55.733998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x46b54b3c5e6b5b5d%3A0x0!2zNTXCsDQ0JzAyLjQiTiAzN8KwMjMnMzguNSJF!5e0!3m2!1sru!2sru!4v1700000000000!5m2!1sru!2sru" 
+                            width="100%" 
+                            height="300" 
+                            style="border:0; border-radius: 24px;" 
+                            allowfullscreen="" 
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Код дресс-кода -->
+    <section class="dresscode-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Дресс-код</h2>
+            <div class="dresscode-content" data-aos="fade-up" data-aos-delay="200">
+                <div class="dresscode-colors">
+                    <div class="color-circle" style="background: #D4A5A5;"></div>
+                    <div class="color-circle" style="background: #F3D7D7;"></div>
+                    <div class="color-circle" style="background: #1C2E4A;"></div>
+                    <div class="color-circle" style="background: #E8C9C9;"></div>
+                </div>
+                <p>Приветствуются нежные пастельные тона и элегантные вечерние наряды.<br>Пожалуйста, воздержитесь от белого цвета (для невесты) и чёрного (траурный цвет).</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Подарки -->
+    <section class="gifts-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Пожелания по подаркам</h2>
+            <div class="gifts-content" data-aos="fade-up" data-aos-delay="200">
+                <p>Ваше присутствие — лучший подарок. Если вы хотите поздравить нас материально, будем благодарны за вклад в наше совместное будущее.</p>
+                <div class="gift-options">
+                    <div class="gift-option">
+                        <div class="gift-icon">🏠</div>
+                        <h4>На квартиру</h4>
+                    </div>
+                    <div class="gift-option">
+                        <div class="gift-icon">✈️</div>
+                        <h4>На путешествие</h4>
+                    </div>
+                    <div class="gift-option">
+                        <div class="gift-icon">📷</div>
+                        <h4>Фотокнига воспоминаний</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- RSVP форма -->
+    <section id="rsvp" class="rsvp-section-main">
+        <div class="container">
+            <h2 data-aos="fade-up">Подтвердите своё присутствие</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Пожалуйста, ответьте до 1 августа 2026</p>
+            <div class="rsvp-card" data-aos="fade-up" data-aos-delay="200">
+                <form id="rsvpForm">
+                    <div class="form-group">
+                        <input type="text" id="guestName" placeholder="Ваше имя" required>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <select id="guestsCount">
+                                <option value="1">1 гость</option>
+                                <option value="2">2 гостя</option>
+                                <option value="3">3 гостя</option>
+                                <option value="4">4 гостя</option>
+                                <option value="5">5+ гостей</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <select id="dietary">
+                                <option value="">Питание (опционально)</option>
+                                <option value="standard">Стандартное</option>
+                                <option value="vegetarian">Вегетарианское</option>
+                                <option value="vegan">Веганское</option>
+                                <option value="allergy">Аллергия (укажите в комментарии)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="comment" rows="3" placeholder="Ваши пожелания, аллергии, особые предпочтения..."></textarea>
+                    </div>
+                    <div class="rsvp-buttons">
+                        <button type="submit" class="rsvp-btn yes" id="rsvpYes">Буду с радостью ✨</button>
+                        <button type="button" class="rsvp-btn no" id="rsvpNo">Не смогу прийти 💔</button>
+                    </div>
+                </form>
+                <div id="rsvpResult" class="rsvp-result-message"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Футер -->
+    <footer class="invitation-footer">
+        <div class="container">
+            <p>По всем вопросам: <a href="tel:+74951234567">+7 (495) 123-45-67</a> | <a href="mailto:hello@weddy.ru">hello@weddy.ru</a></p>
+            <p>✧ С любовью, Анна и Дмитрий ✧</p>
+        </div>
+    </footer>
+
+    <!-- Скрипты -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/invitation.js"></script>
 </body>
 </html>
