@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Weddy — Админ-панель</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+    <script>
+        // Проверка авторизации
+        if (!sessionStorage.getItem('adminAuthenticated')) {
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+
+    <div class="admin-container">
+        <!-- Шапка -->
+        <header class="admin-header">
+            <div class="header-left">
+                <span class="logo">✦ Weddy</span>
+                <span class="badge">Админ-панель</span>
+            </div>
+            <div class="header-right">
+                <span class="event-name">Свадьба Анны и Дмитрия</span>
+                <span class="event-date">15 августа 2026</span>
+                <button class="btn-logout" id="logoutBtn">Выйти</button>
+            </div>
+        </header>
+
+        <!-- Статистика -->
+        <section class="stats-section">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon">👥</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="totalGuests">0</div>
+                        <div class="stat-label">Всего ответило</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">✅</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="confirmedGuests">0</div>
+                        <div class="stat-label">Подтвердили</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">❌</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="declinedGuests">0</div>
+                        <div class="stat-label">Не придут</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">👶</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="totalChildren">0</div>
+                        <div class="stat-label">Всего детей</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">🍷</div>
+                    <div class="stat-info">
+                        <div class="stat-number" id="totalAlcohol">0</div>
+                        <div class="stat-label">Заказов алкоголя</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Фильтры -->
+        <section class="filters-section">
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label>Статус</label>
+                    <select id="filterStatus">
+                        <option value="all">Все</option>
+                        <option value="coming">Идут</option>
+                        <option value="not">Не идут</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Поиск</label>
+                    <input type="text" id="searchInput" placeholder="Имя гостя...">
+                </div>
+                <div class="filter-group actions">
+                    <button class="btn-export" id="exportExcelBtn">📊 Экспорт в Excel</button>
+                    <button class="btn-export" id="exportCsvBtn">📄 Экспорт в CSV</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Таблица -->
+        <section class="table-section">
+            <div class="table-wrapper">
+                <table class="guests-table" id="guestsTable">
+                    <thead>
+                        <tr>
+                            <th>№</th>
+                            <th>Имя</th>
+                            <th>Гостей</th>
+                            <th>Детей</th>
+                            <th>Алкоголь</th>
+                            <th>Аллергии</th>
+                            <th>Комментарий</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- Строки будут добавлены через JS -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-footer">
+                <span id="rowCount">Показано: 0 записей</span>
+            </div>
+        </section>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>
