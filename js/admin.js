@@ -1,109 +1,88 @@
-// Выход из админки
-document.addEventListener('DOMContentLoaded', function() {
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            sessionStorage.removeItem('adminAuthenticated');
-            window.location.href = 'admin-login.html';
+// =====================================================
+// Weddy — Админ-панель
+// Подключение к Google Таблице
+// =====================================================
+
+// URL вашего Google Apps Script
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQkcz3X4LrCLH_7xeVveUegZzjovW0jLkxYoWPLIvr3SyWf-_IA6dLfONweY7g3HgL/exec';
+
+// Глобальный массив для хранения данных
+let guests = [];
+
+// =====================================================
+// Загрузка данных из Google Таблицы
+// =====================================================
+function loadGuestsFromSheet() {
+    fetch(SCRIPT_URL)
+        .then(response => response.json())
+        .then(data => {
+            guests = data;
+            console.log('✅ Данные загружены из таблицы:', guests.length, 'записей');
+            renderTable();
+            updateStats();
+        })
+        .catch(error => {
+            console.error('❌ Ошибка загрузки данных:', error);
+            // Если ошибка, показываем демо-данные
+            guests = getDemoData();
+            renderTable();
+            updateStats();
+            alert('⚠️ Не удалось загрузить данные из таблицы. Показаны демо-данные.');
         });
-    }
-});
+}
 
-// Демо-данные гостей (только те, кто заполнил форму)
-let guests = [
-    {
-        id: 1,
-        name: "Анна Иванова",
-        guests: 1,
-        children: 0,
-        alcohol: ["вино"],
-        allergies: "Нет",
-        comment: "—",
-        status: "coming"
-    },
-    {
-        id: 2,
-        name: "Дмитрий Петров",
-        guests: 2,
-        children: 0,
-        alcohol: ["водка", "вино"],
-        allergies: "Нет",
-        comment: "Будем рады увидеть всех!",
-        status: "coming"
-    },
-    {
-        id: 3,
-        name: "Елена Смирнова",
-        guests: 0,
-        children: 0,
-        alcohol: [],
-        allergies: "Орехи",
-        comment: "—",
-        status: "not"
-    },
-    {
-        id: 4,
-        name: "Михаил Козлов",
-        guests: 1,
-        children: 1,
-        alcohol: ["пиво"],
-        allergies: "Нет",
-        comment: "—",
-        status: "coming"
-    },
-    {
-        id: 5,
-        name: "Алексей Виноградов",
-        guests: 2,
-        children: 0,
-        alcohol: ["виски", "вино"],
-        allergies: "Нет",
-        comment: "—",
-        status: "coming"
-    },
-    {
-        id: 6,
-        name: "Мария Федорова",
-        guests: 1,
-        children: 2,
-        alcohol: ["без алкоголя"],
-        allergies: "Нет",
-        comment: "Дети будут, 5 и 7 лет",
-        status: "coming"
-    },
-    {
-        id: 7,
-        name: "Сергей Николаев",
-        guests: 0,
-        children: 0,
-        alcohol: [],
-        allergies: "Нет",
-        comment: "—",
-        status: "not"
-    },
-    {
-        id: 8,
-        name: "Игорь Соколов",
-        guests: 2,
-        children: 1,
-        alcohol: ["водка", "пиво"],
-        allergies: "Нет",
-        comment: "—",
-        status: "coming"
-    }
-];
+// =====================================================
+// Демо-данные (на случай ошибки)
+// =====================================================
+function getDemoData() {
+    return [
+        { id: 1, name: "Анна Иванова", guests: 1, children: 0, alcohol: "вино", allergies: "Нет", comment: "—", status: "coming", date: "15.08.2026" },
+        { id: 2, name: "Дмитрий Петров", guests: 2, children: 0, alcohol: "водка, вино", allergies: "Нет", comment: "Будем рады увидеть всех!", status: "coming", date: "15.08.2026" },
+        { id: 3, name: "Елена Смирнова", guests: 0, children: 0, alcohol: "—", allergies: "Орехи", comment: "—", status: "not", date: "14.08.2026" },
+        { id: 4, name: "Михаил Козлов", guests: 1, children: 1, alcohol: "пиво", allergies: "Нет", comment: "—", status: "coming", date: "15.08.2026" }
+    ];
+}
 
-// Текущий фильтр
+// =====================================================
+// Отправка данных в Google Таблицу (удаление)
+// =====================================================
+function deleteFromSheet(id) {
+    const data = { 
+        action: 'delete', 
+        id: id 
+    };
+    
+    return fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then(() => {
+        console.log('✅ Запись удалена из таблицы');
+        return { success: true };
+    })
+    .catch(error => {
+        console.error('❌ Ошибка удаления:', error);
+        return { success: false, error: error };
+    });
+}
+
+// =====================================================
+// Текущий фильтр и поиск
+// =====================================================
 let currentFilter = 'all';
 let searchQuery = '';
 
+// =====================================================
 // Рендер таблицы
+// =====================================================
 function renderTable() {
-    console.log('renderTable вызван!');
     const tbody = document.getElementById('tableBody');
     const rowCount = document.getElementById('rowCount');
     
-    // Проверка, что элементы найдены
     if (!tbody) {
         console.error('Элемент tableBody не найден!');
         return;
@@ -121,8 +100,12 @@ function renderTable() {
         filtered = filtered.filter(g => g.name.toLowerCase().includes(query));
     }
     
-    // Обновляем статистику
-    updateStats();
+    // Сортировка: сначала идут
+    filtered.sort((a, b) => {
+        if (a.status === 'coming' && b.status !== 'coming') return -1;
+        if (a.status !== 'coming' && b.status === 'coming') return 1;
+        return 0;
+    });
     
     // Рендер строк
     if (filtered.length === 0) {
@@ -148,17 +131,17 @@ function renderTable() {
             'not': 'not'
         };
         
-        const alcoholText = guest.alcohol.length > 0 ? guest.alcohol.join(', ') : 'Не выбрано';
+        const alcoholText = guest.alcohol && guest.alcohol !== '—' ? guest.alcohol : 'Не выбрано';
         
         html += `
             <tr>
                 <td>${index + 1}</td>
                 <td><strong>${guest.name}</strong></td>
-                <td>${guest.guests}</td>
-                <td>${guest.children}</td>
+                <td>${guest.guests || 0}</td>
+                <td>${guest.children || 0}</td>
                 <td>${alcoholText}</td>
-                <td>${guest.allergies}</td>
-                <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${guest.comment}</td>
+                <td>${guest.allergies || 'Нет'}</td>
+                <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${guest.comment || '—'}</td>
                 <td><span class="status-badge ${statusClasses[guest.status]}">${statusLabels[guest.status]}</span></td>
                 <td>
                     <button class="btn-delete" onclick="deleteGuest(${guest.id})" title="Удалить">✕</button>
@@ -171,13 +154,20 @@ function renderTable() {
     rowCount.textContent = `Показано: ${filtered.length} из ${guests.length} записей`;
 }
 
+// =====================================================
 // Обновление статистики
+// =====================================================
 function updateStats() {
     const total = guests.length;
     const coming = guests.filter(g => g.status === 'coming').length;
     const not = guests.filter(g => g.status === 'not').length;
-    const children = guests.reduce((sum, g) => sum + g.children, 0);
-    const alcoholOrders = guests.reduce((sum, g) => sum + g.alcohol.length, 0);
+    const children = guests.reduce((sum, g) => sum + (g.children || 0), 0);
+    const alcoholOrders = guests.reduce((sum, g) => {
+        if (g.alcohol && g.alcohol !== '—' && g.alcohol !== 'Не выбрано') {
+            return sum + g.alcohol.split(',').length;
+        }
+        return sum;
+    }, 0);
     
     document.getElementById('totalGuests').textContent = total;
     document.getElementById('confirmedGuests').textContent = coming;
@@ -186,44 +176,30 @@ function updateStats() {
     document.getElementById('totalAlcohol').textContent = alcoholOrders;
 }
 
+// =====================================================
 // Удаление гостя
+// =====================================================
 function deleteGuest(id) {
     if (confirm('Удалить этого гостя из списка?')) {
+        // Удаляем из локального массива
         guests = guests.filter(g => g.id !== id);
         renderTable();
+        updateStats();
+        
+        // Отправляем запрос на удаление в таблицу
+        deleteFromSheet(id).then(result => {
+            if (result.success) {
+                console.log('✅ Гость удалён из таблицы');
+            } else {
+                console.warn('⚠️ Не удалось удалить из таблицы, но из отображения убран');
+            }
+        });
     }
 }
 
-// Фильтры
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM загружен!');
-    
-    const filterStatus = document.getElementById('filterStatus');
-    const searchInput = document.getElementById('searchInput');
-    
-    if (filterStatus) {
-        filterStatus.addEventListener('change', function() {
-            currentFilter = this.value;
-            renderTable();
-        });
-    }
-    
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            searchQuery = this.value;
-            renderTable();
-        });
-    }
-    
-    // Кнопки экспорта
-    document.getElementById('exportExcelBtn').addEventListener('click', exportToExcel);
-    document.getElementById('exportCsvBtn').addEventListener('click', () => exportToCSV('guests_list.csv'));
-    
-    // Инициализация таблицы
-    renderTable();
-});
-
+// =====================================================
 // Экспорт в Excel (CSV с разделителем ;)
+// =====================================================
 function exportToCSV(filename = 'guests_list.csv') {
     const headers = ['№', 'Имя', 'Гостей', 'Детей', 'Алкоголь', 'Аллергии', 'Комментарий', 'Статус'];
     const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
@@ -234,12 +210,12 @@ function exportToCSV(filename = 'guests_list.csv') {
         const row = [
             index + 1,
             guest.name,
-            guest.guests,
-            guest.children,
-            guest.alcohol.length > 0 ? guest.alcohol.join(', ') : 'Не выбрано',
-            guest.allergies,
-            guest.comment,
-            statusMap[guest.status]
+            guest.guests || 0,
+            guest.children || 0,
+            guest.alcohol && guest.alcohol !== '—' ? guest.alcohol : 'Не выбрано',
+            guest.allergies || 'Нет',
+            guest.comment || '—',
+            statusMap[guest.status] || guest.status
         ];
         csv += row.join(';') + '\n';
     });
@@ -248,11 +224,15 @@ function exportToCSV(filename = 'guests_list.csv') {
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = filename;
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
     URL.revokeObjectURL(link.href);
 }
 
-// Экспорт в Excel (XLSX через простой HTML)
+// =====================================================
+// Экспорт в Excel (XLSX через HTML)
+// =====================================================
 function exportToExcel() {
     const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
     
@@ -275,12 +255,12 @@ function exportToExcel() {
             <tr>
                 <td>${index + 1}</td>
                 <td>${guest.name}</td>
-                <td>${guest.guests}</td>
-                <td>${guest.children}</td>
-                <td>${guest.alcohol.length > 0 ? guest.alcohol.join(', ') : 'Не выбрано'}</td>
-                <td>${guest.allergies}</td>
-                <td>${guest.comment}</td>
-                <td>${statusMap[guest.status]}</td>
+                <td>${guest.guests || 0}</td>
+                <td>${guest.children || 0}</td>
+                <td>${guest.alcohol && guest.alcohol !== '—' ? guest.alcohol : 'Не выбрано'}</td>
+                <td>${guest.allergies || 'Нет'}</td>
+                <td>${guest.comment || '—'}</td>
+                <td>${statusMap[guest.status] || guest.status}</td>
             </tr>
         `;
     });
@@ -291,6 +271,57 @@ function exportToExcel() {
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'guests_list.xls';
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
     URL.revokeObjectURL(link.href);
 }
+
+// =====================================================
+// Инициализация
+// =====================================================
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Админ-панель загружена');
+    
+    // Загружаем данные из таблицы
+    loadGuestsFromSheet();
+    
+    // Фильтры
+    const filterStatus = document.getElementById('filterStatus');
+    const searchInput = document.getElementById('searchInput');
+    
+    if (filterStatus) {
+        filterStatus.addEventListener('change', function() {
+            currentFilter = this.value;
+            renderTable();
+        });
+    }
+    
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            searchQuery = this.value;
+            renderTable();
+        });
+    }
+    
+    // Кнопки экспорта
+    const exportExcelBtn = document.getElementById('exportExcelBtn');
+    const exportCsvBtn = document.getElementById('exportCsvBtn');
+    
+    if (exportExcelBtn) {
+        exportExcelBtn.addEventListener('click', exportToExcel);
+    }
+    
+    if (exportCsvBtn) {
+        exportCsvBtn.addEventListener('click', () => exportToCSV('guests_list.csv'));
+    }
+    
+    // Кнопка выхода
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function() {
+            sessionStorage.removeItem('adminAuthenticated');
+            window.location.href = 'admin-login.html';
+        });
+    }
+});
