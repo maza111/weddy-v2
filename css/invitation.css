@@ -548,3 +548,68 @@ body {
 
 .invitation-footer a { color: #D4A5A5; text-decoration: none; }
 .invitation-footer a:hover { text-decoration: underline; }
+
+/* Стили для чекбоксов в форме */
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: #1C2E4A;
+    padding: 6px 12px;
+    border: 1.5px solid #E2D9CE;
+    border-radius: 60px;
+    transition: all 0.2s;
+    background: white;
+}
+
+.checkbox-label:hover {
+    border-color: #D4A5A5;
+    background: rgba(212, 165, 165, 0.05);
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: #D4A5A5;
+    cursor: pointer;
+}
+
+.checkbox-label:has(input:checked) {
+    background: #D4A5A5;
+    border-color: #D4A5A5;
+    color: #1C2E4A;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #1C2E4A;
+    font-size: 0.95rem;
+}
+
+.required {
+    color: #D4A5A5;
+    font-weight: 600;
+}
+
+@media (max-width: 480px) {
+    .checkbox-group {
+        gap: 8px;
+    }
+    
+    .checkbox-label {
+        font-size: 0.85rem;
+        padding: 4px 10px;
+    }
+}

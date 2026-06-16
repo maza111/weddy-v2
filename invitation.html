@@ -200,31 +200,79 @@
         </div>
     </section>
 
+    <!-- RSVP форма -->
     <section id="rsvp" class="rsvp-section-main">
         <div class="container">
             <h2 data-aos="fade-up">Подтвердите своё присутствие</h2>
             <p data-aos="fade-up" data-aos-delay="100">Пожалуйста, ответьте до 1 августа 2026</p>
             <div class="rsvp-card" data-aos="fade-up" data-aos-delay="200">
                 <form id="rsvpForm">
-                    <div class="form-group"><input type="text" id="guestName" placeholder="Ваше имя" required></div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <select id="guestsCount">
-                                <option value="1">1 гость</option><option value="2">2 гостя</option><option value="3">3 гостя</option>
-                                <option value="4">4 гостя</option><option value="5">5+ гостей</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <select id="dietary">
-                                <option value="">Питание</option><option value="standard">Стандартное</option>
-                                <option value="vegetarian">Вегетарианское</option><option value="vegan">Веганское</option>
-                                <option value="allergy">Аллергия</option>
-                            </select>
+                    <!-- 1. Имя и фамилия -->
+                    <div class="form-group">
+                        <label>Ваше имя и фамилия <span class="required">*</span></label>
+                        <input type="text" id="guestName" placeholder="Например: Анна Иванова" required>
+                    </div>
+                
+                    <!-- 2. Количество гостей с вами -->
+                    <div class="form-group">
+                        <label>Количество гостей с вами (включая вас)</label>
+                        <select id="guestsCount">
+                            <option value="1">1 гость (только я)</option>
+                            <option value="2">2 гостя</option>
+                            <option value="3">3 гостя</option>
+                            <option value="4">4 гостя</option>
+                            <option value="5">5+ гостей</option>
+                        </select>
+                    </div>
+                
+                    <!-- 3. Количество детей с вами -->
+                    <div class="form-group">
+                        <label>Количество детей с вами (до 14 лет)</label>
+                        <select id="childrenCount">
+                            <option value="0">0 детей</option>
+                            <option value="1">1 ребёнок</option>
+                            <option value="2">2 ребёнка</option>
+                            <option value="3">3 ребёнка</option>
+                            <option value="4">4+ детей</option>
+                        </select>
+                    </div>
+                
+                    <!-- 4. Алкоголь -->
+                    <div class="form-group">
+                        <label>Предпочтения по алкоголю</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="vodka"> Водка
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="wine"> Вино
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="beer"> Пиво
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="whiskey"> Виски/Коньяк
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="none"> Без алкоголя
+                            </label>
                         </div>
                     </div>
-                    <div class="form-group"><textarea id="comment" rows="3" placeholder="Ваши пожелания, аллергии..."></textarea></div>
+                
+                    <!-- 5. Аллергии -->
+                    <div class="form-group">
+                        <label>Аллергии и непереносимость</label>
+                        <input type="text" id="allergies" placeholder="Например: орехи, лактоза, глютен... или 'Нет'">
+                    </div>
+                
+                    <!-- 6. Комментарии -->
+                    <div class="form-group">
+                        <label>Комментарии и пожелания</label>
+                        <textarea id="comment" rows="3" placeholder="Что-то важное, что мы должны знать..."></textarea>
+                    </div>
+                
                     <div class="rsvp-buttons">
-                        <button type="submit" class="rsvp-btn yes" id="rsvpYes">Буду с радостью ✨</button>
+                        <button type="submit" class="rsvp-btn yes">Буду с радостью ✨</button>
                         <button type="button" class="rsvp-btn no" id="rsvpNo">Не смогу прийти 💔</button>
                     </div>
                 </form>
