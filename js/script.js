@@ -26,36 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =====================================================
-    // URL Google Apps Script (ДЛЯ ЗАЯВОК С ЛЕНДИНГА)
-    // =====================================================
-    
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztJY-uPkxZmc9Xf5HdyONO2ttNmJXBeqNHq1EyBI4Wbdr4cqvMmyYqwCestBQ-Vco/exec';
-
-    // =====================================================
-    // ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ
-    // =====================================================
-    
-    function sendDataToSheet(data) {
-        return fetch(SCRIPT_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
-        .then(() => {
-            console.log('✅ Заявка отправлена в Google Таблицу');
-            return { success: true };
-        })
-        .catch(error => {
-            console.error('❌ Ошибка отправки:', error);
-            return { success: false, error: error };
-        });
-    }
-
-    // =====================================================
-    // ФОРМА НА ЛЕНДИНГЕ
+    // ОТПРАВКА ФОРМЫ (только iframe, без fetch)
     // =====================================================
     
     const leadForm = document.getElementById('leadForm');
@@ -72,21 +43,55 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
             
-            const data = {
+            // Ваш URL Google Apps Script
+            const scriptUrl = 'https://script.google.com/macros/s/AKfycbyQkcz3X4LrCLH_7xeVveUegZzjovW0jLkxYoWPLIvr3SyWf-_IA6dLfONweY7g3HgL/exec';
+            
+            // Создаём форму
+            const form = document.createElement('form');
+            form.method = 'POST';
+            form.action = scriptUrl;
+            form.target = 'hiddenFrame';
+            form.style.display = 'none';
+            
+            // Поля
+            const fields = {
                 name: name,
                 email: email,
-                phone: phone || '—',
-                timestamp: new Date().toISOString()
+                phone: phone || '—'
             };
             
-            sendDataToSheet(data).then(result => {
-                if (result.success) {
-                    alert(`Спасибо, ${name}! Мы свяжемся с вами в ближайшее время. 💌`);
-                    leadForm.reset();
-                } else {
-                    alert('❌ Произошла ошибка. Попробуйте ещё раз или свяжитесь с нами по телефону.');
+            for (const key in fields) {
+                const input = document.createElement('input');
+                input.type = 'hidden';
+                input.name = key;
+                input.value = fields[key];
+                form.appendChild(input);
+            }
+            
+            // Создаём iframe
+            let iframe = document.getElementById('hiddenFrame');
+            if (!iframe) {
+                iframe = document.createElement('iframe');
+                iframe.id = 'hiddenFrame';
+                iframe.name = 'hiddenFrame';
+                iframe.style.display = 'none';
+                document.body.appendChild(iframe);
+            }
+            
+            // Отправляем
+            document.body.appendChild(form);
+            form.submit();
+            
+            // Удаляем форму
+            setTimeout(function() {
+                if (document.body.contains(form)) {
+                    document.body.removeChild(form);
                 }
-            });
+            }, 1000);
+            
+            // Сообщение об успехе
+            alert('Спасибо, ' + name + '! Мы свяжемся с вами в ближайшее время. 💌');
+            leadForm.reset();
         });
     }
 
@@ -94,22 +99,12 @@ document.addEventListener('DOMContentLoaded', function() {
     // КНОПКИ ТАРИФОВ
     // =====================================================
     
-    const singleDemo = document.querySelector('.demo-single');
-    const subDemo = document.querySelector('.demo-subscription');
-    
-    if (singleDemo) {
-        singleDemo.addEventListener('click', function() {
-            alert('Спасибо за интерес к тарифу Стандарт! Оставьте контакты в форме ниже.');
+    document.querySelectorAll('.demo-single, .demo-subscription').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+            alert('Спасибо за интерес! Оставьте контакты в форме ниже.');
             document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
         });
-    }
-    
-    if (subDemo) {
-        subDemo.addEventListener('click', function() {
-            alert('Спасибо за интерес к тарифу Премиум! Оставьте контакты в форме ниже.');
-            document.getElementById('demo').scrollIntoView({ behavior: 'smooth' });
-        });
-    }
+    });
 
     // =====================================================
     // ПЛАВНЫЙ СКРОЛЛ
@@ -137,10 +132,9 @@ document.addEventListener('DOMContentLoaded', function() {
     
     window.addEventListener('scroll', function() {
         const scrollY = window.scrollY;
-        blobs.forEach((blob, index) => {
+        blobs.forEach(function(blob, index) {
             const speed = 0.02 + (index * 0.01);
-            const yOffset = scrollY * speed;
-            blob.style.transform = `translateY(${yOffset}px)`;
+            blob.style.transform = 'translateY(' + (scrollY * speed) + 'px)';
         });
     });
 });
