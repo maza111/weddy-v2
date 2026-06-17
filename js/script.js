@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // =====================================================
-    // АНИМАЦИЯ ПРИ СКРОЛЛЕ (Intersection Observer)
+    // АНИМАЦИЯ ПРИ СКРОЛЛЕ
     // =====================================================
     
     const animatedElements = document.querySelectorAll(
@@ -26,21 +26,67 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =====================================================
-    // ФОРМА (демо-режим)
+    // URL Google Apps Script (ДЛЯ ЗАЯВОК С ЛЕНДИНГА)
+    // =====================================================
+    
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbztJY-uPkxZmc9Xf5HdyONO2ttNmJXBeqNHq1EyBI4Wbdr4cqvMmyYqwCestBQ-Vco/exec';
+
+    // =====================================================
+    // ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ
+    // =====================================================
+    
+    function sendDataToSheet(data) {
+        return fetch(SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(() => {
+            console.log('✅ Заявка отправлена в Google Таблицу');
+            return { success: true };
+        })
+        .catch(error => {
+            console.error('❌ Ошибка отправки:', error);
+            return { success: false, error: error };
+        });
+    }
+
+    // =====================================================
+    // ФОРМА НА ЛЕНДИНГЕ
     // =====================================================
     
     const leadForm = document.getElementById('leadForm');
     if (leadForm) {
         leadForm.addEventListener('submit', function(e) {
             e.preventDefault();
+            
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            
             if (!name || !email) {
                 alert('Пожалуйста, укажите имя и email');
                 return;
             }
-            alert(`Спасибо, ${name}! Мы свяжемся с вами в ближайшее время.`);
-            leadForm.reset();
+            
+            const data = {
+                name: name,
+                email: email,
+                phone: phone || '—',
+                timestamp: new Date().toISOString()
+            };
+            
+            sendDataToSheet(data).then(result => {
+                if (result.success) {
+                    alert(`Спасибо, ${name}! Мы свяжемся с вами в ближайшее время. 💌`);
+                    leadForm.reset();
+                } else {
+                    alert('❌ Произошла ошибка. Попробуйте ещё раз или свяжитесь с нами по телефону.');
+                }
+            });
         });
     }
 
@@ -66,7 +112,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =====================================================
-    // ПЛАВНЫЙ СКРОЛЛ ДЛЯ НАВИГАЦИИ
+    // ПЛАВНЫЙ СКРОЛЛ
     // =====================================================
     
     document.querySelectorAll('.nav-links a, .btn-small').forEach(function(anchor) {
@@ -84,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =====================================================
-    // ПАРАЛЛАКС ДЛЯ BLOBS (следят за скроллом)
+    // ПАРАЛЛАКС ДЛЯ BLOBS
     // =====================================================
     
     const blobs = document.querySelectorAll('.blob');

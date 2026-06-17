@@ -253,27 +253,26 @@ h2 {
 .hero::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 20% 50%, rgba(212, 165, 165, 0.08) 0%, transparent 50%);
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg,
+        rgba(212, 165, 165, 0.05) 0%,
+        rgba(28, 46, 74, 0.02) 25%,
+        rgba(212, 165, 165, 0.05) 50%,
+        rgba(28, 46, 74, 0.02) 75%,
+        rgba(212, 165, 165, 0.05) 100%
+    );
+    animation: heroGradient 20s linear infinite;
     pointer-events: none;
+    z-index: 0;
 }
 
 .hero-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
     position: relative;
     z-index: 2;
-}
-
-@media (min-width: 768px) {
-    .hero-container {
-        flex-direction: row;
-    }
 }
 
 .hero-content {
@@ -403,6 +402,12 @@ h2 {
     }
 }
 
+@keyframes heroGradient {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.5); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
 .grid-3 {
     display: grid;
     grid-template-columns: 1fr;
@@ -419,7 +424,6 @@ h2 {
 }
 
 .pain-card {
-    background: var(--white);
     padding: 24px 20px;
     border-radius: var(--card-radius);
     box-shadow: var(--shadow-sm);
@@ -488,7 +492,6 @@ h2 {
 
 .step-item {
     flex: 1;
-    background: var(--white);
     border-radius: var(--card-radius);
     padding: 24px 16px;
     text-align: center;
@@ -598,8 +601,6 @@ h2 {
 }
 
 .pricing-card {
-    background: var(--white);
-    border-radius: var(--card-radius);
     padding: 28px 24px;
     flex: 1;
     min-width: 280px;
@@ -743,8 +744,6 @@ h2 {
 }
 
 .stats-preview {
-    background: white;
-    border-radius: 24px;
     padding: 20px;
     max-width: 100%;
     margin: 32px auto 0;
@@ -792,8 +791,6 @@ h2 {
 }
 
 .form-card {
-    background: var(--white);
-    border-radius: 28px;
     padding: 28px 20px;
     box-shadow: var(--shadow-sm);
     max-width: 100%;
@@ -900,19 +897,6 @@ footer {
     .footer-bottom {
         padding-top: 24px;
         font-size: 0.8rem;
-    }
-}
-
-.dev-note {
-    margin-top: 10px;
-    color: var(--rose-gold);
-    font-family: monospace;
-    font-size: 0.65rem;
-}
-
-@media (min-width: 768px) {
-    .dev-note {
-        font-size: 0.7rem;
     }
 }
 
@@ -1046,47 +1030,6 @@ footer {
     background: rgba(255, 255, 255, 0.8) !important;
 }
 
-/* Для тёмных секций — более прозрачное стекло */
 .section-bg-light .glass {
     background: rgba(255, 255, 255, 0.5) !important;
-}
-
-/* =====================================================
-   АНИМИРОВАННЫЙ ГРАДИЕНТ В HERO
-   ===================================================== */
-
-.hero {
-    position: relative;
-    overflow: hidden;
-}
-
-.hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: conic-gradient(
-        from 0deg,
-        rgba(212, 165, 165, 0.05) 0%,
-        rgba(28, 46, 74, 0.02) 25%,
-        rgba(212, 165, 165, 0.05) 50%,
-        rgba(28, 46, 74, 0.02) 75%,
-        rgba(212, 165, 165, 0.05) 100%
-    );
-    animation: heroGradient 20s linear infinite;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.hero-container {
-    position: relative;
-    z-index: 2;
-}
-
-@keyframes heroGradient {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(180deg) scale(1.5); }
-    100% { transform: rotate(360deg) scale(1); }
 }
