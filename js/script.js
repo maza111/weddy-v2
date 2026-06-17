@@ -82,4 +82,19 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // =====================================================
+    // ПАРАЛЛАКС ДЛЯ BLOBS (следят за скроллом)
+    // =====================================================
+    
+    const blobs = document.querySelectorAll('.blob');
+    
+    window.addEventListener('scroll', function() {
+        const scrollY = window.scrollY;
+        blobs.forEach((blob, index) => {
+            const speed = 0.02 + (index * 0.01);
+            const yOffset = scrollY * speed;
+            blob.style.transform = `translateY(${yOffset}px)`;
+        });
+    });
 });
