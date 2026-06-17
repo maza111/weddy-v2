@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Weddy — цифровые приглашения на свадьбу с учётом гостей</title>
+    <title>Weddy — цифровые приглашения на свадьбу</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
@@ -26,13 +26,14 @@
     </nav>
 
     <main>
+        <!-- Hero блок -->
         <section class="hero">
             <div class="container hero-container">
                 <div class="hero-content">
-                    <h1>Свадьба — это радость,<br>а не бесконечные "приду-не приду"</h1>
-                    <p class="hero-subtitle">Weddy помогает собирать ответы гостей онлайн, считать бюджет и забыть про хаос в мессенджерах. Красивые цифровые приглашения за 5 минут.</p>
+                    <h1>Свадьба без хаоса:<br>автоматический сбор ответов гостей</h1>
+                    <p class="hero-subtitle">Weddy — сервис, который собирает ответы гостей, считает количество человек и сохраняет всё в Google Таблице. Вы видите статистику в реальном времени и можете выгрузить данные в Excel одной кнопкой.</p>
                     <div class="hero-buttons">
-                        <button class="btn btn-primary" id="demoHeroBtn">Создать приглашение бесплатно</button>
+                        <a href="#demo" class="btn btn-primary">Создать приглашение</a>
                         <a href="invitation.html" class="btn btn-outline">Посмотреть пример</a>
                     </div>
                 </div>
@@ -44,6 +45,7 @@
             </div>
         </section>
 
+        <!-- Проблема -->
         <section id="problem" class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
@@ -70,99 +72,151 @@
             </div>
         </section>
 
+        <!-- Как работает -->
         <section id="how-it-works" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2>Создаёте приглашение за 5 минут</h2>
-                    <p>Всё просто, как чашка утреннего кофе</p>
+                    <h2>Как это работает</h2>
+                    <p>Всего 3 шага — и вы забываете о хаосе</p>
                 </div>
                 <div class="steps">
                     <div class="step-item">
                         <div class="step-number">1</div>
-                        <h3>Выбираете дизайн</h3>
-                        <p>Загружаете фото, указываете дату, место, программу — и получаете уникальную ссылку-приглашение.</p>
+                        <h3>Создаёте приглашение</h3>
+                        <p>Выбираете дизайн, заполняете информацию о свадьбе. Получаете уникальную ссылку для гостей.</p>
                     </div>
                     <div class="step-item">
                         <div class="step-number">2</div>
-                        <h3>Отправляете гостям</h3>
-                        <p>Делитесь ссылкой через WhatsApp, Telegram, соцсети — гостям не нужно ничего скачивать.</p>
+                        <h3>Гости заполняют форму</h3>
+                        <p>Гость переходит по ссылке, указывает имя, количество гостей, предпочтения. Данные автоматически попадают в Google Таблицу.</p>
                     </div>
                     <div class="step-item">
                         <div class="step-number">3</div>
-                        <h3>Следите за ответами</h3>
-                        <p>В реальном времени видите, кто придёт, с кем, какие предпочтения по питанию. Экспорт в Excel одной кнопкой.</p>
+                        <h3>Вы видите всё в админ-панели</h3>
+                        <p>Открываете админку, видите список всех гостей. Смотрите статистику, фильтруете, выгружаете в Excel.</p>
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Преимущества -->
         <section class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2>Почему невесты выбирают Weddy</h2>
+                    <h2>Почему организаторы выбирают Weddy</h2>
                 </div>
                 <div class="features-grid">
-                    <div class="feature"><span class="check">✓</span> Гостям не нужно регистрироваться</div>
-                    <div class="feature"><span class="check">✓</span> Гость может изменить ответ до дедлайна</div>
-                    <div class="feature"><span class="check">✓</span> Сбор +1 и детей — автоматически</div>
-                    <div class="feature"><span class="check">✓</span> Вопросы по питанию (аллергии, меню)</div>
-                    <div class="feature"><span class="check">✓</span> Счётчик гостей в реальном времени</div>
-                    <div class="feature"><span class="check">✓</span> Экспорт гостевого списка в Excel/CSV</div>
+                    <div class="feature"><span class="check">✓</span> Все данные в Google Таблице</div>
+                    <div class="feature"><span class="check">✓</span> Только вы имеете доступ к данным</div>
+                    <div class="feature"><span class="check">✓</span> Работает на телефоне и компьютере</div>
+                    <div class="feature"><span class="check">✓</span> Экспорт в Excel одной кнопкой</div>
+                    <div class="feature"><span class="check">✓</span> Удобная админ-панель с фильтрами</div>
+                    <div class="feature"><span class="check">✓</span> Бесплатно для гостей</div>
                 </div>
             </div>
         </section>
 
+        <!-- Для кого -->
         <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Для кого этот сервис</h2>
+                </div>
+                <div class="grid-3">
+                    <div class="pain-card">
+                        <div class="pain-icon" style="font-size:2.5rem;">🎯</div>
+                        <h3>Для организаторов</h3>
+                        <p>Автоматизируйте сбор ответов и экономьте до 20 часов на каждой свадьбе.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon" style="font-size:2.5rem;">💕</div>
+                        <h3>Для молодожёнов</h3>
+                        <p>Создайте красивое онлайн-приглашение и соберите ответы без стресса.</p>
+                    </div>
+                    <div class="pain-card">
+                        <div class="pain-icon" style="font-size:2.5rem;">🏢</div>
+                        <h3>Для event-менеджеров</h3>
+                        <p>Управляйте списком гостей в реальном времени и экспортируйте данные для ресторана.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Пример админ-панели -->
+        <section class="section section-bg-light">
             <div class="container" style="text-align: center;">
-                <h2>Как выглядит ваш гостьевой список</h2>
-                <p class="section-subtitle">Понятная таблица — никакой путаницы</p>
+                <h2>Как выглядит админ-панель</h2>
+                <p class="section-subtitle">Все ответы гостей в одной таблице</p>
                 <div class="stats-preview">
+                    <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 24px;">
+                        <div style="background: #F8F5F0; padding: 12px 24px; border-radius: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #1C2E4A;">28</div>
+                            <div style="font-size: 0.8rem; color: #6B7A8A;">Всего гостей</div>
+                        </div>
+                        <div style="background: rgba(76, 175, 80, 0.1); padding: 12px 24px; border-radius: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #2E7D32;">20</div>
+                            <div style="font-size: 0.8rem; color: #6B7A8A;">Подтвердили</div>
+                        </div>
+                        <div style="background: rgba(244, 67, 54, 0.1); padding: 12px 24px; border-radius: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #C62828;">4</div>
+                            <div style="font-size: 0.8rem; color: #6B7A8A;">Не придут</div>
+                        </div>
+                        <div style="background: rgba(255, 193, 7, 0.15); padding: 12px 24px; border-radius: 16px;">
+                            <div style="font-size: 1.5rem; font-weight: 700; color: #F57F17;">4</div>
+                            <div style="font-size: 0.8rem; color: #6B7A8A;">Детей</div>
+                        </div>
+                    </div>
                     <table class="stats-table">
                         <thead>
-                            <tr><th>Гость</th><th>Статус</th><th>+1</th><th>Питание</th></tr>
+                            <tr><th>№</th><th>Имя</th><th>Гостей</th><th>Детей</th><th>Алкоголь</th><th>Статус</th></tr>
                         </thead>
                         <tbody>
-                            <tr><td>Анна и Дмитрий</td><td>Идут</td><td>Нет</td><td>Без орехов</td></tr>
-                            <tr><td>Елена С.</td><td>Идут</td><td>Да</td><td>Вегетарианское</td></tr>
-                            <tr><td>Михаил П.</td><td>Не идёт</td><td>-</td><td>-</td></tr>
-                            <tr><td>Татьяна В.</td><td>Ожидание</td><td>Да</td><td>Любое</td></tr>
+                            <tr><td>1</td><td>Анна Иванова</td><td>1</td><td>0</td><td>Вино</td><td style="color:#2E7D32;">✅ Идёт</td></tr>
+                            <tr><td>2</td><td>Дмитрий Петров</td><td>2</td><td>0</td><td>Пиво</td><td style="color:#2E7D32;">✅ Идёт</td></tr>
+                            <tr><td>3</td><td>Елена Смирнова</td><td>0</td><td>0</td><td>—</td><td style="color:#C62828;">❌ Не идёт</td></tr>
+                            <tr><td>4</td><td>Михаил Козлов</td><td>1</td><td>1</td><td>Водка</td><td style="color:#2E7D32;">✅ Идёт</td></tr>
                         </tbody>
                     </table>
                     <div style="margin-top: 16px; font-size: 0.85rem; color: var(--text-muted);">
-                        Итого: 25 подтверждено, 3 ожидают ответа, 2 отказалось
+                        📊 Экспорт в Excel и CSV — одной кнопкой
                     </div>
                 </div>
             </div>
         </section>
 
+        <!-- Цены -->
         <section id="pricing" class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2>Цены, которые не ударят по бюджету</h2>
-                    <p>Свадьба и так стоит недешево — мы вас не разорим</p>
+                    <h2>Выберите свой пакет</h2>
+                    <p>Стандарт — наши готовые шаблоны. Премиум — дизайн под вашу свадьбу</p>
                 </div>
                 <div class="pricing-grid">
+                    <!-- Стандарт -->
                     <div class="pricing-card">
                         <h3>Стандарт</h3>
-                        <div class="price">4 990 ₽ <small>на одно мероприятие</small></div>
+                        <div class="price">4 990 ₽ <small>на свадьбу</small></div>
+                        <div class="package-badge">🎨 Наши шаблоны</div>
                         <ul class="pricing-list">
-                            <li>✓ До 200 гостей</li>
-                            <li>✓ Красивый дизайн-шаблон</li>
+                            <li>✓ Готовый дизайн-шаблон</li>
                             <li>✓ Сбор ответов +1 и детей</li>
-                            <li>✓ Экспорт в Excel</li>
-                            <li>✓ Поддержка по чату</li>
+                            <li>✓ Google Таблица + Админ-панель</li>
+                            <li>✓ Экспорт в Excel/CSV</li>
                         </ul>
                         <button class="btn btn-outline w-100 demo-single">Выбрать Стандарт</button>
                     </div>
+                
+                    <!-- Премиум -->
                     <div class="pricing-card popular">
-                        <div class="popular-badge">Популярный</div>
+                        <div class="popular-badge">🔥 Популярный</div>
                         <h3>Премиум</h3>
-                        <div class="price">10 990 ₽ <small>на одно мероприятие</small></div>
+                        <div class="price">10 990 ₽ <small>на свадьбу</small></div>
+                        <div class="package-badge">✨ Под ваш стиль</div>
                         <ul class="pricing-list">
-                            <li>✓ Неограниченное число гостей</li>
-                            <li>✓ Индивидуальный дизайн под вашу стилистику</li>
+                            <li>✓ Индивидуальный дизайн под ваш стиль</li>
                             <li>✓ Кастомные вопросы (меню, аллергии)</li>
                             <li>✓ Рассылка напоминаний гостям</li>
+                            <li>✓ Google Таблица + Админ-панель</li>
                             <li>✓ Приоритетная поддержка 24/7</li>
                         </ul>
                         <button class="btn btn-primary w-100 demo-subscription">Выбрать Премиум</button>
@@ -171,11 +225,12 @@
             </div>
         </section>
 
+        <!-- Форма захвата -->
         <section id="demo" class="section">
             <div class="container">
                 <div class="form-card">
-                    <h2 style="text-align: center; margin-bottom: 8px;">Получите демо-доступ и готовый шаблон приглашения</h2>
-                    <p style="text-align: center; margin-bottom: 28px;">Оставьте контакты — мы пришлём пример и чек-лист невесты</p>
+                    <h2 style="text-align: center; margin-bottom: 8px;">Создайте своё приглашение</h2>
+                    <p style="text-align: center; margin-bottom: 28px;">Оставьте контакты — и мы поможем вам начать</p>
                     <form id="leadForm">
                         <div class="input-group">
                             <input type="text" id="name" placeholder="Ваше имя" required>
@@ -184,10 +239,10 @@
                             <input type="email" id="email" placeholder="Email" required>
                         </div>
                         <div class="input-group">
-                            <input type="tel" id="phone" placeholder="Телефон (для консультации)">
+                            <input type="tel" id="phone" placeholder="Телефон для связи">
                         </div>
-                        <button type="submit" class="btn btn-primary w-100">Получить пример приглашения</button>
-                        <p style="font-size: 12px; text-align: center; margin-top: 16px;">Никакого спама. Только полезные материалы для невест.</p>
+                        <button type="submit" class="btn btn-primary w-100">Создать приглашение</button>
+                        <p style="font-size: 12px; text-align: center; margin-top: 16px; color: #6B7A8A;">Никакого спама. Только полезные материалы для невест.</p>
                     </form>
                 </div>
             </div>
@@ -203,19 +258,17 @@
                 </div>
                 <div class="footer-contacts">
                     <h4>Контакты</h4>
-                    <p>Email: hello@weddy.ru</p>
+                    <p>Email: weddy.service@gmail.com</p>
                     <p>Тел: +7 (495) 123-45-67</p>
-                    <p>Telegram: @weddy_support</p>
                 </div>
                 <div class="footer-social">
                     <h4>Мы в соцсетях</h4>
-                    <p>| VK |</p>
-                    <p>#weddy_wedding</p>
+                    <p>Instagram | Pinterest | VK</p>
                 </div>
             </div>
             <div class="footer-bottom">
                 <p>© 2026 Weddy — сервис для счастливых невест</p>
-                <p class="dev-note">готово к интеграции с бекендом (заменить # на реальные ссылки)</p>
+                <p class="dev-note">готово к интеграции с бекендом</p>
             </div>
         </div>
     </footer>
