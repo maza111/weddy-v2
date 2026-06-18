@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // URL Google Apps Script (ДЛЯ ЗАЯВОК С ЛЕНДИНГА)
     // =====================================================
     
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmz35nDF8AJY_MNTMYqoS5xSNUnx88r7Vwqy5vzSNnpkV6c0WdrFKGLdbboyjGX6zg/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9tl_P_KplTtJNltsoiv_fBbH-73P8wr_qlILm8hjiUf_JqLtLJR8QN09aMwWOn-_i/exec';
 
     // =====================================================
     // ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ
