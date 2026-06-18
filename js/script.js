@@ -26,10 +26,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =====================================================
-    // URL Google Apps Script
+    // URL Google Apps Script (ДЛЯ ЗАЯВОК С ЛЕНДИНГА)
     // =====================================================
     
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQkcz3X4LrCLH_7xeVveUegZzjovW0jLkxYoWPLIvr3SyWf-_IA6dLfONweY7g3HgL/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmz35nDF8AJY_MNTMYqoS5xSNUnx88r7Vwqy5vzSNnpkV6c0WdrFKGLdbboyjGX6zg/exec';
 
     // =====================================================
     // ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ
@@ -76,8 +76,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 name: name,
                 email: email,
                 phone: phone || '—',
-                source: 'Лендинг',
-                status: 'Новая заявка',
                 timestamp: new Date().toISOString()
             };
             
