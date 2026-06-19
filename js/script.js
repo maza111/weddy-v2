@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     // =====================================================
-    // АНИМАЦИЯ ПРИ СКРОЛЛЕ
+    // АНИМАЦИЯ ПРИ СКРОЛЛЕ (Intersection Observer)
     // =====================================================
     
     const animatedElements = document.querySelectorAll(
@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // URL Google Apps Script (ДЛЯ ЗАЯВОК С ЛЕНДИНГА)
     // =====================================================
     
-    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby9tl_P_KplTtJNltsoiv_fBbH-73P8wr_qlILm8hjiUf_JqLtLJR8QN09aMwWOn-_i/exec';
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwmz35nDF8AJY_MNTMYqoS5xSNUnx88r7Vwqy5vzSNnpkV6c0WdrFKGLdbboyjGX6zg/exec';
 
     // =====================================================
     // ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ
@@ -55,36 +55,98 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =====================================================
-    // ФОРМА НА ЛЕНДИНГЕ
+    // ПОПАПЫ ДЛЯ ЛЕНДИНГА
+    // =====================================================
+
+    function showPopup(id) {
+        const popup = document.getElementById(id);
+        if (popup) {
+            popup.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+    }
+
+    function closePopup(id) {
+        const popup = document.getElementById(id);
+        if (popup) {
+            popup.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    }
+
+    // Закрытие по клику на фон
+    document.querySelectorAll('.popup-overlay').forEach(function(overlay) {
+        overlay.addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+
+    // Закрытие по Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            document.querySelectorAll('.popup-overlay.active').forEach(function(popup) {
+                popup.classList.remove('active');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+
+    // =====================================================
+    // ПОКАЗ ПОПАПА ДЛЯ ЛЕНДИНГА
+    // =====================================================
+
+    function showLeadPopup(message, type) {
+        if (type === 'success') {
+            document.getElementById('popupLeadMessage').textContent = message || 'Спасибо! Мы свяжемся с вами в ближайшее время. 💌';
+            showPopup('popupLeadSuccess');
+        } else {
+            showPopup('popupLeadError');
+        }
+    }
+
+    // =====================================================
+    // ФОРМА НА ЛЕНДИНГЕ (3 поля: Имя, Email, Телефон)
     // =====================================================
     
     const leadForm = document.getElementById('leadForm');
     if (leadForm) {
         leadForm.addEventListener('submit', function(e) {
             e.preventDefault();
-            
+
             const name = document.getElementById('name').value.trim();
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
-            
+
             if (!name || !email) {
-                alert('Пожалуйста, укажите имя и email');
+                showLeadPopup('Пожалуйста, укажите имя и email', 'error');
                 return;
             }
-            
+
             const data = {
                 name: name,
                 email: email,
                 phone: phone || '—',
                 timestamp: new Date().toISOString()
             };
-            
+
+            // Показываем состояние отправки
+            const btn = this.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.textContent = 'Отправка...';
+            btn.disabled = true;
+
             sendDataToSheet(data).then(result => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+
                 if (result.success) {
-                    alert(`Спасибо, ${name}! Мы свяжемся с вами в ближайшее время. 💌`);
+                    showLeadPopup(`Спасибо, ${name}! Мы свяжемся с вами в ближайшее время. 💌`, 'success');
                     leadForm.reset();
                 } else {
-                    alert('❌ Произошла ошибка. Попробуйте ещё раз или свяжитесь с нами по телефону.');
+                    showLeadPopup('', 'error');
                 }
             });
         });
@@ -112,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =====================================================
-    // ПЛАВНЫЙ СКРОЛЛ
+    // ПЛАВНЫЙ СКРОЛЛ ДЛЯ НАВИГАЦИИ
     // =====================================================
     
     document.querySelectorAll('.nav-links a, .btn-small').forEach(function(anchor) {
