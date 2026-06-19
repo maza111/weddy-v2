@@ -1,14 +1,22 @@
+/* =====================================================
+   УБИРАЕМ ДЁРГАНИЕ ВЕРТИКАЛЬНОЙ ПОЛОСЫ ПРОКРУТКИ
+   ===================================================== */
+
+html {
+    overflow-y: scroll;
+}
+
+body {
+    overflow-y: scroll;
+    font-family: 'Inter', sans-serif;
+    background: #FEFCF8;
+    color: #1C2E4A;
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-}
-
-body {
-    font-family: 'Inter', sans-serif;
-    background: #FEFCF8;
-    color: #1C2E4A;
-    overflow-x: hidden;
 }
 
 .container {
@@ -147,7 +155,7 @@ body {
     .scroll-indicator { bottom: 20px; font-size: 0.7rem; white-space: nowrap; }
     .scroll-mouse { width: 22px; height: 34px; margin: 6px auto 0; }
     .scroll-mouse::before { width: 3px; height: 6px; top: 6px; }
-    .container { padding: 0 20px; }
+    .container { padding: 0 16px; }
     .story-item, .story-item.reverse { flex-direction: column; text-align: center; }
     .schedule-timeline::before { left: 70px; }
     .timeline-time { width: 70px; font-size: 0.9rem; }
@@ -387,6 +395,7 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 40px;
+    overflow: hidden;
 }
 
 .venue-info { flex: 1; }
@@ -394,7 +403,8 @@ body {
 .venue-info p { opacity: 0.9; margin-bottom: 25px; }
 .venue-details { margin-bottom: 30px; }
 .venue-detail { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.venue-map { flex: 1; min-width: 300px; }
+.venue-map { flex: 1; min-width: 300px; overflow: hidden; }
+.venue-map iframe { display: block; }
 .map-btn {
     padding: 12px 30px;
     background: #D4A5A5;
@@ -407,6 +417,22 @@ body {
     transition: all 0.3s;
 }
 .map-btn:hover { background: #C48E8E; transform: translateY(-2px); }
+
+@media (max-width: 768px) {
+    .venue-map {
+        min-width: 100%;
+        max-width: 100%;
+    }
+    .venue-map iframe {
+        height: 220px;
+    }
+}
+
+@media (max-width: 480px) {
+    .venue-map iframe {
+        height: 180px;
+    }
+}
 
 .dresscode-section {
     padding: 80px 0;
@@ -501,6 +527,17 @@ body {
 }
 
 .form-group { margin-bottom: 20px; }
+.form-group label {
+    display: block;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: #1C2E4A;
+    font-size: 0.95rem;
+}
+.required {
+    color: #D4A5A5;
+    font-weight: 600;
+}
 .form-group input, .form-group select, .form-group textarea {
     width: 100%;
     padding: 14px 18px;
@@ -508,6 +545,7 @@ body {
     border-radius: 60px;
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
+    background: white;
 }
 .form-group textarea { border-radius: 24px; resize: vertical; }
 .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
@@ -549,27 +587,31 @@ body {
 .invitation-footer a { color: #D4A5A5; text-decoration: none; }
 .invitation-footer a:hover { text-decoration: underline; }
 
-/* Стили для чекбоксов в форме */
+/* =====================================================
+   ЧЕКБОКСЫ АЛКОГОЛЯ В СТРОКУ
+   ===================================================== */
+
 .checkbox-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     margin-top: 8px;
 }
 
 .checkbox-label {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     gap: 6px;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     font-family: 'Inter', sans-serif;
     color: #1C2E4A;
-    padding: 6px 12px;
+    padding: 8px 16px;
     border: 1.5px solid #E2D9CE;
     border-radius: 60px;
     transition: all 0.2s;
     background: white;
+    user-select: none;
 }
 
 .checkbox-label:hover {
@@ -582,6 +624,7 @@ body {
     height: 16px;
     accent-color: #D4A5A5;
     cursor: pointer;
+    margin: 0;
 }
 
 .checkbox-label:has(input:checked) {
@@ -590,26 +633,60 @@ body {
     color: #1C2E4A;
 }
 
-.form-group label {
-    display: block;
-    margin-bottom: 6px;
-    font-weight: 500;
-    color: #1C2E4A;
-    font-size: 0.95rem;
-}
-
-.required {
-    color: #D4A5A5;
-    font-weight: 600;
-}
-
 @media (max-width: 480px) {
     .checkbox-group {
         gap: 8px;
     }
+    .checkbox-label {
+        font-size: 0.8rem;
+        padding: 6px 12px;
+    }
+}
+
+/* =====================================================
+   ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНЫХ — ИСТОРИЯ
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .story-item {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
     
+    .story-item.reverse {
+        flex-direction: column !important;
+    }
+    
+    .story-img {
+        width: 100%;
+        min-width: auto !important;
+        order: -1;
+    }
+    
+    .story-item.reverse .story-img {
+        order: -1;
+    }
+    
+    .story-text {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .story-grid {
+        gap: 30px !important;
+    }
+}
+
+/* =====================================================
+   ЧЕКБОКСЫ В СТРОКУ (ДОПОЛНИТЕЛЬНО)
+   ===================================================== */
+
+@media (min-width: 481px) and (max-width: 768px) {
+    .checkbox-group {
+        gap: 10px;
+    }
     .checkbox-label {
         font-size: 0.85rem;
-        padding: 4px 10px;
+        padding: 8px 14px;
     }
 }
