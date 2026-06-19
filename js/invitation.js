@@ -1,14 +1,7 @@
 // =====================================================
-// Weddy — Скрипт для страницы приглашения
-// Подключение к Google Таблице
+// ИНИЦИАЛИЗАЦИЯ AOS
 // =====================================================
 
-// URL вашего Google Apps Script
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQkcz3X4LrCLH_7xeVveUegZzjovW0jLkxYoWPLIvr3SyWf-_IA6dLfONweY7g3HgL/exec';
-
-// =====================================================
-// Инициализация AOS анимаций
-// =====================================================
 AOS.init({
     duration: 800,
     once: true,
@@ -16,8 +9,9 @@ AOS.init({
 });
 
 // =====================================================
-// Таймер до свадьбы
+// ТАЙМЕР
 // =====================================================
+
 function updateTimer() {
     const weddingDate = new Date(2026, 7, 15, 17, 0, 0);
     const now = new Date();
@@ -46,8 +40,9 @@ setInterval(updateTimer, 1000);
 updateTimer();
 
 // =====================================================
-// Открыть карту
+// КАРТА
 // =====================================================
+
 const openMapBtn = document.getElementById('openMapBtn');
 if (openMapBtn) {
     openMapBtn.addEventListener('click', () => {
@@ -56,8 +51,55 @@ if (openMapBtn) {
 }
 
 // =====================================================
-// Отправка данных в Google Таблицу
+// URL GOOGLE APPS SCRIPT (RSVP)
 // =====================================================
+
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQkcz3X4LrCLH_7xeVveUegZzjovW0jLkxYoWPLIvr3SyWf-_IA6dLfONweY7g3HgL/exec';
+
+// =====================================================
+// ПОПАПЫ
+// =====================================================
+
+function showPopup(id) {
+    const popup = document.getElementById(id);
+    if (popup) {
+        popup.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+function closePopup(id) {
+    const popup = document.getElementById(id);
+    if (popup) {
+        popup.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Закрытие по клику на фон
+document.querySelectorAll('.popup-overlay').forEach(function(overlay) {
+    overlay.addEventListener('click', function(e) {
+        if (e.target === this) {
+            this.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+    });
+});
+
+// Закрытие по Escape
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.popup-overlay.active').forEach(function(popup) {
+            popup.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+    }
+});
+
+// =====================================================
+// ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ
+// =====================================================
+
 function sendDataToSheet(data) {
     return fetch(SCRIPT_URL, {
         method: 'POST',
@@ -68,7 +110,7 @@ function sendDataToSheet(data) {
         body: JSON.stringify(data)
     })
     .then(() => {
-        console.log('✅ Данные отправлены в таблицу');
+        console.log('✅ Данные отправлены в Google Таблицу');
         return { success: true };
     })
     .catch(error => {
@@ -78,38 +120,49 @@ function sendDataToSheet(data) {
 }
 
 // =====================================================
-// RSVP форма
+// ПОКАЗ ПОПАПА
 // =====================================================
+
+function showResult(message, type) {
+    if (type === 'success') {
+        document.getElementById('popupMessage').textContent = message || 'Мы очень рады, что вы будете с нами в этот особенный день!';
+        showPopup('popupSuccess');
+    } else if (type === 'decline') {
+        showPopup('popupDecline');
+    } else {
+        showPopup('popupError');
+    }
+}
+
+// =====================================================
+// ПОЛУЧЕНИЕ ВЫБРАННОГО АЛКОГОЛЯ
+// =====================================================
+
+function getSelectedAlcohol() {
+    const checkboxes = document.querySelectorAll('input[name="alcohol"]:checked');
+    if (checkboxes.length === 0) return 'Не выбрано';
+    return Array.from(checkboxes).map(cb => cb.value).join(', ');
+}
+
+// =====================================================
+// ОБРАБОТКА ФОРМЫ
+// =====================================================
+
 document.addEventListener('DOMContentLoaded', function() {
     const rsvpForm = document.getElementById('rsvpForm');
     const rsvpNoBtn = document.getElementById('rsvpNo');
-    const resultDiv = document.getElementById('rsvpResult');
 
-    function showResult(message, isSuccess = true) {
-        resultDiv.textContent = message;
-        resultDiv.className = 'rsvp-result-message show';
-        resultDiv.style.background = isSuccess ? 'rgba(212,165,165,0.15)' : 'rgba(212,165,165,0.08)';
-        resultDiv.style.color = '#1C2E4A';
-        
-        setTimeout(() => {
-            resultDiv.classList.remove('show');
-        }, 6000);
-    }
+    // =====================================================
+    // ОТПРАВКА "БУДУ С РАДОСТЬЮ"
+    // =====================================================
 
-    function getSelectedAlcohol() {
-        const checkboxes = document.querySelectorAll('input[name="alcohol"]:checked');
-        if (checkboxes.length === 0) return 'Не выбрано';
-        return Array.from(checkboxes).map(cb => cb.value).join(', ');
-    }
-
-    // Обработка отправки формы (Буду с радостью)
     if (rsvpForm) {
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
             const name = document.getElementById('guestName').value.trim();
             if (!name) {
-                showResult('Пожалуйста, представьтесь ❤️', false);
+                showResult('Пожалуйста, представьтесь ❤️', 'error');
                 return;
             }
 
@@ -118,8 +171,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const alcohol = getSelectedAlcohol();
             const allergies = document.getElementById('allergies').value.trim() || 'Нет';
             const comment = document.getElementById('comment').value.trim() || '—';
-            
-            // Формируем данные для отправки
+
             const data = {
                 name: name,
                 guests: guests,
@@ -134,28 +186,22 @@ document.addEventListener('DOMContentLoaded', function() {
             // Отправляем в Google Таблицу
             sendDataToSheet(data).then(result => {
                 if (result.success) {
-                    // Формируем сообщение для гостя
                     let message = `${name}, спасибо за подтверждение! `;
                     message += `Вы пришли${guests > 1 ? ` с компанией (${guests} чел.)` : ''}`;
-                    
                     if (children > 0) {
                         message += `, детей: ${children}`;
                     }
-                    
                     message += `. Алкоголь: ${alcohol}. `;
-                    
                     if (allergies !== 'Нет') {
                         message += `Аллергии: ${allergies}. `;
                     }
-                    
                     if (comment !== '—') {
                         message += `Комментарий: "${comment}"`;
                     }
-                    
                     message += ' До встречи 15 августа! ✨';
 
-                    showResult(message);
-                    
+                    showResult(message, 'success');
+
                     // Очищаем форму
                     setTimeout(() => {
                         document.getElementById('guestName').value = '';
@@ -166,23 +212,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         document.getElementById('comment').value = '';
                     }, 3000);
                 } else {
-                    showResult('❌ Произошла ошибка при отправке. Попробуйте ещё раз.', false);
+                    showResult('', 'error');
                 }
             });
         });
     }
 
-    // Обработка кнопки "Не смогу прийти"
+    // =====================================================
+    // ОТПРАВКА "НЕ СМОГУ ПРИЙТИ"
+    // =====================================================
+
     if (rsvpNoBtn) {
         rsvpNoBtn.addEventListener('click', function(e) {
             e.preventDefault();
             const name = document.getElementById('guestName').value.trim();
             if (!name) {
-                showResult('Пожалуйста, представьтесь 💔', false);
+                showResult('Пожалуйста, представьтесь 💔', 'error');
                 return;
             }
 
-            // Формируем данные для отправки
             const data = {
                 name: name,
                 guests: 0,
@@ -194,24 +242,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: new Date().toISOString()
             };
 
-            // Отправляем в Google Таблицу
             sendDataToSheet(data).then(result => {
                 if (result.success) {
-                    showResult(`${name}, очень жаль, что вы не сможете быть с нами. Будем рады видеть вас в другой раз! 💔`);
+                    showResult('', 'decline');
                     document.getElementById('guestName').value = '';
                 } else {
-                    showResult('❌ Произошла ошибка при отправке. Попробуйте ещё раз.', false);
+                    showResult('', 'error');
                 }
             });
         });
     }
 
-    // Плавная прокрутка для якорных ссылок
+    // =====================================================
+    // ПЛАВНАЯ ПРОКРУТКА
+    // =====================================================
+
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             if (href === '#') return;
-            
             const target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
@@ -223,7 +272,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Клик по галерее — открыть фото в новом окне
+    // =====================================================
+    // ГАЛЕРЕЯ — ОТКРЫТИЕ ФОТО
+    // =====================================================
+
     document.querySelectorAll('.gallery-item').forEach(item => {
         item.addEventListener('click', () => {
             const img = item.querySelector('img');
