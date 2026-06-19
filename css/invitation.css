@@ -11,6 +11,8 @@ body {
     font-family: 'Inter', sans-serif;
     background: #FEFCF8;
     color: #1C2E4A;
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 * {
@@ -19,11 +21,20 @@ body {
     box-sizing: border-box;
 }
 
+/* =====================================================
+   ОСНОВНЫЕ СТИЛИ
+   ===================================================== */
+
 .container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 24px;
+    overflow: hidden;
 }
+
+/* =====================================================
+   HERO
+   ===================================================== */
 
 .hero-section {
     position: relative;
@@ -150,18 +161,9 @@ body {
     100% { transform: translateX(-50%) translateY(0); opacity: 0; }
 }
 
-@media (max-width: 768px) {
-    .hero-title { font-size: 2.5rem; }
-    .scroll-indicator { bottom: 20px; font-size: 0.7rem; white-space: nowrap; }
-    .scroll-mouse { width: 22px; height: 34px; margin: 6px auto 0; }
-    .scroll-mouse::before { width: 3px; height: 6px; top: 6px; }
-    .container { padding: 0 16px; }
-    .story-item, .story-item.reverse { flex-direction: column; text-align: center; }
-    .schedule-timeline::before { left: 70px; }
-    .timeline-time { width: 70px; font-size: 0.9rem; }
-    .rsvp-buttons { flex-direction: column; }
-    .form-row { flex-direction: column; }
-}
+/* =====================================================
+   ТАЙМЕР
+   ===================================================== */
 
 .timer-section {
     padding: 80px 0;
@@ -174,10 +176,6 @@ body {
     font-family: 'Unbounded', sans-serif;
     font-size: 1.8rem;
     margin-bottom: 40px;
-}
-
-@media (min-width: 768px) {
-    .timer-section h2 { font-size: 2.2rem; }
 }
 
 .timer-grid {
@@ -201,15 +199,26 @@ body {
     font-weight: 700;
 }
 
+.timer-label {
+    font-size: 0.85rem;
+    opacity: 0.9;
+}
+
 @media (min-width: 768px) {
+    .timer-section h2 { font-size: 2.2rem; }
     .timer-number { font-size: 3.5rem; }
 }
 
-.timer-label { font-size: 0.85rem; opacity: 0.9; }
+/* =====================================================
+   ИСТОРИЯ ЛЮБВИ — ПОЛНОСТЬЮ ПЕРЕДЕЛАНО
+   ===================================================== */
 
 .story-section {
     padding: 80px 0;
     background: #FEFCF8;
+    overflow: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
 .story-section h2 {
@@ -223,6 +232,9 @@ body {
     display: flex;
     flex-direction: column;
     gap: 50px;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
 .story-item {
@@ -230,16 +242,107 @@ body {
     flex-wrap: wrap;
     gap: 40px;
     align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
 }
 
-.story-item.reverse { flex-direction: row-reverse; }
-.story-img { flex: 1; min-width: 250px; }
-.story-img img { width: 100%; border-radius: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); transition: transform 0.3s; }
-.story-img img:hover { transform: scale(1.02); }
-.story-text { flex: 1; }
-.story-text h3 { font-family: 'Unbounded', sans-serif; font-size: 1.5rem; margin-bottom: 15px; }
-.story-text p { color: #6B7A8A; line-height: 1.6; margin-bottom: 15px; }
-.story-date { color: #D4A5A5; font-size: 0.85rem; font-weight: 500; }
+.story-item.reverse {
+    flex-direction: row-reverse;
+}
+
+.story-img {
+    flex: 1;
+    min-width: 250px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.story-img img {
+    width: 100%;
+    height: auto;
+    border-radius: 30px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+    display: block;
+}
+
+.story-img img:hover {
+    transform: scale(1.02);
+}
+
+.story-text {
+    flex: 1;
+    max-width: 100%;
+}
+
+.story-text h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.story-text p {
+    color: #6B7A8A;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.story-date {
+    color: #D4A5A5;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+/* =====================================================
+   МОБИЛЬНАЯ ВЕРСИЯ — ИСТОРИЯ
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .story-item,
+    .story-item.reverse {
+        flex-direction: column !important;
+        gap: 20px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .story-img {
+        width: 100% !important;
+        min-width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        order: -1 !important;
+    }
+    
+    .story-item.reverse .story-img {
+        order: -1 !important;
+    }
+    
+    .story-img img {
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 20px !important;
+    }
+    
+    .story-text {
+        width: 100% !important;
+        max-width: 100% !important;
+        flex: none !important;
+        text-align: center;
+        padding: 0 10px !important;
+    }
+    
+    .story-grid {
+        gap: 30px !important;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* =====================================================
+   ПЛАН МЕРОПРИЯТИЙ
+   ===================================================== */
 
 .schedule-section {
     padding: 80px 0;
@@ -269,10 +372,6 @@ body {
     background: #D4A5A5;
 }
 
-@media (min-width: 768px) {
-    .schedule-timeline::before { left: 120px; }
-}
-
 .timeline-item {
     display: flex;
     gap: 30px;
@@ -288,10 +387,6 @@ body {
     padding-top: 5px;
 }
 
-@media (min-width: 768px) {
-    .timeline-time { width: 120px; font-size: 1.1rem; }
-}
-
 .timeline-content {
     flex: 1;
     background: white;
@@ -300,8 +395,31 @@ body {
     box-shadow: 0 5px 20px rgba(0,0,0,0.05);
 }
 
-.timeline-content h4 { font-family: 'Unbounded', sans-serif; font-size: 1rem; margin-bottom: 8px; }
-.timeline-content p { color: #6B7A8A; font-size: 0.85rem; line-height: 1.5; }
+.timeline-content h4 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1rem;
+    margin-bottom: 8px;
+}
+
+.timeline-content p {
+    color: #6B7A8A;
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+    .schedule-timeline::before { left: 70px; }
+    .timeline-time { width: 70px; font-size: 0.9rem; }
+}
+
+@media (min-width: 768px) {
+    .schedule-timeline::before { left: 120px; }
+    .timeline-time { width: 120px; font-size: 1.1rem; }
+}
+
+/* =====================================================
+   ГАЛЕРЕЯ
+   ===================================================== */
 
 .gallery-section {
     padding: 80px 0;
@@ -345,21 +463,12 @@ body {
     transform: scale(1.08);
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
-    .gallery-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 16px;
-        padding: 0 16px;
-    }
-}
-
 @media (max-width: 768px) {
     .gallery-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
         padding: 0 12px;
     }
-
     .gallery-item {
         border-radius: 16px;
         aspect-ratio: 1 / 1;
@@ -371,12 +480,22 @@ body {
         gap: 8px;
         padding: 0 8px;
     }
-
     .gallery-item {
         border-radius: 12px;
         aspect-ratio: 1 / 1;
     }
 }
+
+@media (min-width: 769px) and (max-width: 1024px) {
+    .gallery-grid {
+        gap: 16px;
+        padding: 0 16px;
+    }
+}
+
+/* =====================================================
+   МЕСТО ПРОВЕДЕНИЯ
+   ===================================================== */
 
 .venue-section {
     padding: 80px 0;
@@ -396,15 +515,54 @@ body {
     flex-wrap: wrap;
     gap: 40px;
     overflow: hidden;
+    width: 100%;
+    max-width: 100%;
 }
 
-.venue-info { flex: 1; }
-.venue-info h3 { font-family: 'Unbounded', sans-serif; font-size: 1.5rem; margin-bottom: 15px; }
-.venue-info p { opacity: 0.9; margin-bottom: 25px; }
-.venue-details { margin-bottom: 30px; }
-.venue-detail { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
-.venue-map { flex: 1; min-width: 300px; overflow: hidden; }
-.venue-map iframe { display: block; }
+.venue-info {
+    flex: 1;
+    min-width: 280px;
+    max-width: 100%;
+}
+
+.venue-info h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.venue-info p {
+    opacity: 0.9;
+    margin-bottom: 25px;
+}
+
+.venue-details {
+    margin-bottom: 30px;
+}
+
+.venue-detail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.venue-map {
+    flex: 1;
+    min-width: 280px;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.venue-map iframe {
+    display: block;
+    width: 100%;
+    height: 300px;
+    border-radius: 24px;
+    border: 0;
+}
+
 .map-btn {
     padding: 12px 30px;
     background: #D4A5A5;
@@ -416,23 +574,42 @@ body {
     cursor: pointer;
     transition: all 0.3s;
 }
-.map-btn:hover { background: #C48E8E; transform: translateY(-2px); }
+
+.map-btn:hover {
+    background: #C48E8E;
+    transform: translateY(-2px);
+}
 
 @media (max-width: 768px) {
-    .venue-map {
+    .venue-content {
+        flex-direction: column;
+        gap: 30px;
+    }
+    .venue-info {
         min-width: 100%;
         max-width: 100%;
     }
+    .venue-map {
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
+    }
     .venue-map iframe {
         height: 220px;
+        border-radius: 16px;
     }
 }
 
 @media (max-width: 480px) {
     .venue-map iframe {
         height: 180px;
+        border-radius: 12px;
     }
 }
+
+/* =====================================================
+   ДРЕСС-КОД
+   ===================================================== */
 
 .dresscode-section {
     padding: 80px 0;
@@ -461,7 +638,14 @@ body {
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 }
 
-.dresscode-section p { color: #6B7A8A; line-height: 1.6; }
+.dresscode-section p {
+    color: #6B7A8A;
+    line-height: 1.6;
+}
+
+/* =====================================================
+   ПОДАРКИ
+   ===================================================== */
 
 .gifts-section {
     padding: 80px 0;
@@ -498,9 +682,23 @@ body {
     transition: transform 0.3s;
 }
 
-.gift-option:hover { transform: translateY(-5px); }
-.gift-icon { font-size: 2.5rem; margin-bottom: 10px; }
-.gift-option h4 { font-family: 'Unbounded', sans-serif; font-size: 1rem; }
+.gift-option:hover {
+    transform: translateY(-5px);
+}
+
+.gift-icon {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.gift-option h4 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1rem;
+}
+
+/* =====================================================
+   RSVP ФОРМА
+   ===================================================== */
 
 .rsvp-section-main {
     padding: 80px 0;
@@ -515,7 +713,10 @@ body {
     color: white;
 }
 
-.rsvp-section-main p { color: rgba(255,255,255,0.9); margin-bottom: 40px; }
+.rsvp-section-main p {
+    color: rgba(255,255,255,0.9);
+    margin-bottom: 40px;
+}
 
 .rsvp-card {
     max-width: 600px;
@@ -526,7 +727,10 @@ body {
     box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
-.form-group { margin-bottom: 20px; }
+.form-group {
+    margin-bottom: 20px;
+}
+
 .form-group label {
     display: block;
     margin-bottom: 6px;
@@ -534,11 +738,15 @@ body {
     color: #1C2E4A;
     font-size: 0.95rem;
 }
+
 .required {
     color: #D4A5A5;
     font-weight: 600;
 }
-.form-group input, .form-group select, .form-group textarea {
+
+.form-group input,
+.form-group select,
+.form-group textarea {
     width: 100%;
     padding: 14px 18px;
     border: 1px solid #E2D9CE;
@@ -547,14 +755,35 @@ body {
     font-size: 1rem;
     background: white;
 }
-.form-group textarea { border-radius: 24px; resize: vertical; }
-.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+
+.form-group textarea {
+    border-radius: 24px;
+    resize: vertical;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
     outline: none;
     border-color: #D4A5A5;
 }
-.form-row { display: flex; gap: 15px; flex-wrap: wrap; }
-.form-row .form-group { flex: 1; }
-.rsvp-buttons { display: flex; gap: 15px; margin-top: 30px; }
+
+.form-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.rsvp-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
 .rsvp-btn {
     flex: 1;
     padding: 14px;
@@ -565,27 +794,48 @@ body {
     cursor: pointer;
     transition: all 0.3s;
 }
-.rsvp-btn.yes { background: #1C2E4A; color: white; }
-.rsvp-btn.yes:hover { background: #2C4A6E; transform: translateY(-2px); }
-.rsvp-btn.no { background: #F5F0EB; color: #6B7A8A; }
-.rsvp-btn.no:hover { background: #E8E0D5; transform: translateY(-2px); }
+
+.rsvp-btn.yes {
+    background: #1C2E4A;
+    color: white;
+}
+
+.rsvp-btn.yes:hover {
+    background: #2C4A6E;
+    transform: translateY(-2px);
+}
+
+.rsvp-btn.no {
+    background: #F5F0EB;
+    color: #6B7A8A;
+}
+
+.rsvp-btn.no:hover {
+    background: #E8E0D5;
+    transform: translateY(-2px);
+}
+
 .rsvp-result-message {
     margin-top: 25px;
     padding: 15px;
     border-radius: 20px;
     display: none;
 }
-.rsvp-result-message.show { display: block; background: rgba(212,165,165,0.15); color: #1C2E4A; }
 
-.invitation-footer {
-    background: #1C2E4A;
-    color: rgba(255,255,255,0.7);
-    padding: 40px 0;
-    text-align: center;
+.rsvp-result-message.show {
+    display: block;
+    background: rgba(212,165,165,0.15);
+    color: #1C2E4A;
 }
 
-.invitation-footer a { color: #D4A5A5; text-decoration: none; }
-.invitation-footer a:hover { text-decoration: underline; }
+@media (max-width: 768px) {
+    .rsvp-buttons {
+        flex-direction: column;
+    }
+    .form-row {
+        flex-direction: column;
+    }
+}
 
 /* =====================================================
    ЧЕКБОКСЫ АЛКОГОЛЯ В СТРОКУ
@@ -643,44 +893,6 @@ body {
     }
 }
 
-/* =====================================================
-   ИСПРАВЛЕНИЯ ДЛЯ МОБИЛЬНЫХ — ИСТОРИЯ
-   ===================================================== */
-
-@media (max-width: 768px) {
-    .story-item {
-        flex-direction: column !important;
-        gap: 20px !important;
-    }
-    
-    .story-item.reverse {
-        flex-direction: column !important;
-    }
-    
-    .story-img {
-        width: 100%;
-        min-width: auto !important;
-        order: -1;
-    }
-    
-    .story-item.reverse .story-img {
-        order: -1;
-    }
-    
-    .story-text {
-        width: 100%;
-        text-align: center;
-    }
-    
-    .story-grid {
-        gap: 30px !important;
-    }
-}
-
-/* =====================================================
-   ЧЕКБОКСЫ В СТРОКУ (ДОПОЛНИТЕЛЬНО)
-   ===================================================== */
-
 @media (min-width: 481px) and (max-width: 768px) {
     .checkbox-group {
         gap: 10px;
@@ -688,5 +900,53 @@ body {
     .checkbox-label {
         font-size: 0.85rem;
         padding: 8px 14px;
+    }
+}
+
+/* =====================================================
+   ФУТЕР
+   ===================================================== */
+
+.invitation-footer {
+    background: #1C2E4A;
+    color: rgba(255,255,255,0.7);
+    padding: 40px 0;
+    text-align: center;
+}
+
+.invitation-footer a {
+    color: #D4A5A5;
+    text-decoration: none;
+}
+
+.invitation-footer a:hover {
+    text-decoration: underline;
+}
+
+/* =====================================================
+   ОБЩИЕ МЕДИА-ЗАПРОСЫ
+   ===================================================== */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 16px;
+    }
+    .hero-title {
+        font-size: 2.5rem;
+    }
+    .scroll-indicator {
+        bottom: 20px;
+        font-size: 0.7rem;
+        white-space: nowrap;
+    }
+    .scroll-mouse {
+        width: 22px;
+        height: 34px;
+        margin: 6px auto 0;
+    }
+    .scroll-mouse::before {
+        width: 3px;
+        height: 6px;
+        top: 6px;
     }
 }
