@@ -1,17 +1,11 @@
 // =====================================================
-// Weddy — Админ-панель
-// Подключение к Google Таблице
+// Weddy — Админ-панель (без удаления)
 // =====================================================
 
-// URL вашего Google Apps Script
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQkcz3X4LrCLH_7xeVveUegZzjovW0jLkxYoWPLIvr3SyWf-_IA6dLfONweY7g3HgL/exec';
 
-// Глобальный массив для хранения данных
 let guests = [];
 
-// =====================================================
-// Загрузка данных из Google Таблицы
-// =====================================================
 function loadGuestsFromSheet() {
     fetch(SCRIPT_URL)
         .then(response => response.json())
@@ -23,7 +17,6 @@ function loadGuestsFromSheet() {
         })
         .catch(error => {
             console.error('❌ Ошибка загрузки данных:', error);
-            // Если ошибка, показываем демо-данные
             guests = getDemoData();
             renderTable();
             updateStats();
@@ -31,9 +24,6 @@ function loadGuestsFromSheet() {
         });
 }
 
-// =====================================================
-// Демо-данные (на случай ошибки)
-// =====================================================
 function getDemoData() {
     return [
         { id: 1, name: "Анна Иванова", guests: 1, children: 0, alcohol: "вино", allergies: "Нет", comment: "—", status: "coming", date: "15.08.2026" },
@@ -43,42 +33,9 @@ function getDemoData() {
     ];
 }
 
-// =====================================================
-// Отправка данных в Google Таблицу (удаление)
-// =====================================================
-function deleteFromSheet(id) {
-    const data = { 
-        action: 'delete', 
-        id: id 
-    };
-    
-    return fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data)
-    })
-    .then(() => {
-        console.log('✅ Запись удалена из таблицы');
-        return { success: true };
-    })
-    .catch(error => {
-        console.error('❌ Ошибка удаления:', error);
-        return { success: false, error: error };
-    });
-}
-
-// =====================================================
-// Текущий фильтр и поиск
-// =====================================================
 let currentFilter = 'all';
 let searchQuery = '';
 
-// =====================================================
-// Рендер таблицы
-// =====================================================
 function renderTable() {
     const tbody = document.getElementById('tableBody');
     const rowCount = document.getElementById('rowCount');
@@ -88,7 +45,6 @@ function renderTable() {
         return;
     }
     
-    // Фильтрация
     let filtered = guests;
     
     if (currentFilter !== 'all') {
@@ -100,18 +56,16 @@ function renderTable() {
         filtered = filtered.filter(g => g.name.toLowerCase().includes(query));
     }
     
-    // Сортировка: сначала идут
     filtered.sort((a, b) => {
         if (a.status === 'coming' && b.status !== 'coming') return -1;
         if (a.status !== 'coming' && b.status === 'coming') return 1;
         return 0;
     });
     
-    // Рендер строк
     if (filtered.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="9" style="text-align: center; padding: 40px; color: #6B7A8A;">
+                <td colspan="8" style="text-align: center; padding: 40px; color: #6B7A8A;">
                     Нет записей, соответствующих фильтрам
                 </td>
             </tr>
@@ -143,9 +97,6 @@ function renderTable() {
                 <td>${guest.allergies || 'Нет'}</td>
                 <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${guest.comment || '—'}</td>
                 <td><span class="status-badge ${statusClasses[guest.status]}">${statusLabels[guest.status]}</span></td>
-                <td>
-                    <button class="btn-delete" onclick="deleteGuest(${guest.id})" title="Удалить">✕</button>
-                </td>
             </tr>
         `;
     });
@@ -154,9 +105,6 @@ function renderTable() {
     rowCount.textContent = `Показано: ${filtered.length} из ${guests.length} записей`;
 }
 
-// =====================================================
-// Обновление статистики
-// =====================================================
 function updateStats() {
     const total = guests.length;
     const coming = guests.filter(g => g.status === 'coming').length;
@@ -176,30 +124,6 @@ function updateStats() {
     document.getElementById('totalAlcohol').textContent = alcoholOrders;
 }
 
-// =====================================================
-// Удаление гостя
-// =====================================================
-function deleteGuest(id) {
-    if (confirm('Удалить этого гостя из списка?')) {
-        // Удаляем из локального массива
-        guests = guests.filter(g => g.id !== id);
-        renderTable();
-        updateStats();
-        
-        // Отправляем запрос на удаление в таблицу
-        deleteFromSheet(id).then(result => {
-            if (result.success) {
-                console.log('✅ Гость удалён из таблицы');
-            } else {
-                console.warn('⚠️ Не удалось удалить из таблицы, но из отображения убран');
-            }
-        });
-    }
-}
-
-// =====================================================
-// Экспорт в Excel (CSV с разделителем ;)
-// =====================================================
 function exportToCSV(filename = 'guests_list.csv') {
     const headers = ['№', 'Имя', 'Гостей', 'Детей', 'Алкоголь', 'Аллергии', 'Комментарий', 'Статус'];
     const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
@@ -230,9 +154,6 @@ function exportToCSV(filename = 'guests_list.csv') {
     URL.revokeObjectURL(link.href);
 }
 
-// =====================================================
-// Экспорт в Excel (XLSX через HTML)
-// =====================================================
 function exportToExcel() {
     const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
     
@@ -277,16 +198,11 @@ function exportToExcel() {
     URL.revokeObjectURL(link.href);
 }
 
-// =====================================================
-// Инициализация
-// =====================================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Админ-панель загружена');
     
-    // Загружаем данные из таблицы
     loadGuestsFromSheet();
     
-    // Фильтры
     const filterStatus = document.getElementById('filterStatus');
     const searchInput = document.getElementById('searchInput');
     
@@ -304,7 +220,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Кнопки экспорта
     const exportExcelBtn = document.getElementById('exportExcelBtn');
     const exportCsvBtn = document.getElementById('exportCsvBtn');
     
@@ -316,7 +231,6 @@ document.addEventListener('DOMContentLoaded', function() {
         exportCsvBtn.addEventListener('click', () => exportToCSV('guests_list.csv'));
     }
     
-    // Кнопка выхода
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', function() {
