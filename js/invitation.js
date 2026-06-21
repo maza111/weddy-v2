@@ -45,7 +45,7 @@ updateTimer();
 
 const openMapBtn = document.getElementById('openMapBtn');
 if (openMapBtn) {
-    openMapBtn.addEventListener('click', () => {
+    openMapBtn.addEventListener('click', function() {
         window.open('https://maps.google.com/?q=55.733998,37.394605', '_blank');
     });
 }
@@ -76,7 +76,6 @@ function closePopup(id) {
     }
 }
 
-// Закрытие по клику на фон
 document.querySelectorAll('.popup-overlay').forEach(function(overlay) {
     overlay.addEventListener('click', function(e) {
         if (e.target === this) {
@@ -86,7 +85,6 @@ document.querySelectorAll('.popup-overlay').forEach(function(overlay) {
     });
 });
 
-// Закрытие по Escape
 document.addEventListener('keydown', function(e) {
     if (e.key === 'Escape') {
         document.querySelectorAll('.popup-overlay.active').forEach(function(popup) {
@@ -97,7 +95,7 @@ document.addEventListener('keydown', function(e) {
 });
 
 // =====================================================
-// ОТПРАВКА ДАННЫХ В GOOGLE ТАБЛИЦУ
+// ОТПРАВКА В GOOGLE ТАБЛИЦУ
 // =====================================================
 
 function sendDataToSheet(data) {
@@ -109,11 +107,11 @@ function sendDataToSheet(data) {
         },
         body: JSON.stringify(data)
     })
-    .then(() => {
+    .then(function() {
         console.log('✅ Данные отправлены в Google Таблицу');
         return { success: true };
     })
-    .catch(error => {
+    .catch(function(error) {
         console.error('❌ Ошибка отправки:', error);
         return { success: false, error: error };
     });
@@ -139,9 +137,13 @@ function showResult(message, type) {
 // =====================================================
 
 function getSelectedAlcohol() {
-    const checkboxes = document.querySelectorAll('input[name="alcohol"]:checked');
+    var checkboxes = document.querySelectorAll('input[name="alcohol"]:checked');
     if (checkboxes.length === 0) return 'Не выбрано';
-    return Array.from(checkboxes).map(cb => cb.value).join(', ');
+    var values = [];
+    checkboxes.forEach(function(cb) {
+        values.push(cb.value);
+    });
+    return values.join(', ');
 }
 
 // =====================================================
@@ -149,30 +151,26 @@ function getSelectedAlcohol() {
 // =====================================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    const rsvpForm = document.getElementById('rsvpForm');
-    const rsvpNoBtn = document.getElementById('rsvpNo');
-
-    // =====================================================
-    // ОТПРАВКА "БУДУ С РАДОСТЬЮ"
-    // =====================================================
+    var rsvpForm = document.getElementById('rsvpForm');
+    var rsvpNoBtn = document.getElementById('rsvpNo');
 
     if (rsvpForm) {
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
 
-            const name = document.getElementById('guestName').value.trim();
+            var name = document.getElementById('guestName').value.trim();
             if (!name) {
                 showResult('Пожалуйста, представьтесь ❤️', 'error');
                 return;
             }
 
-            const guests = parseInt(document.getElementById('guestsCount').value) || 1;
-            const children = parseInt(document.getElementById('childrenCount').value) || 0;
-            const alcohol = getSelectedAlcohol();
-            const allergies = document.getElementById('allergies').value.trim() || 'Нет';
-            const comment = document.getElementById('comment').value.trim() || '—';
+            var guests = parseInt(document.getElementById('guestsCount').value) || 1;
+            var children = parseInt(document.getElementById('childrenCount').value) || 0;
+            var alcohol = getSelectedAlcohol();
+            var allergies = document.getElementById('allergies').value.trim() || 'Нет';
+            var comment = document.getElementById('comment').value.trim() || '—';
 
-            const data = {
+            var data = {
                 name: name,
                 guests: guests,
                 children: children,
@@ -183,31 +181,31 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: new Date().toISOString()
             };
 
-            // Отправляем в Google Таблицу
-            sendDataToSheet(data).then(result => {
+            sendDataToSheet(data).then(function(result) {
                 if (result.success) {
-                    let message = `${name}, спасибо за подтверждение! `;
-                    message += `Вы пришли${guests > 1 ? ` с компанией (${guests} чел.)` : ''}`;
+                    var message = name + ', спасибо за подтверждение! ';
+                    message += 'Вы пришли' + (guests > 1 ? ' с компанией (' + guests + ' чел.)' : '');
                     if (children > 0) {
-                        message += `, детей: ${children}`;
+                        message += ', детей: ' + children;
                     }
-                    message += `. Алкоголь: ${alcohol}. `;
+                    message += '. Алкоголь: ' + alcohol + '. ';
                     if (allergies !== 'Нет') {
-                        message += `Аллергии: ${allergies}. `;
+                        message += 'Аллергии: ' + allergies + '. ';
                     }
                     if (comment !== '—') {
-                        message += `Комментарий: "${comment}"`;
+                        message += 'Комментарий: "' + comment + '"';
                     }
                     message += ' До встречи 15 августа! ✨';
 
                     showResult(message, 'success');
 
-                    // Очищаем форму
-                    setTimeout(() => {
+                    setTimeout(function() {
                         document.getElementById('guestName').value = '';
                         document.getElementById('guestsCount').value = '1';
                         document.getElementById('childrenCount').value = '0';
-                        document.querySelectorAll('input[name="alcohol"]:checked').forEach(cb => cb.checked = false);
+                        document.querySelectorAll('input[name="alcohol"]:checked').forEach(function(cb) {
+                            cb.checked = false;
+                        });
                         document.getElementById('allergies').value = '';
                         document.getElementById('comment').value = '';
                     }, 3000);
@@ -218,20 +216,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // =====================================================
-    // ОТПРАВКА "НЕ СМОГУ ПРИЙТИ"
-    // =====================================================
-
     if (rsvpNoBtn) {
         rsvpNoBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            const name = document.getElementById('guestName').value.trim();
+            var name = document.getElementById('guestName').value.trim();
             if (!name) {
                 showResult('Пожалуйста, представьтесь 💔', 'error');
                 return;
             }
 
-            const data = {
+            var data = {
                 name: name,
                 guests: 0,
                 children: 0,
@@ -242,7 +236,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: new Date().toISOString()
             };
 
-            sendDataToSheet(data).then(result => {
+            sendDataToSheet(data).then(function(result) {
                 if (result.success) {
                     showResult('', 'decline');
                     document.getElementById('guestName').value = '';
@@ -254,14 +248,26 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =====================================================
+    // FAQ — раскрывающиеся ответы
+    // =====================================================
+
+    var faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(function(item) {
+        var question = item.querySelector('.faq-question');
+        question.addEventListener('click', function() {
+            item.classList.toggle('active');
+        });
+    });
+
+    // =====================================================
     // ПЛАВНАЯ ПРОКРУТКА
     // =====================================================
 
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
         anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
+            var href = this.getAttribute('href');
             if (href === '#') return;
-            const target = document.querySelector(href);
+            var target = document.querySelector(href);
             if (target) {
                 e.preventDefault();
                 target.scrollIntoView({
@@ -276,12 +282,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // ГАЛЕРЕЯ — ОТКРЫТИЕ ФОТО
     // =====================================================
 
-    document.querySelectorAll('.gallery-item').forEach(item => {
-        item.addEventListener('click', () => {
-            const img = item.querySelector('img');
+    document.querySelectorAll('.gallery-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+            var img = this.querySelector('img');
             if (img) {
                 window.open(img.src, '_blank');
             }
         });
+    });
+
+    // =====================================================
+    // АНИМАЦИЯ ЦИФР (для секции "Факты о нас")
+    // =====================================================
+
+    var factNumbers = document.querySelectorAll('.fact-number');
+
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+            if (entry.isIntersecting) {
+                var el = entry.target;
+                var target = parseInt(el.getAttribute('data-count'));
+                var current = 0;
+                var increment = target / 60;
+                var timer = setInterval(function() {
+                    current += increment;
+                    if (current >= target) {
+                        el.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        el.textContent = Math.floor(current);
+                    }
+                }, 20);
+                observer.unobserve(el);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    factNumbers.forEach(function(el) {
+        observer.observe(el);
     });
 });
