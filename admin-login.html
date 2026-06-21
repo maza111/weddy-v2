@@ -97,11 +97,40 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            position: relative;
         }
 
-        .login-btn:hover {
+        .login-btn:hover:not(:disabled) {
             background: #2C4A6E;
             transform: translateY(-2px);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .login-btn .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto;
+        }
+
+        .login-btn.loading .spinner {
+            display: block;
+        }
+
+        .login-btn.loading .btn-text {
+            display: none;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         .error-message {
@@ -124,6 +153,34 @@
             margin-top: 20px;
             color: #6B7A8A;
             font-size: 0.75rem;
+        }
+
+        .projects-list {
+            margin-top: 20px;
+            border-top: 1px solid #EEEEEE;
+            padding-top: 20px;
+        }
+
+        .projects-list .project-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #F5F5F5;
+            font-size: 0.9rem;
+            color: #6B7A8A;
+        }
+
+        .projects-list .project-item .status {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4CAF50;
+            flex-shrink: 0;
+        }
+
+        .projects-list .project-item .status.inactive {
+            background: #BDBDBD;
         }
 
         @media (max-width: 480px) {
@@ -151,8 +208,23 @@
                     <label>Пароль</label>
                     <input type="password" id="passwordInput" placeholder="Введите пароль" autofocus>
                 </div>
-                <button type="submit" class="login-btn">Войти</button>
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span class="btn-text">Войти</span>
+                    <span class="spinner"></span>
+                </button>
             </form>
+
+            <div class="projects-list" id="projectsList">
+                <div style="font-size:0.8rem; color:#BDBDBD; margin-bottom:8px;">Доступные свадьбы:</div>
+                <div class="project-item">
+                    <span class="status" id="status1"></span>
+                    <span>Анна & Дмитрий</span>
+                </div>
+                <div class="project-item">
+                    <span class="status" id="status2"></span>
+                    <span>Екатерина & Алексей</span>
+                </div>
+            </div>
 
             <div class="login-footer">
                 🔒 Только для организаторов и молодожёнов
@@ -161,32 +233,128 @@
     </div>
 
     <script>
+        // =====================================================
+        // СПИСОК ВСЕХ ТАБЛИЦ
+        // =====================================================
+        // Добавляйте новые таблицы сюда
+        const TABLES = [
+            {
+                id: 'project1',
+                name: 'Анна & Дмитрий',
+                url: 'https://script.google.com/macros/s/AKfycbwoGm2UrS3FksU9P1QNyEkrTKODugKx7GUnL_DsFx0MvhVbVa86MXwR91xgNkiEBBtw/exec',
+                statusEl: 'status1'
+            },
+            {
+                id: 'project2',
+                name: 'Екатерина & Алексей',
+                url: 'https://script.google.com/macros/s/НОВЫЙ_URL_ПРЕМИУМ/exec',
+                statusEl: 'status2'
+            }
+        ];
+
+        // =====================================================
+        // ПРОВЕРКА ПАРОЛЯ В ТАБЛИЦЕ
+        // =====================================================
+        function checkPasswordInTable(tableUrl, password) {
+            const url = tableUrl + '?password=' + encodeURIComponent(password);
+            
+            return fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    return { success: data.success, tableUrl: tableUrl };
+                })
+                .catch(() => {
+                    return { success: false, tableUrl: tableUrl };
+                });
+        }
+
+        // =====================================================
+        // ПРОВЕРКА ВСЕХ ТАБЛИЦ
+        // =====================================================
+        function checkAllTables(password) {
+            const promises = TABLES.map(table => {
+                return checkPasswordInTable(table.url, password)
+                    .then(result => {
+                        return { ...result, name: table.name, id: table.id };
+                    });
+            });
+
+            return Promise.all(promises);
+        }
+
+        // =====================================================
+        // ОБНОВЛЕНИЕ СТАТУСОВ ТАБЛИЦ
+        // =====================================================
+        function updateTableStatuses() {
+            TABLES.forEach(table => {
+                const el = document.getElementById(table.statusEl);
+                if (el) {
+                    // Просто проверяем, что таблица доступна
+                    fetch(table.url)
+                        .then(() => {
+                            el.className = 'status';
+                        })
+                        .catch(() => {
+                            el.className = 'status inactive';
+                        });
+                }
+            });
+        }
+
+        // =====================================================
+        // ОБРАБОТКА ВХОДА
+        // =====================================================
         const loginForm = document.getElementById('loginForm');
         const passwordInput = document.getElementById('passwordInput');
         const errorMessage = document.getElementById('errorMessage');
-
-        // Пароль (можно изменить)
-        const CORRECT_PASSWORD = 'weddy2026';
+        const loginBtn = document.getElementById('loginBtn');
 
         loginForm.addEventListener('submit', function(e) {
             e.preventDefault();
             
             const password = passwordInput.value.trim();
-            
-            if (password === CORRECT_PASSWORD) {
-                // Сохраняем, что пользователь вошёл
-                sessionStorage.setItem('adminAuthenticated', 'true');
-                // Переходим в админку
-                window.location.href = 'admin.html';
-            } else {
+            if (!password) {
+                errorMessage.textContent = '❌ Введите пароль';
                 errorMessage.classList.add('show');
-                passwordInput.value = '';
-                passwordInput.focus();
-                
-                setTimeout(() => {
-                    errorMessage.classList.remove('show');
-                }, 3000);
+                return;
             }
+
+            // Показываем загрузку
+            loginBtn.classList.add('loading');
+            loginBtn.disabled = true;
+            errorMessage.classList.remove('show');
+
+            // Проверяем все таблицы
+            checkAllTables(password)
+                .then(results => {
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+
+                    // Ищем успешную проверку
+                    const found = results.find(r => r.success === true);
+
+                    if (found) {
+                        // Сохраняем URL таблицы в сессию
+                        sessionStorage.setItem('tableUrl', found.tableUrl);
+                        sessionStorage.setItem('projectName', found.name);
+                        sessionStorage.setItem('projectId', found.id);
+                        sessionStorage.setItem('adminAuthenticated', 'true');
+                        
+                        // Переходим в админку
+                        window.location.href = 'admin.html';
+                    } else {
+                        errorMessage.textContent = '❌ Неверный пароль. Попробуйте ещё раз.';
+                        errorMessage.classList.add('show');
+                        passwordInput.value = '';
+                        passwordInput.focus();
+                    }
+                })
+                .catch(() => {
+                    loginBtn.classList.remove('loading');
+                    loginBtn.disabled = false;
+                    errorMessage.textContent = '❌ Ошибка подключения к таблицам. Попробуйте позже.';
+                    errorMessage.classList.add('show');
+                });
         });
 
         // Enter для отправки
@@ -194,6 +362,11 @@
             if (e.key === 'Enter') {
                 loginForm.dispatchEvent(new Event('submit'));
             }
+        });
+
+        // Проверяем статус таблиц при загрузке
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTableStatuses();
         });
     </script>
 </body>

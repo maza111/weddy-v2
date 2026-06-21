@@ -51,10 +51,11 @@ if (openMapBtn) {
 }
 
 // =====================================================
-// URL GOOGLE APPS SCRIPT (RSVP)
+// URL GOOGLE APPS SCRIPT (ПРЕМИУМ ТАБЛИЦА)
 // =====================================================
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoGm2UrS3FksU9P1QNyEkrTKODugKx7GUnL_DsFx0MvhVbVa86MXwR91xgNkiEBBtw/exec';
+// ВСТАВЬТЕ СЮДА ВАШ НОВЫЙ URL
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKnU_NCDBeMQc4JMkeYoG5IZ-NgWL1uM1O8eJsG-4MeTXhLf6ljlf3PF5QfIPC-UyoPQ/exec';
 
 // =====================================================
 // ПОПАПЫ
@@ -108,7 +109,7 @@ function sendDataToSheet(data) {
         body: JSON.stringify(data)
     })
     .then(function() {
-        console.log('✅ Данные отправлены в Google Таблицу');
+        console.log('✅ Данные отправлены в Google Таблицу (Премиум)');
         return { success: true };
     })
     .catch(function(error) {
@@ -147,13 +148,14 @@ function getSelectedAlcohol() {
 }
 
 // =====================================================
-// ОБРАБОТКА ФОРМЫ
+// ОБРАБОТКА ФОРМЫ (ПРЕМИУМ)
 // =====================================================
 
 document.addEventListener('DOMContentLoaded', function() {
-    var rsvpForm = document.getElementById('rsvpForm');
-    var rsvpNoBtn = document.getElementById('rsvpNo');
+    var rsvpForm = document.getElementById('rsvpFormPremium');
+    var rsvpNoBtn = document.getElementById('rsvpNoPremium');
 
+    // ОТПРАВКА "БУДУ С РАДОСТЬЮ"
     if (rsvpForm) {
         rsvpForm.addEventListener('submit', function(e) {
             e.preventDefault();
@@ -216,6 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // ОТПРАВКА "НЕ СМОГУ ПРИЙТИ"
     if (rsvpNoBtn) {
         rsvpNoBtn.addEventListener('click', function(e) {
             e.preventDefault();
@@ -248,15 +251,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =====================================================
-    // FAQ — раскрывающиеся ответы
+    // FAQ — РАСКРЫВАЮЩИЕСЯ ОТВЕТЫ
     // =====================================================
 
     var faqItems = document.querySelectorAll('.faq-item');
     faqItems.forEach(function(item) {
         var question = item.querySelector('.faq-question');
-        question.addEventListener('click', function() {
-            item.classList.toggle('active');
-        });
+        if (question) {
+            question.addEventListener('click', function() {
+                item.classList.toggle('active');
+            });
+        }
     });
 
     // =====================================================
@@ -292,7 +297,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =====================================================
-    // АНИМАЦИЯ ЦИФР (для секции "Факты о нас")
+    // АНИМАЦИЯ ЦИФР
     // =====================================================
 
     var factNumbers = document.querySelectorAll('.fact-number');

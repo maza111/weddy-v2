@@ -8,28 +8,19 @@
     <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
-    <script>
-        // Проверка авторизации
-        if (!sessionStorage.getItem('adminAuthenticated')) {
-            window.location.href = 'admin-login.html';
-        }
-    </script>
-
     <div class="admin-container">
-        <!-- Шапка -->
         <header class="admin-header">
             <div class="header-left">
                 <span class="logo">✦ Weddy</span>
                 <span class="badge">Админ-панель</span>
             </div>
             <div class="header-right">
-                <span class="event-name">Свадьба Анны и Дмитрия</span>
-                <span class="event-date">15 августа 2026</span>
+                <span class="event-name" id="projectName">Загрузка...</span>
+                <span class="event-date" id="projectDate">15 августа 2026</span>
                 <button class="btn-logout" id="logoutBtn">Выйти</button>
             </div>
         </header>
 
-        <!-- Статистика -->
         <section class="stats-section">
             <div class="stats-grid">
                 <div class="stat-card">
@@ -70,7 +61,6 @@
             </div>
         </section>
 
-        <!-- Фильтры -->
         <section class="filters-section">
             <div class="filters-row">
                 <div class="filter-group">
@@ -92,10 +82,9 @@
             </div>
         </section>
 
-        <!-- Таблица -->
         <section class="table-section">
             <div class="table-wrapper">
-                <table class="guests-table" id="guestsTable">
+                <table class="guests-table">
                     <thead>
                         <tr>
                             <th>№</th>
@@ -109,7 +98,6 @@
                         </tr>
                     </thead>
                     <tbody id="tableBody">
-                        <!-- Строки будут добавлены через JS -->
                     </tbody>
                 </table>
             </div>

@@ -27,7 +27,7 @@ body {
 }
 
 /* =====================================================
-   ДЕКОРАТИВНЫЕ ЛИНИИ ПО ВСЕМУ САЙТУ
+   ДЕКОРАТИВНЫЕ ЛИНИИ
    ===================================================== */
 
 .site-lines {
@@ -43,7 +43,7 @@ body {
 
 .site-lines .line {
     position: absolute;
-    background: rgba(196, 168, 130, 0.04);
+    background: rgba(196, 168, 130, 0.06);
 }
 
 .site-lines .line-v {
@@ -72,40 +72,11 @@ body {
 .site-lines .line-h:nth-child(11) { top: 70%; }
 .site-lines .line-h:nth-child(12) { top: 90%; }
 
-.site-lines .line-d {
-    width: 100%;
-    height: 100%;
-    background: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
-.site-lines .line-d::before {
-    content: '';
-    position: absolute;
-    width: 1px;
-    height: 150%;
-    background: rgba(196, 168, 130, 0.03);
-    transform: rotate(-30deg);
-    transform-origin: top left;
-}
-
-.site-lines .line-d::after {
-    content: '';
-    position: absolute;
-    width: 1px;
-    height: 150%;
-    background: rgba(196, 168, 130, 0.03);
-    transform: rotate(30deg);
-    transform-origin: top right;
-}
-
 .corner-decoration {
     position: fixed;
     pointer-events: none;
     z-index: 0;
-    opacity: 0.15;
+    opacity: 0.2;
 }
 
 .corner-decoration-tl {
@@ -147,15 +118,11 @@ body {
 @media (max-width: 768px) {
     .site-lines .line-v { display: none; }
     .site-lines .line-h { display: none; }
-    .site-lines .line-d::before,
-    .site-lines .line-d::after { display: none; }
-    .corner-decoration {
-        display: none;
-    }
+    .corner-decoration { display: none; }
 }
 
 /* =====================================================
-   БЛОК 1: ОБЛОЖКА-ПРИГЛАШЕНИЕ С ФОТО
+   БЛОК 1: ОБЛОЖКА-ПРИГЛАШЕНИЕ
    ===================================================== */
 
 .hero-section {
@@ -343,7 +310,7 @@ body {
 }
 
 /* =====================================================
-   ОБЩИЕ СТИЛИ ДЛЯ СЕКЦИЙ
+   ОБЩИЕ СТИЛИ
    ===================================================== */
 
 h2 {
@@ -363,7 +330,7 @@ h2 {
 }
 
 /* =====================================================
-   БЛОК 2: ТАЙМЛАЙН С ФОТО
+   БЛОК 2: ТАЙМЛАЙН
    ===================================================== */
 
 .timeline-section {
@@ -851,107 +818,140 @@ h2 {
     min-width: 140px;
 }
 
-.menu-options {
+/* =====================================================
+   КНОПКИ RSVP
+   ===================================================== */
+
+.rsvp-buttons {
     display: flex;
+    gap: 16px;
+    margin-top: 30px;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 8px;
-}
-
-.menu-option {
-    flex: 1;
-    min-width: 160px;
-}
-
-.menu-option input {
-    display: none;
-}
-
-.menu-card {
-    display: block;
-    padding: 16px;
-    border: 2px solid #E0D6CC;
-    border-radius: 16px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s;
-    background: #FFFFFF;
-}
-
-.menu-card:hover {
-    border-color: #C4A882;
-}
-
-.menu-option input:checked + .menu-card {
-    border-color: #1C1C1C;
-    background: #F5EDE6;
-}
-
-.menu-emoji {
-    font-size: 1.8rem;
-    display: block;
-    margin-bottom: 4px;
-}
-
-.menu-name {
-    font-weight: 600;
-    font-size: 0.9rem;
-    display: block;
-}
-
-.menu-desc {
-    font-size: 0.75rem;
-    color: #8B7A6B;
-    font-weight: 300;
 }
 
 .rsvp-btn {
-    width: 100%;
-    padding: 16px;
-    background: #1C1C1C;
-    color: white;
+    flex: 1;
+    min-width: 160px;
+    padding: 16px 24px;
     border: none;
     border-radius: 60px;
     font-family: 'Unbounded', sans-serif;
     font-weight: 500;
+    font-size: 0.95rem;
     cursor: pointer;
-    transition: all 0.3s;
-    font-size: 1rem;
-}
-
-.rsvp-btn:hover {
-    background: #2C2C2C;
-    transform: translateY(-2px);
-}
-
-.rsvp-result-message {
-    margin-top: 20px;
-    padding: 16px;
-    border-radius: 16px;
-    display: none;
+    transition: all 0.3s ease;
     text-align: center;
 }
 
-.rsvp-result-message.show {
-    display: block;
-    background: rgba(196, 168, 130, 0.15);
-    color: #1C1C1C;
+.rsvp-btn.yes {
+    background: #1C1C1C;
+    color: #FFFFFF;
+}
+
+.rsvp-btn.yes:hover {
+    background: #2C2C2C;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(28, 28, 28, 0.25);
+}
+
+.rsvp-btn.no {
+    background: #F0EBE6;
+    color: #4A3A2A;
+}
+
+.rsvp-btn.no:hover {
+    background: #E0D6CC;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
 }
 
 @media (max-width: 640px) {
-    .rsvp-card {
-        padding: 24px;
-    }
-    .menu-options {
+    .rsvp-buttons {
         flex-direction: column;
+        gap: 12px;
     }
-    .form-row {
-        flex-direction: column;
+    
+    .rsvp-btn {
+        min-width: 100%;
     }
 }
 
 /* =====================================================
-   БЛОК 9: QR-КОД С ФОТО
+   ЧЕКБОКСЫ АЛКОГОЛЯ С ПОДЧЁРКИВАНИЕМ
+   ===================================================== */
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.checkbox-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: 'Inter', sans-serif;
+    color: #1C1C1C;
+    padding: 8px 4px 4px 4px;
+    border-bottom: 2px solid #E0D6CC;
+    transition: all 0.3s ease;
+    background: transparent;
+    user-select: none;
+    position: relative;
+}
+
+.checkbox-label:hover {
+    border-bottom-color: #C4A882;
+}
+
+.checkbox-label input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #1C1C1C;
+    cursor: pointer;
+    margin: 0;
+    flex-shrink: 0;
+}
+
+.checkbox-label:has(input:checked) {
+    border-bottom-color: #1C1C1C;
+    color: #1C1C1C;
+}
+
+.checkbox-label::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: #1C1C1C;
+    transition: width 0.3s ease;
+}
+
+.checkbox-label:has(input:checked)::after {
+    width: 100%;
+}
+
+@media (max-width: 480px) {
+    .checkbox-group {
+        gap: 8px;
+    }
+    .checkbox-label {
+        font-size: 0.85rem;
+        padding: 6px 2px 2px 2px;
+    }
+    .checkbox-label input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+    }
+}
+
+/* =====================================================
+   БЛОК 9: QR-КОД
    ===================================================== */
 
 .qr-section {
@@ -1228,8 +1228,5 @@ h2 {
     }
     .gifts-grid {
         grid-template-columns: 1fr;
-    }
-    .menu-options {
-        flex-direction: column;
     }
 }

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Анна & Дмитрий | Приглашение на свадьбу</title>
+    <title>Екатерина & Алексей | Приглашение на свадьбу</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/invitation-premium.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
@@ -35,7 +35,7 @@
     <div class="corner-decoration corner-decoration-br"></div>
 
     <!-- =====================================================
-    БЛОК 1: ОБЛОЖКА-ПРИГЛАШЕНИЕ С ФОТО
+    БЛОК 1: ОБЛОЖКА-ПРИГЛАШЕНИЕ
     ===================================================== -->
     <section class="hero-section" style="background-image: url('img/couple1.jpg'); background-size: cover; background-position: center;">
         <div class="hero-overlay"></div>
@@ -47,9 +47,9 @@
         <div class="hero-content" data-aos="fade-up" data-aos-duration="1500">
             <span class="hero-badge">Свадебное приглашение</span>
             <h1 class="hero-title">
-                <span class="hero-name">Анна</span>
+                <span class="hero-name">Екатерина</span>
                 <span class="hero-ampersand">&</span>
-                <span class="hero-name">Дмитрий</span>
+                <span class="hero-name">Алексей</span>
             </h1>
             <div class="hero-divider">✦</div>
             <p class="hero-text">Приглашают вас разделить с ними радость<br>самого важного дня в их жизни</p>
@@ -67,7 +67,7 @@
     </section>
 
     <!-- =====================================================
-    БЛОК 2: НАША ИСТОРИЯ В ДАТАХ С ФОТО
+    БЛОК 2: НАША ИСТОРИЯ
     ===================================================== -->
     <section class="timeline-section">
         <div class="container">
@@ -297,74 +297,82 @@
     </section>
 
     <!-- =====================================================
-    БЛОК 8: ВЫБОР МЕНЮ (RSVP)
+    БЛОК 8: RSVP (ФОРМА ОБРАТНОЙ СВЯЗИ)
     ===================================================== -->
     <section id="rsvp" class="rsvp-section">
         <div class="container">
             <h2 data-aos="fade-up">Подтвердите присутствие</h2>
-            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Пожалуйста, выберите вариант меню</p>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Пожалуйста, ответьте до 1 августа 2026</p>
             <div class="rsvp-card" data-aos="fade-up" data-aos-delay="200">
-                <form id="rsvpForm">
+                <form id="rsvpFormPremium">
+                    <!-- 1. Имя и фамилия -->
                     <div class="form-group">
                         <label>Ваше имя и фамилия <span class="required">*</span></label>
-                        <input type="text" id="guestName" placeholder="Анна Иванова" required>
+                        <input type="text" id="guestName" placeholder="Например: Екатерина Смирнова" required>
                     </div>
+
+                    <!-- 2. Количество гостей -->
                     <div class="form-group">
-                        <label>Выберите блюдо <span class="required">*</span></label>
-                        <div class="menu-options">
-                            <label class="menu-option">
-                                <input type="radio" name="menu" value="fish" checked>
-                                <span class="menu-card">
-                                    <span class="menu-emoji">🐟</span>
-                                    <span class="menu-name">Рыба с овощами</span>
-                                    <span class="menu-desc">Лосось на гриле с овощным гарниром</span>
-                                </span>
-                            </label>
-                            <label class="menu-option">
-                                <input type="radio" name="menu" value="meat">
-                                <span class="menu-card">
-                                    <span class="menu-emoji">🥩</span>
-                                    <span class="menu-name">Мясо с картофелем</span>
-                                    <span class="menu-desc">Стейк из говядины с запечённым картофелем</span>
-                                </span>
-                            </label>
-                            <label class="menu-option">
-                                <input type="radio" name="menu" value="vegetarian">
-                                <span class="menu-card">
-                                    <span class="menu-emoji">🥗</span>
-                                    <span class="menu-name">Вегетарианское</span>
-                                    <span class="menu-desc">Овощное рагу с киноа и свежей зеленью</span>
-                                </span>
-                            </label>
-                        </div>
+                        <label>Количество гостей с вами (включая вас)</label>
+                        <select id="guestsCount">
+                            <option value="1">1 гость (только я)</option>
+                            <option value="2">2 гостя</option>
+                            <option value="3">3 гостя</option>
+                            <option value="4">4 гостя</option>
+                            <option value="5">5+ гостей</option>
+                        </select>
                     </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Количество гостей с вами</label>
-                            <select id="guestsCount">
-                                <option value="1">1 гость</option>
-                                <option value="2">2 гостя</option>
-                                <option value="3">3 гостя</option>
-                                <option value="4">4 гостя</option>
-                                <option value="5">5+ гостей</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Количество детей</label>
-                            <select id="childrenCount">
-                                <option value="0">0 детей</option>
-                                <option value="1">1 ребёнок</option>
-                                <option value="2">2 ребёнка</option>
-                                <option value="3">3 ребёнка</option>
-                                <option value="4">4+ детей</option>
-                            </select>
-                        </div>
-                    </div>
+
+                    <!-- 3. Количество детей -->
                     <div class="form-group">
-                        <label>Аллергии и пожелания</label>
-                        <textarea id="comment" rows="2" placeholder="Например: аллергия на орехи, люблю острое..."></textarea>
+                        <label>Количество детей с вами (до 14 лет)</label>
+                        <select id="childrenCount">
+                            <option value="0">0 детей</option>
+                            <option value="1">1 ребёнок</option>
+                            <option value="2">2 ребёнка</option>
+                            <option value="3">3 ребёнка</option>
+                            <option value="4">4+ детей</option>
+                        </select>
                     </div>
-                    <button type="submit" class="rsvp-btn">Отправить ответ ✨</button>
+
+                    <!-- 4. Алкоголь (на русском) -->
+                    <div class="form-group">
+                        <label>Предпочтения по алкоголю</label>
+                        <div class="checkbox-group">
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="Водка"> Водка
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="Вино"> Вино
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="Пиво"> Пиво
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="Виски/Коньяк"> Виски/Коньяк
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" name="alcohol" value="Без алкоголя"> Без алкоголя
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- 5. Аллергии -->
+                    <div class="form-group">
+                        <label>Аллергии и непереносимость</label>
+                        <input type="text" id="allergies" placeholder="Например: орехи, лактоза, глютен... или 'Нет'">
+                    </div>
+
+                    <!-- 6. Комментарии -->
+                    <div class="form-group">
+                        <label>Комментарии и пожелания</label>
+                        <textarea id="comment" rows="3" placeholder="Что-то важное, что мы должны знать..."></textarea>
+                    </div>
+
+                    <div class="rsvp-buttons">
+                        <button type="submit" class="rsvp-btn yes" id="rsvpYesPremium">Буду с радостью ✨</button>
+                        <button type="button" class="rsvp-btn no" id="rsvpNoPremium">Не смогу прийти 💔</button>
+                    </div>
                 </form>
                 <div id="rsvpResult" class="rsvp-result-message"></div>
             </div>
@@ -372,13 +380,13 @@
     </section>
 
     <!-- =====================================================
-    БЛОК 9: QR-КОД С ФОТО ПАРЫ
+    БЛОК 9: QR-КОД
     ===================================================== -->
     <section class="qr-section">
         <div class="container">
             <div class="qr-content" data-aos="zoom-in" data-aos-duration="1000">
                 <div class="qr-photo">
-                    <img src="img/couple3.jpg" alt="Анна и Дмитрий">
+                    <img src="img/couple3.jpg" alt="Екатерина и Алексей">
                 </div>
                 <div class="qr-code">
                     <div class="qr-placeholder">
@@ -399,7 +407,7 @@
     </section>
 
     <!-- =====================================================
-    БЛОК 10: ФУТЕР + ХЕШТЕГ
+    БЛОК 10: ФУТЕР
     ===================================================== -->
     <footer class="footer-section">
         <div class="container">
@@ -409,9 +417,9 @@
                 <span>❤️</span>
             </div>
             <h2>Спасибо, что вы с нами!</h2>
-            <p class="footer-hashtag">#АннаИДмитрийСвадьба2026</p>
+            <p class="footer-hashtag">#ЕкатеринаИАлексейСвадьба2026</p>
             <div class="footer-divider">✦</div>
-            <p class="footer-text">С любовью, Анна и Дмитрий</p>
+            <p class="footer-text">С любовью, Екатерина и Алексей</p>
             <p class="footer-link"><a href="index.html">← Вернуться на главную</a></p>
         </div>
     </footer>
@@ -445,6 +453,6 @@
     </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="js/invitation.js"></script>
+    <script src="js/invitation-premium.js"></script>
 </body>
 </html>

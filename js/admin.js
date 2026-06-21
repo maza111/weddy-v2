@@ -1,16 +1,49 @@
 // =====================================================
-// Weddy — Админ-панель (без удаления)
+// Weddy — Админ-панель (универсальная)
+// Показывает ВСЕ колонки из Google Таблицы
 // =====================================================
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyQkcz3X4LrCLH_7xeVveUegZzjovW0jLkxYoWPLIvr3SyWf-_IA6dLfONweY7g3HgL/exec';
+// Проверка авторизации
+if (!sessionStorage.getItem('adminAuthenticated')) {
+    window.location.href = 'admin-login.html';
+}
+
+// Получаем URL таблицы из сессии
+const SCRIPT_URL = sessionStorage.getItem('tableUrl');
+const PROJECT_NAME = sessionStorage.getItem('projectName');
+
+if (!SCRIPT_URL) {
+    alert('Ошибка: не найден URL таблицы. Войдите заново.');
+    sessionStorage.removeItem('adminAuthenticated');
+    window.location.href = 'admin-login.html';
+}
+
+// Показываем название проекта в шапке
+document.addEventListener('DOMContentLoaded', function() {
+    const projectNameEl = document.getElementById('projectName');
+    if (projectNameEl && PROJECT_NAME) {
+        projectNameEl.textContent = PROJECT_NAME;
+    }
+});
 
 let guests = [];
+let headers = [];
 
+// =====================================================
+// ЗАГРУЗКА ДАННЫХ ИЗ ТАБЛИЦЫ
+// =====================================================
 function loadGuestsFromSheet() {
     fetch(SCRIPT_URL)
         .then(response => response.json())
         .then(data => {
-            guests = data;
+            // data = { headers: [...], rows: [...] }
+            if (data.headers) {
+                headers = data.headers;
+                guests = data.rows;
+            } else {
+                // Если данные без заголовков — используем старый формат
+                guests = data;
+            }
             console.log('✅ Данные загружены из таблицы:', guests.length, 'записей');
             renderTable();
             updateStats();
@@ -24,6 +57,9 @@ function loadGuestsFromSheet() {
         });
 }
 
+// =====================================================
+// ДЕМО-ДАННЫЕ
+// =====================================================
 function getDemoData() {
     return [
         { id: 1, name: "Анна Иванова", guests: 1, children: 0, alcohol: "вино", allergies: "Нет", comment: "—", status: "coming", date: "15.08.2026" },
@@ -36,6 +72,9 @@ function getDemoData() {
 let currentFilter = 'all';
 let searchQuery = '';
 
+// =====================================================
+// РЕНДЕР ТАБЛИЦЫ (универсальный)
+// =====================================================
 function renderTable() {
     const tbody = document.getElementById('tableBody');
     const rowCount = document.getElementById('rowCount');
@@ -45,27 +84,40 @@ function renderTable() {
         return;
     }
     
+    // Если есть заголовки — используем их
     let filtered = guests;
+    let headerKeys = headers;
     
-    if (currentFilter !== 'all') {
-        filtered = filtered.filter(g => g.status === currentFilter);
+    // Если заголовков нет — определяем из данных
+    if (!headerKeys || headerKeys.length === 0) {
+        if (guests.length > 0) {
+            headerKeys = Object.keys(guests[0]);
+        } else {
+            headerKeys = ['Имя', 'Статус'];
+        }
     }
     
+    // Фильтрация (если есть поле status)
+    if (currentFilter !== 'all') {
+        filtered = filtered.filter(g => {
+            const status = g.status || g.Статус || '';
+            return status === currentFilter;
+        });
+    }
+    
+    // Поиск по имени (если есть поле name)
     if (searchQuery.trim()) {
         const query = searchQuery.trim().toLowerCase();
-        filtered = filtered.filter(g => g.name.toLowerCase().includes(query));
+        filtered = filtered.filter(g => {
+            const name = g.name || g.Имя || '';
+            return name.toLowerCase().includes(query);
+        });
     }
-    
-    filtered.sort((a, b) => {
-        if (a.status === 'coming' && b.status !== 'coming') return -1;
-        if (a.status !== 'coming' && b.status === 'coming') return 1;
-        return 0;
-    });
     
     if (filtered.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="8" style="text-align: center; padding: 40px; color: #6B7A8A;">
+                <td colspan="${headerKeys.length}" style="text-align: center; padding: 40px; color: #6B7A8A;">
                     Нет записей, соответствующих фильтрам
                 </td>
             </tr>
@@ -76,42 +128,50 @@ function renderTable() {
     
     let html = '';
     filtered.forEach((guest, index) => {
-        const statusLabels = {
-            'coming': 'Идёт',
-            'not': 'Не идёт'
-        };
-        const statusClasses = {
-            'coming': 'coming',
-            'not': 'not'
-        };
+        html += '<tr>';
+        html += `<td>${index + 1}</td>`;
         
-        const alcoholText = guest.alcohol && guest.alcohol !== '—' ? guest.alcohol : 'Не выбрано';
+        // Показываем все поля
+        headerKeys.forEach(key => {
+            const value = guest[key] !== undefined ? guest[key] : '—';
+            // Делаем первую колонку жирной (если это имя)
+            if (key === 'name' || key === 'Имя') {
+                html += `<td><strong>${value}</strong></td>`;
+            } else {
+                html += `<td>${value}</td>`;
+            }
+        });
         
-        html += `
-            <tr>
-                <td>${index + 1}</td>
-                <td><strong>${guest.name}</strong></td>
-                <td>${guest.guests || 0}</td>
-                <td>${guest.children || 0}</td>
-                <td>${alcoholText}</td>
-                <td>${guest.allergies || 'Нет'}</td>
-                <td style="max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${guest.comment || '—'}</td>
-                <td><span class="status-badge ${statusClasses[guest.status]}">${statusLabels[guest.status]}</span></td>
-            </tr>
-        `;
+        html += '</tr>';
     });
     
     tbody.innerHTML = html;
     rowCount.textContent = `Показано: ${filtered.length} из ${guests.length} записей`;
 }
 
+// =====================================================
+// СТАТИСТИКА
+// =====================================================
 function updateStats() {
     const total = guests.length;
-    const coming = guests.filter(g => g.status === 'coming').length;
-    const not = guests.filter(g => g.status === 'not').length;
-    const children = guests.reduce((sum, g) => sum + (g.children || 0), 0);
+    
+    // Считаем статусы (если есть поле status)
+    const coming = guests.filter(g => {
+        const status = g.status || g.Статус || '';
+        return status === 'coming' || status === 'Идёт';
+    }).length;
+    
+    const not = guests.filter(g => {
+        const status = g.status || g.Статус || '';
+        return status === 'not' || status === 'Не идёт';
+    }).length;
+    
+    // Считаем детей (если есть поле children)
+    const children = guests.reduce((sum, g) => sum + (parseInt(g.children) || 0), 0);
+    
+    // Считаем алкоголь (если есть поле alcohol)
     const alcoholOrders = guests.reduce((sum, g) => {
-        if (g.alcohol && g.alcohol !== '—' && g.alcohol !== 'Не выбрано') {
+        if (g.alcohol && g.alcohol !== '—') {
             return sum + g.alcohol.split(',').length;
         }
         return sum;
@@ -124,23 +184,24 @@ function updateStats() {
     document.getElementById('totalAlcohol').textContent = alcoholOrders;
 }
 
+// =====================================================
+// ЭКСПОРТ В CSV
+// =====================================================
 function exportToCSV(filename = 'guests_list.csv') {
-    const headers = ['№', 'Имя', 'Гостей', 'Детей', 'Алкоголь', 'Аллергии', 'Комментарий', 'Статус'];
+    const headerKeys = headers.length > 0 ? headers : (guests.length > 0 ? Object.keys(guests[0]) : []);
     const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
     
-    let csv = headers.join(';') + '\n';
+    let csv = headerKeys.join(';') + '\n';
     
-    guests.forEach((guest, index) => {
-        const row = [
-            index + 1,
-            guest.name,
-            guest.guests || 0,
-            guest.children || 0,
-            guest.alcohol && guest.alcohol !== '—' ? guest.alcohol : 'Не выбрано',
-            guest.allergies || 'Нет',
-            guest.comment || '—',
-            statusMap[guest.status] || guest.status
-        ];
+    guests.forEach((guest) => {
+        const row = headerKeys.map(key => {
+            let value = guest[key] !== undefined ? guest[key] : '—';
+            // Преобразуем статус
+            if (key === 'status' || key === 'Статус') {
+                value = statusMap[value] || value;
+            }
+            return value;
+        });
         csv += row.join(';') + '\n';
     });
     
@@ -154,7 +215,11 @@ function exportToCSV(filename = 'guests_list.csv') {
     URL.revokeObjectURL(link.href);
 }
 
+// =====================================================
+// ЭКСПОРТ В EXCEL
+// =====================================================
 function exportToExcel() {
+    const headerKeys = headers.length > 0 ? headers : (guests.length > 0 ? Object.keys(guests[0]) : []);
     const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
     
     let html = `
@@ -165,25 +230,23 @@ function exportToExcel() {
         <table>
             <thead>
                 <tr>
-                    <th>№</th><th>Имя</th><th>Гостей</th><th>Детей</th><th>Алкоголь</th><th>Аллергии</th><th>Комментарий</th><th>Статус</th>
+                    <th>№</th>
+                    ${headerKeys.map(key => `<th>${key}</th>`).join('')}
                 </tr>
             </thead>
             <tbody>
     `;
     
     guests.forEach((guest, index) => {
-        html += `
-            <tr>
-                <td>${index + 1}</td>
-                <td>${guest.name}</td>
-                <td>${guest.guests || 0}</td>
-                <td>${guest.children || 0}</td>
-                <td>${guest.alcohol && guest.alcohol !== '—' ? guest.alcohol : 'Не выбрано'}</td>
-                <td>${guest.allergies || 'Нет'}</td>
-                <td>${guest.comment || '—'}</td>
-                <td>${statusMap[guest.status] || guest.status}</td>
-            </tr>
-        `;
+        html += `<tr><td>${index + 1}</td>`;
+        headerKeys.forEach(key => {
+            let value = guest[key] !== undefined ? guest[key] : '—';
+            if (key === 'status' || key === 'Статус') {
+                value = statusMap[value] || value;
+            }
+            html += `<td>${value}</td>`;
+        });
+        html += '</tr>';
     });
     
     html += '</tbody></table></body></html>';
@@ -198,11 +261,32 @@ function exportToExcel() {
     URL.revokeObjectURL(link.href);
 }
 
+// =====================================================
+// ВЫХОД
+// =====================================================
+function logout() {
+    sessionStorage.removeItem('adminAuthenticated');
+    sessionStorage.removeItem('tableUrl');
+    sessionStorage.removeItem('projectName');
+    sessionStorage.removeItem('projectId');
+    window.location.href = 'admin-login.html';
+}
+
+// =====================================================
+// ИНИЦИАЛИЗАЦИЯ
+// =====================================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Админ-панель загружена');
+    console.log('📁 Проект:', PROJECT_NAME);
+    console.log('🔗 URL:', SCRIPT_URL);
     
-    loadGuestsFromSheet();
+    // Кнопка выхода
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', logout);
+    }
     
+    // Фильтры
     const filterStatus = document.getElementById('filterStatus');
     const searchInput = document.getElementById('searchInput');
     
@@ -220,6 +304,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
+    // Кнопки экспорта
     const exportExcelBtn = document.getElementById('exportExcelBtn');
     const exportCsvBtn = document.getElementById('exportCsvBtn');
     
@@ -231,11 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
         exportCsvBtn.addEventListener('click', () => exportToCSV('guests_list.csv'));
     }
     
-    const logoutBtn = document.getElementById('logoutBtn');
-    if (logoutBtn) {
-        logoutBtn.addEventListener('click', function() {
-            sessionStorage.removeItem('adminAuthenticated');
-            window.location.href = 'admin-login.html';
-        });
-    }
+    // Загружаем данные
+    loadGuestsFromSheet();
 });

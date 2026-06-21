@@ -9,39 +9,6 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
-        <!-- =====================================================
-       ПОПАПЫ
-       ===================================================== -->
-    
-    <!-- Попап "Спасибо за подтверждение" -->
-    <div class="popup-overlay" id="popupSuccess">
-        <div class="popup">
-            <div class="popup-icon">🎉</div>
-            <h2 class="popup-title">Спасибо за подтверждение!</h2>
-            <p class="popup-text" id="popupMessage">Мы очень рады, что вы будете с нами в этот особенный день!</p>
-            <button class="popup-btn" onclick="closePopup('popupSuccess')">Отлично!</button>
-        </div>
-    </div>
-    
-    <!-- Попап "Ошибка" -->
-    <div class="popup-overlay" id="popupError">
-        <div class="popup">
-            <div class="popup-icon">😕</div>
-            <h2 class="popup-title">Что-то пошло не так</h2>
-            <p class="popup-text">Не удалось отправить ответ. Попробуйте ещё раз или свяжитесь с нами по телефону.</p>
-            <button class="popup-btn popup-btn-error" onclick="closePopup('popupError')">Попробовать снова</button>
-        </div>
-    </div>
-    
-    <!-- Попап "Отказ" -->
-    <div class="popup-overlay" id="popupDecline">
-        <div class="popup">
-            <div class="popup-icon">💔</div>
-            <h2 class="popup-title">Мы будем скучать!</h2>
-            <p class="popup-text">Очень жаль, что вы не сможете быть с нами. Обязательно встретимся в другой раз!</p>
-            <button class="popup-btn" onclick="closePopup('popupDecline')">Обнимаем!</button>
-        </div>
-    </div>
     <section class="hero-section">
         <div class="hero-overlay"></div>
         <div class="hero-content" data-aos="fade-up">
@@ -270,24 +237,24 @@
                         </select>
                     </div>
                 
-                    <!-- 4. Алкоголь (в строку) -->
+                    <!-- 4. Алкоголь (на русском) -->
                     <div class="form-group">
                         <label>Предпочтения по алкоголю</label>
                         <div class="checkbox-group checkbox-group-row">
                             <label class="checkbox-label">
-                                <input type="checkbox" name="alcohol" value="vodka"> Водка
+                                <input type="checkbox" name="alcohol" value="Водка"> Водка
                             </label>
                             <label class="checkbox-label">
-                                <input type="checkbox" name="alcohol" value="wine"> Вино
+                                <input type="checkbox" name="alcohol" value="Вино"> Вино
                             </label>
                             <label class="checkbox-label">
-                                <input type="checkbox" name="alcohol" value="beer"> Пиво
+                                <input type="checkbox" name="alcohol" value="Пиво"> Пиво
                             </label>
                             <label class="checkbox-label">
-                                <input type="checkbox" name="alcohol" value="whiskey"> Виски/Коньяк
+                                <input type="checkbox" name="alcohol" value="Виски/Коньяк"> Виски/Коньяк
                             </label>
                             <label class="checkbox-label">
-                                <input type="checkbox" name="alcohol" value="none"> Без алкоголя
+                                <input type="checkbox" name="alcohol" value="Без алкоголя"> Без алкоголя
                             </label>
                         </div>
                     </div>
@@ -321,6 +288,34 @@
             <p><a href="index.html" style="color:#D4A5A5;">← Вернуться на главную</a></p>
         </div>
     </footer>
+
+    <!-- Попапы -->
+    <div class="popup-overlay" id="popupSuccess">
+        <div class="popup">
+            <div class="popup-icon">🎉</div>
+            <h2 class="popup-title">Спасибо за подтверждение!</h2>
+            <p class="popup-text" id="popupMessage">Мы очень рады, что вы будете с нами в этот особенный день!</p>
+            <button class="popup-btn" onclick="closePopup('popupSuccess')">Отлично!</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popupError">
+        <div class="popup">
+            <div class="popup-icon">😕</div>
+            <h2 class="popup-title">Что-то пошло не так</h2>
+            <p class="popup-text">Не удалось отправить ответ. Попробуйте ещё раз.</p>
+            <button class="popup-btn popup-btn-error" onclick="closePopup('popupError')">Попробовать снова</button>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popupDecline">
+        <div class="popup">
+            <div class="popup-icon">💔</div>
+            <h2 class="popup-title">Мы будем скучать!</h2>
+            <p class="popup-text">Очень жаль, что вы не сможете быть с нами. Обязательно встретимся в другой раз!</p>
+            <button class="popup-btn" onclick="closePopup('popupDecline')">Обнимаем!</button>
+        </div>
+    </div>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/invitation.js"></script>
