@@ -54,8 +54,7 @@ if (openMapBtn) {
 // URL GOOGLE APPS SCRIPT (ПРЕМИУМ ТАБЛИЦА)
 // =====================================================
 
-// ВСТАВЬТЕ СЮДА ВАШ НОВЫЙ URL
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwKnU_NCDBeMQc4JMkeYoG5IZ-NgWL1uM1O8eJsG-4MeTXhLf6ljlf3PF5QfIPC-UyoPQ/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/НОВЫЙ_URL_ПРЕМИУМ/exec';
 
 // =====================================================
 // ПОПАПЫ
@@ -166,19 +165,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            var role = document.getElementById('guestRole').value;
             var guests = parseInt(document.getElementById('guestsCount').value) || 1;
             var children = parseInt(document.getElementById('childrenCount').value) || 0;
             var alcohol = getSelectedAlcohol();
             var allergies = document.getElementById('allergies').value.trim() || 'Нет';
-            var comment = document.getElementById('comment').value.trim() || '—';
+            var music = document.getElementById('musicPreference').value;
+            var wish = document.getElementById('wish').value.trim() || '—';
 
             var data = {
                 name: name,
+                role: role,
                 guests: guests,
                 children: children,
                 alcohol: alcohol,
                 allergies: allergies,
-                comment: comment,
+                music: music,
+                wish: wish,
                 status: 'Идёт',
                 timestamp: new Date().toISOString()
             };
@@ -194,8 +197,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (allergies !== 'Нет') {
                         message += 'Аллергии: ' + allergies + '. ';
                     }
-                    if (comment !== '—') {
-                        message += 'Комментарий: "' + comment + '"';
+                    if (wish !== '—') {
+                        message += 'Пожелание: "' + wish + '"';
                     }
                     message += ' До встречи 15 августа! ✨';
 
@@ -203,13 +206,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     setTimeout(function() {
                         document.getElementById('guestName').value = '';
+                        document.getElementById('guestRole').value = 'Гость';
                         document.getElementById('guestsCount').value = '1';
                         document.getElementById('childrenCount').value = '0';
                         document.querySelectorAll('input[name="alcohol"]:checked').forEach(function(cb) {
                             cb.checked = false;
                         });
                         document.getElementById('allergies').value = '';
-                        document.getElementById('comment').value = '';
+                        document.getElementById('musicPreference').value = 'Любая';
+                        document.getElementById('wish').value = '';
                     }, 3000);
                 } else {
                     showResult('', 'error');
@@ -230,11 +235,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
             var data = {
                 name: name,
+                role: '—',
                 guests: 0,
                 children: 0,
                 alcohol: '—',
                 allergies: '—',
-                comment: '—',
+                music: '—',
+                wish: '—',
                 status: 'Не идёт',
                 timestamp: new Date().toISOString()
             };
