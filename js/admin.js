@@ -1,5 +1,6 @@
 // =====================================================
-// Weddy — Админ-панель (исправленная)
+// Weddy — Админ-панель (универсальная)
+// Автоматически подстраивается под любую таблицу
 // =====================================================
 
 // Проверка авторизации
@@ -36,17 +37,47 @@ function loadGuestsFromSheet() {
     fetch(SCRIPT_URL)
         .then(response => response.json())
         .then(data => {
-            // data = { headers: [...], rows: [...] }
             if (data.headers) {
-                // Сохраняем все заголовки
                 allHeaders = data.headers;
-                // Фильтруем заголовки: убираем пустые и служебные
-                headers = data.headers.filter(h => {
-                    return h && h.trim() !== '' && 
-                           h.trim() !== 'ID' && 
-                           h.trim() !== 'id' &&
-                           h.trim() !== '№';
-                });
+                
+                // Определяем, какая это таблица (по наличию колонок)
+                const isPremium = data.headers.includes('Кто') || data.headers.includes('Музыка');
+                const isClassic = data.headers.includes('Комментарий') && !data.headers.includes('Музыка');
+                
+                // Порядок колонок для отображения (в зависимости от типа таблицы)
+                let displayOrder = [];
+                
+                if (isPremium) {
+                    // Премиум-таблица (Екатерина & Алексей)
+                    displayOrder = ['Имя', 'Кто', 'Гостей', 'Детей', 'Алкоголь', 'Аллергии', 'Музыка', 'Пожелание', 'Статус', 'Дата'];
+                } else if (isClassic) {
+                    // Классическая таблица (Анна & Дмитрий)
+                    displayOrder = ['Имя', 'Гостей', 'Детей', 'Алкоголь', 'Аллергии', 'Комментарий', 'Статус', 'Дата'];
+                } else {
+                    // Универсальный вариант — показываем все колонки, кроме служебных
+                    displayOrder = data.headers.filter(h => 
+                        h && h.trim() !== '' && 
+                        h.trim() !== 'ID' && 
+                        h.trim() !== 'id' &&
+                        h.trim() !== '№' &&
+                        h.trim() !== 'Идент'
+                    );
+                }
+                
+                // Берём только те колонки, которые есть в таблице, в правильном порядке
+                headers = displayOrder.filter(h => data.headers.includes(h));
+                
+                // Если в таблице есть другие колонки (кроме служебных) — добавляем их в конец
+                const extraHeaders = data.headers.filter(h => 
+                    h && h.trim() !== '' && 
+                    h.trim() !== 'ID' && 
+                    h.trim() !== 'id' &&
+                    h.trim() !== '№' &&
+                    h.trim() !== 'Идент' &&
+                    !displayOrder.includes(h)
+                );
+                headers = headers.concat(extraHeaders);
+                
                 guests = data.rows.map(row => {
                     const newRow = {};
                     data.headers.forEach(h => {
@@ -54,7 +85,8 @@ function loadGuestsFromSheet() {
                     });
                     return newRow;
                 });
-                console.log('✅ Все заголовки:', allHeaders);
+                
+                console.log('✅ Тип таблицы:', isPremium ? 'Премиум' : isClassic ? 'Классическая' : 'Универсальная');
                 console.log('✅ Отображаемые заголовки:', headers);
             } else {
                 // Если данные без заголовков — используем старый формат
@@ -91,7 +123,7 @@ let currentFilter = 'all';
 let searchQuery = '';
 
 // =====================================================
-// РЕНДЕР ТАБЛИЦЫ (исправленный)
+// РЕНДЕР ТАБЛИЦЫ
 // =====================================================
 function renderTable() {
     const tbody = document.getElementById('tableBody');
@@ -102,7 +134,6 @@ function renderTable() {
         return;
     }
     
-    // Используем отфильтрованные заголовки
     let headerKeys = headers.length > 0 ? headers : ['Имя', 'Статус'];
     
     // Фильтрация
@@ -140,7 +171,6 @@ function renderTable() {
         html += '<tr>';
         html += `<td>${index + 1}</td>`;
         
-        // Показываем только нужные колонки
         headerKeys.forEach(key => {
             let value = guest[key] !== undefined && guest[key] !== '—' ? guest[key] : '—';
             
@@ -156,7 +186,6 @@ function renderTable() {
                 }
             }
             
-            // Делаем первую колонку жирной (если это имя)
             if (key === 'Имя' || key === 'name') {
                 html += `<td><strong>${value}</strong></td>`;
             } else if (key === 'Статус' || key === 'status') {
@@ -182,7 +211,6 @@ function renderTable() {
 function updateStats() {
     const total = guests.length;
     
-    // Считаем статусы
     const coming = guests.filter(g => {
         const status = g.Статус || g.status || '';
         return status === 'coming' || status === 'Идёт';
@@ -193,13 +221,11 @@ function updateStats() {
         return status === 'not' || status === 'Не идёт';
     }).length;
     
-    // Считаем детей
     const children = guests.reduce((sum, g) => {
         const val = parseInt(g.Детей) || parseInt(g.children) || 0;
         return sum + val;
     }, 0);
     
-    // Считаем алкоголь
     const alcoholOrders = guests.reduce((sum, g) => {
         const alcohol = g.Алкоголь || g.alcohol || '';
         if (alcohol && alcohol !== '—' && alcohol !== 'Не выбрано') {
@@ -298,17 +324,15 @@ function logout() {
 // ИНИЦИАЛИЗАЦИЯ
 // =====================================================
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Админ-панель загружена (v2)');
+    console.log('🚀 Админ-панель загружена (универсальная)');
     console.log('📁 Проект:', PROJECT_NAME);
     console.log('🔗 URL:', SCRIPT_URL);
     
-    // Кнопка выхода
     const logoutBtn = document.getElementById('logoutBtn');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', logout);
     }
     
-    // Фильтры
     const filterStatus = document.getElementById('filterStatus');
     const searchInput = document.getElementById('searchInput');
     
@@ -326,7 +350,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Кнопки экспорта
     const exportExcelBtn = document.getElementById('exportExcelBtn');
     const exportCsvBtn = document.getElementById('exportCsvBtn');
     
@@ -338,6 +361,5 @@ document.addEventListener('DOMContentLoaded', function() {
         exportCsvBtn.addEventListener('click', () => exportToCSV('guests_list.csv'));
     }
     
-    // Загружаем данные
     loadGuestsFromSheet();
 });
