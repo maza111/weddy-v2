@@ -54,7 +54,7 @@ if (openMapBtn) {
 // URL GOOGLE APPS SCRIPT (RSVP)
 // =====================================================
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwoGm2UrS3FksU9P1QNyEkrTKODugKx7GUnL_DsFx0MvhVbVa86MXwR91xgNkiEBBtw/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbywBXDpYX6T-XpBxQrjqR-2ociDYod9RkErZ4HjspS1SalGVZ2kGY8M9FflaRVjYt0/exec';
 
 // =====================================================
 // ПОПАПЫ
