@@ -65,7 +65,7 @@ if (openMapBtn) {
 // URL GOOGLE APPS SCRIPT (ПРЕМИУМ) — ИСПРАВЛЕН!
 // =====================================================
 
-const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfnFsgnechM1v6ZOh_cN9Mvcqw-xxQKI5u0HoLEi9eemBFJleXI-WRLLlDuWOnCPTsyg/exec';
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx2gyLfI2qFIq7Gr6ynsiJUpBxSNTvpcuH1TY48Rn9ZBmyy9B1hFL1w-Xe2Wte_4WDcIg/exec';
 // =====================================================
 // ПОПАПЫ
 // =====================================================
