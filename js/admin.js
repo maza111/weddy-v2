@@ -8,7 +8,6 @@ if (!sessionStorage.getItem('adminAuthenticated')) {
     window.location.href = 'admin-login.html';
 }
 
-// Получаем URL таблицы из сессии
 const SCRIPT_URL = sessionStorage.getItem('tableUrl');
 const PROJECT_NAME = sessionStorage.getItem('projectName');
 
@@ -18,7 +17,6 @@ if (!SCRIPT_URL) {
     window.location.href = 'admin-login.html';
 }
 
-// Показываем название проекта в шапке
 document.addEventListener('DOMContentLoaded', function() {
     const projectNameEl = document.getElementById('projectName');
     if (projectNameEl && PROJECT_NAME) {
@@ -40,21 +38,18 @@ function loadGuestsFromSheet() {
             if (data.headers) {
                 allHeaders = data.headers;
                 
-                // Определяем, какая это таблица (по наличию колонок)
-                const isPremium = data.headers.includes('Кто') || data.headers.includes('Музыка');
+                // Определяем тип таблицы
+                const isPremium = data.headers.includes('Кто') && data.headers.includes('Музыка');
                 const isClassic = data.headers.includes('Комментарий') && !data.headers.includes('Музыка');
                 
-                // Порядок колонок для отображения (в зависимости от типа таблицы)
+                // Порядок колонок
                 let displayOrder = [];
                 
                 if (isPremium) {
-                    // Премиум-таблица (Екатерина & Алексей)
                     displayOrder = ['Имя', 'Кто', 'Гостей', 'Детей', 'Алкоголь', 'Аллергии', 'Музыка', 'Пожелание', 'Статус', 'Дата'];
                 } else if (isClassic) {
-                    // Классическая таблица (Анна & Дмитрий)
                     displayOrder = ['Имя', 'Гостей', 'Детей', 'Алкоголь', 'Аллергии', 'Комментарий', 'Статус', 'Дата'];
                 } else {
-                    // Универсальный вариант — показываем все колонки, кроме служебных
                     displayOrder = data.headers.filter(h => 
                         h && h.trim() !== '' && 
                         h.trim() !== 'ID' && 
@@ -64,10 +59,10 @@ function loadGuestsFromSheet() {
                     );
                 }
                 
-                // Берём только те колонки, которые есть в таблице, в правильном порядке
+                // Берём только те колонки, которые есть в таблице
                 headers = displayOrder.filter(h => data.headers.includes(h));
                 
-                // Если в таблице есть другие колонки (кроме служебных) — добавляем их в конец
+                // Добавляем остальные колонки (кроме служебных) в конец
                 const extraHeaders = data.headers.filter(h => 
                     h && h.trim() !== '' && 
                     h.trim() !== 'ID' && 
@@ -89,12 +84,10 @@ function loadGuestsFromSheet() {
                 console.log('✅ Тип таблицы:', isPremium ? 'Премиум' : isClassic ? 'Классическая' : 'Универсальная');
                 console.log('✅ Отображаемые заголовки:', headers);
             } else {
-                // Если данные без заголовков — используем старый формат
                 guests = data;
                 headers = guests.length > 0 ? Object.keys(guests[0]).filter(h => h !== 'id' && h !== 'ID') : ['Имя', 'Статус'];
                 allHeaders = headers;
             }
-            console.log('✅ Данные загружены из таблицы:', guests.length, 'записей');
             renderTable();
             updateStats();
         })
@@ -107,9 +100,6 @@ function loadGuestsFromSheet() {
         });
 }
 
-// =====================================================
-// ДЕМО-ДАННЫЕ
-// =====================================================
 function getDemoData() {
     return [
         { Имя: "Анна Иванова", Гостей: 1, Детей: 0, Алкоголь: "вино", Аллергии: "Нет", Комментарий: "—", Статус: "Идёт", Дата: "15.08.2026" },
@@ -122,9 +112,6 @@ function getDemoData() {
 let currentFilter = 'all';
 let searchQuery = '';
 
-// =====================================================
-// РЕНДЕР ТАБЛИЦЫ
-// =====================================================
 function renderTable() {
     const tbody = document.getElementById('tableBody');
     const rowCount = document.getElementById('rowCount');
@@ -136,7 +123,6 @@ function renderTable() {
     
     let headerKeys = headers.length > 0 ? headers : ['Имя', 'Статус'];
     
-    // Фильтрация
     let filtered = guests;
     
     if (currentFilter !== 'all') {
@@ -174,7 +160,6 @@ function renderTable() {
         headerKeys.forEach(key => {
             let value = guest[key] !== undefined && guest[key] !== '—' ? guest[key] : '—';
             
-            // Форматируем дату
             if (key === 'Дата' || key === 'date' || key === 'timestamp' || key === 'Date') {
                 if (value && value !== '—') {
                     try {
@@ -205,9 +190,6 @@ function renderTable() {
     rowCount.textContent = `Показано: ${filtered.length} из ${guests.length} записей`;
 }
 
-// =====================================================
-// СТАТИСТИКА
-// =====================================================
 function updateStats() {
     const total = guests.length;
     
@@ -241,9 +223,6 @@ function updateStats() {
     document.getElementById('totalAlcohol').textContent = alcoholOrders;
 }
 
-// =====================================================
-// ЭКСПОРТ В CSV
-// =====================================================
 function exportToCSV(filename = 'guests_list.csv') {
     const headerKeys = headers.length > 0 ? headers : ['Имя', 'Статус'];
     
@@ -267,9 +246,6 @@ function exportToCSV(filename = 'guests_list.csv') {
     URL.revokeObjectURL(link.href);
 }
 
-// =====================================================
-// ЭКСПОРТ В EXCEL
-// =====================================================
 function exportToExcel() {
     const headerKeys = headers.length > 0 ? headers : ['Имя', 'Статус'];
     
@@ -309,9 +285,6 @@ function exportToExcel() {
     URL.revokeObjectURL(link.href);
 }
 
-// =====================================================
-// ВЫХОД
-// =====================================================
 function logout() {
     sessionStorage.removeItem('adminAuthenticated');
     sessionStorage.removeItem('tableUrl');
@@ -320,9 +293,6 @@ function logout() {
     window.location.href = 'admin-login.html';
 }
 
-// =====================================================
-// ИНИЦИАЛИЗАЦИЯ
-// =====================================================
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Админ-панель загружена (универсальная)');
     console.log('📁 Проект:', PROJECT_NAME);
