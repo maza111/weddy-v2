@@ -9,19 +9,28 @@ AOS.init({
 });
 
 // =====================================================
-// ТАЙМЕР
+// ТАЙМЕР (с проверкой)
 // =====================================================
 
 function updateTimer() {
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    
+    if (!daysEl || !hoursEl || !minutesEl || !secondsEl) {
+        return;
+    }
+    
     const weddingDate = new Date(2026, 7, 15, 17, 0, 0);
     const now = new Date();
     const diff = weddingDate - now;
 
     if (diff <= 0) {
-        document.getElementById('days').textContent = '00';
-        document.getElementById('hours').textContent = '00';
-        document.getElementById('minutes').textContent = '00';
-        document.getElementById('seconds').textContent = '00';
+        daysEl.textContent = '00';
+        hoursEl.textContent = '00';
+        minutesEl.textContent = '00';
+        secondsEl.textContent = '00';
         return;
     }
 
@@ -30,14 +39,16 @@ function updateTimer() {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    document.getElementById('days').textContent = days.toString().padStart(2, '0');
-    document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
-    document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
-    document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+    daysEl.textContent = days.toString().padStart(2, '0');
+    hoursEl.textContent = hours.toString().padStart(2, '0');
+    minutesEl.textContent = minutes.toString().padStart(2, '0');
+    secondsEl.textContent = seconds.toString().padStart(2, '0');
 }
 
-setInterval(updateTimer, 1000);
-updateTimer();
+if (document.getElementById('days')) {
+    setInterval(updateTimer, 1000);
+    updateTimer();
+}
 
 // =====================================================
 // КАРТА
@@ -51,7 +62,7 @@ if (openMapBtn) {
 }
 
 // =====================================================
-// URL GOOGLE APPS SCRIPT (ПРЕМИУМ ТАБЛИЦА)
+// URL GOOGLE APPS SCRIPT (ПРЕМИУМ) — ИСПРАВЛЕН!
 // =====================================================
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfnFsgnechM1v6ZOh_cN9Mvcqw-xxQKI5u0HoLEi9eemBFJleXI-WRLLlDuWOnCPTsyg/exec';
@@ -99,6 +110,9 @@ document.addEventListener('keydown', function(e) {
 // =====================================================
 
 function sendDataToSheet(data) {
+    console.log('📤 Отправляем данные:', data);
+    console.log('📤 URL:', SCRIPT_URL);
+    
     return fetch(SCRIPT_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -108,11 +122,11 @@ function sendDataToSheet(data) {
         body: JSON.stringify(data)
     })
     .then(function() {
-        console.log('✅ Данные отправлены в Google Таблицу (Премиум)');
+        console.log('✅ Запрос отправлен (no-cors)');
         return { success: true };
     })
     .catch(function(error) {
-        console.error('❌ Ошибка отправки:', error);
+        console.error('❌ Ошибка:', error);
         return { success: false, error: error };
     });
 }
@@ -153,10 +167,11 @@ function getSelectedAlcohol() {
 document.addEventListener('DOMContentLoaded', function() {
     var rsvpForm = document.getElementById('rsvpFormPremium');
     var rsvpNoBtn = document.getElementById('rsvpNoPremium');
+    var rsvpYesBtn = document.getElementById('rsvpYesPremium');
 
     // ОТПРАВКА "БУДУ С РАДОСТЬЮ"
-    if (rsvpForm) {
-        rsvpForm.addEventListener('submit', function(e) {
+    if (rsvpYesBtn) {
+        rsvpYesBtn.addEventListener('click', function(e) {
             e.preventDefault();
 
             var name = document.getElementById('guestName').value.trim();
@@ -186,7 +201,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: new Date().toISOString()
             };
 
+            console.log('📦 Данные для отправки:', data);
+
             sendDataToSheet(data).then(function(result) {
+                console.log('📬 Результат:', result);
+                
                 if (result.success) {
                     var message = name + ', спасибо за подтверждение! ';
                     message += 'Вы пришли' + (guests > 1 ? ' с компанией (' + guests + ' чел.)' : '');
@@ -227,6 +246,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (rsvpNoBtn) {
         rsvpNoBtn.addEventListener('click', function(e) {
             e.preventDefault();
+
             var name = document.getElementById('guestName').value.trim();
             if (!name) {
                 showResult('Пожалуйста, представьтесь 💔', 'error');
@@ -246,6 +266,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 timestamp: new Date().toISOString()
             };
 
+            console.log('📦 Данные для отправки (отказ):', data);
+
             sendDataToSheet(data).then(function(result) {
                 if (result.success) {
                     showResult('', 'decline');
@@ -258,7 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // =====================================================
-    // FAQ — РАСКРЫВАЮЩИЕСЯ ОТВЕТЫ
+    // FAQ
     // =====================================================
 
     var faqItems = document.querySelectorAll('.faq-item');
@@ -291,7 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // =====================================================
-    // ГАЛЕРЕЯ — ОТКРЫТИЕ ФОТО
+    // ГАЛЕРЕЯ
     // =====================================================
 
     document.querySelectorAll('.gallery-item').forEach(function(item) {
