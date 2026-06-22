@@ -6,9 +6,32 @@
     <title>Weddy — цифровые приглашения на свадьбу</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- =====================================================
+       ПОПАПЫ ДЛЯ ЛЕНДИНГА
+    ===================================================== -->
+    
+    <!-- Попап "Спасибо за заявку" -->
+    <div class="popup-overlay" id="popupLeadSuccess">
+        <div class="popup">
+            <div class="popup-icon">🎉</div>
+            <h2 class="popup-title">Заявка отправлена!</h2>
+            <p class="popup-text" id="popupLeadMessage">Спасибо! Мы свяжемся с вами в ближайшее время. 💌</p>
+            <button class="popup-btn" onclick="closePopup('popupLeadSuccess')">Отлично!</button>
+        </div>
+    </div>
+    
+    <!-- Попап "Ошибка" для лендинга -->
+    <div class="popup-overlay" id="popupLeadError">
+        <div class="popup">
+            <div class="popup-icon">😕</div>
+            <h2 class="popup-title">Что-то пошло не так</h2>
+            <p class="popup-text">Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону.</p>
+            <button class="popup-btn popup-btn-error" onclick="closePopup('popupLeadError')">Попробовать снова</button>
+        </div>
+    </div>
 
     <!-- Акцентные цветовые пятна -->
     <div class="blob blob-1"></div>
@@ -114,7 +137,7 @@
         <!-- Разделитель -->
         <div class="section-divider"></div>
 
-        <!-- ШАБЛОНЫ -->
+        <!-- ШАБЛОНЫ (НОВЫЙ БЛОК) -->
         <section id="templates" class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
@@ -122,6 +145,7 @@
                     <p data-aos="fade-up" data-aos-delay="100">Два уникальных дизайна для вашего идеального приглашения</p>
                 </div>
                 <div class="templates-grid">
+                    <!-- Шаблон 1: Классический -->
                     <div class="template-card glass" data-aos="flip-left" data-aos-delay="200">
                         <div class="template-preview">
                             <div class="template-placeholder template-classic">
@@ -145,6 +169,7 @@
                         </div>
                     </div>
 
+                    <!-- Шаблон 2: Премиум -->
                     <div class="template-card glass popular" data-aos="flip-right" data-aos-delay="300">
                         <div class="popular-badge">🔥 Популярный</div>
                         <div class="template-preview">
