@@ -5,32 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Weddy — цифровые приглашения на свадьбу</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-        <!-- =====================================================
-       ПОПАПЫ ДЛЯ ЛЕНДИНГА
-       ===================================================== -->
-    
-    <!-- Попап "Спасибо за заявку" -->
-    <div class="popup-overlay" id="popupLeadSuccess">
-        <div class="popup">
-            <div class="popup-icon">🎉</div>
-            <h2 class="popup-title">Заявка отправлена!</h2>
-            <p class="popup-text" id="popupLeadMessage">Спасибо! Мы свяжемся с вами в ближайшее время. 💌</p>
-            <button class="popup-btn" onclick="closePopup('popupLeadSuccess')">Отлично!</button>
-        </div>
-    </div>
-    
-    <!-- Попап "Ошибка" для лендинга -->
-    <div class="popup-overlay" id="popupLeadError">
-        <div class="popup">
-            <div class="popup-icon">😕</div>
-            <h2 class="popup-title">Что-то пошло не так</h2>
-            <p class="popup-text">Не удалось отправить заявку. Попробуйте ещё раз или свяжитесь с нами по телефону.</p>
-            <button class="popup-btn popup-btn-error" onclick="closePopup('popupLeadError')">Попробовать снова</button>
-        </div>
-    </div>
 
     <!-- Акцентные цветовые пятна -->
     <div class="blob blob-1"></div>
@@ -46,8 +24,8 @@
             <div class="nav-links">
                 <a href="#problem">Проблемы</a>
                 <a href="#how-it-works">Как работает</a>
+                <a href="#templates">Шаблоны</a>
                 <a href="#pricing">Тарифы</a>
-                <a href="invitation.html">Пример</a>
                 <a href="#demo" class="btn-small">Создать</a>
             </div>
         </div>
@@ -57,15 +35,15 @@
         <!-- Hero блок -->
         <section class="hero">
             <div class="container hero-container">
-                <div class="hero-content">
+                <div class="hero-content" data-aos="fade-right" data-aos-duration="1000">
                     <h1>Свадьба без хаоса:<br>автоматический сбор ответов гостей</h1>
                     <p class="hero-subtitle">Weddy — сервис, который собирает ответы гостей, считает количество человек и сохраняет всё в Google Таблице. Вы видите статистику в реальном времени и можете выгрузить данные в Excel одной кнопкой.</p>
                     <div class="hero-buttons">
                         <a href="#demo" class="btn btn-primary">Создать приглашение</a>
-                        <a href="invitation.html" class="btn btn-outline">Посмотреть пример</a>
+                        <a href="#templates" class="btn btn-outline">Смотреть шаблоны</a>
                     </div>
                 </div>
-                <div class="hero-graphic">
+                <div class="hero-graphic" data-aos="fade-left" data-aos-duration="1000">
                     <div class="abstract-shape"></div>
                     <div class="abstract-shape2"></div>
                     <div class="abstract-shape3"></div>
@@ -80,21 +58,21 @@
         <section id="problem" class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2>Знакомо каждой невесте?</h2>
-                    <p>Организация свадьбы — стресс. Мы убираем главные головные боли</p>
+                    <h2 data-aos="fade-up">Знакомо каждой невесте?</h2>
+                    <p data-aos="fade-up" data-aos-delay="100">Организация свадьбы — стресс. Мы убираем главные головные боли</p>
                 </div>
                 <div class="grid-3">
-                    <div class="pain-card glass">
+                    <div class="pain-card glass" data-aos="fade-right" data-aos-delay="200">
                         <div class="pain-icon"></div>
                         <h3>Тысяча сообщений</h3>
                         <p>"А когда?", "А можно с +1?", "А что с детьми?" — вместо того, чтобы наслаждаться подготовкой, вы тонете в мессенджерах.</p>
                     </div>
-                    <div class="pain-card glass">
+                    <div class="pain-card glass" data-aos="fade-up" data-aos-delay="300">
                         <div class="pain-icon"></div>
                         <h3>Неизвестное количество гостей</h3>
                         <p>Вы заказываете банкет вслепую: кто-то не придёт, кто-то приведёт неожиданного +1. Перерасход бюджета или пустые места.</p>
                     </div>
-                    <div class="pain-card glass">
+                    <div class="pain-card glass" data-aos="fade-left" data-aos-delay="400">
                         <div class="pain-icon"></div>
                         <h3>Ручной сбор ответов</h3>
                         <p>Excel-таблицы, голосовые сообщения, забытые ответы — вы тратите часы на то, что может делать автоматика.</p>
@@ -110,21 +88,21 @@
         <section id="how-it-works" class="section">
             <div class="container">
                 <div class="section-header">
-                    <h2>Как это работает</h2>
-                    <p>Всего 3 шага — и вы забываете о хаосе</p>
+                    <h2 data-aos="fade-up">Как это работает</h2>
+                    <p data-aos="fade-up" data-aos-delay="100">Всего 3 шага — и вы забываете о хаосе</p>
                 </div>
                 <div class="steps">
-                    <div class="step-item glass">
+                    <div class="step-item glass" data-aos="fade-right" data-aos-delay="200">
                         <div class="step-number">1</div>
                         <h3>Создаёте приглашение</h3>
                         <p>Выбираете дизайн, заполняете информацию о свадьбе. Получаете уникальную ссылку для гостей.</p>
                     </div>
-                    <div class="step-item glass">
+                    <div class="step-item glass" data-aos="fade-up" data-aos-delay="300">
                         <div class="step-number">2</div>
                         <h3>Гости заполняют форму</h3>
                         <p>Гость переходит по ссылке, указывает имя, количество гостей, предпочтения. Данные автоматически попадают в Google Таблицу.</p>
                     </div>
-                    <div class="step-item glass">
+                    <div class="step-item glass" data-aos="fade-left" data-aos-delay="400">
                         <div class="step-number">3</div>
                         <h3>Вы видите всё в админ-панели</h3>
                         <p>Открываете админку, видите список всех гостей. Смотрите статистику, фильтруете, выгружаете в Excel.</p>
@@ -136,19 +114,82 @@
         <!-- Разделитель -->
         <div class="section-divider"></div>
 
-        <!-- Преимущества -->
-        <section class="section section-bg-light">
+        <!-- ШАБЛОНЫ (НОВЫЙ БЛОК) -->
+        <section id="templates" class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2>Почему организаторы выбирают Weddy</h2>
+                    <h2 data-aos="fade-up">Выберите свой стиль</h2>
+                    <p data-aos="fade-up" data-aos-delay="100">Два уникальных дизайна для вашего идеального приглашения</p>
+                </div>
+                <div class="templates-grid">
+                    <!-- Шаблон 1: Классический -->
+                    <div class="template-card glass" data-aos="flip-left" data-aos-delay="200">
+                        <div class="template-preview">
+                            <div class="template-placeholder template-classic">
+                                <div class="template-label">✦ Классический</div>
+                                <div class="template-overlay">
+                                    <span class="template-icon">💕</span>
+                                    <span class="template-name">Анна & Дмитрий</span>
+                                    <span class="template-desc">Романтичный, нежный, свадебный</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Классический</h3>
+                            <p>Нежный розовый дизайн с романтической атмосферой. Идеально для традиционной свадьбы.</p>
+                            <div class="template-tags">
+                                <span class="tag">Романтика</span>
+                                <span class="tag">Нежность</span>
+                                <span class="tag">Свадебный</span>
+                            </div>
+                            <a href="invitation.html" class="btn btn-outline w-100">Посмотреть пример</a>
+                        </div>
+                    </div>
+
+                    <!-- Шаблон 2: Премиум -->
+                    <div class="template-card glass popular" data-aos="flip-right" data-aos-delay="300">
+                        <div class="popular-badge">🔥 Популярный</div>
+                        <div class="template-preview">
+                            <div class="template-placeholder template-premium">
+                                <div class="template-label">✦ Премиум</div>
+                                <div class="template-overlay">
+                                    <span class="template-icon">✨</span>
+                                    <span class="template-name">Екатерина & Алексей</span>
+                                    <span class="template-desc">Роскошный, стильный, премиальный</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="template-info">
+                            <h3>Премиум</h3>
+                            <p>Элегантный дизайн с декоративными линиями и стильным оформлением. Для особенного дня.</p>
+                            <div class="template-tags">
+                                <span class="tag">Элегантность</span>
+                                <span class="tag">Стиль</span>
+                                <span class="tag">Премиум</span>
+                            </div>
+                            <a href="invitation-premium.html" class="btn btn-primary w-100">Посмотреть пример</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Разделитель -->
+        <div class="section-divider"></div>
+
+        <!-- Преимущества -->
+        <section class="section">
+            <div class="container">
+                <div class="section-header">
+                    <h2 data-aos="fade-up">Почему организаторы выбирают Weddy</h2>
                 </div>
                 <div class="features-grid">
-                    <div class="feature"><span class="check">✓</span> Все данные в Google Таблице</div>
-                    <div class="feature"><span class="check">✓</span> Только вы имеете доступ к данным</div>
-                    <div class="feature"><span class="check">✓</span> Работает на телефоне и компьютере</div>
-                    <div class="feature"><span class="check">✓</span> Экспорт в Excel одной кнопкой</div>
-                    <div class="feature"><span class="check">✓</span> Удобная админ-панель с фильтрами</div>
-                    <div class="feature"><span class="check">✓</span> Бесплатно для гостей</div>
+                    <div class="feature" data-aos="fade-right" data-aos-delay="100"><span class="check">✓</span> Все данные в Google Таблице</div>
+                    <div class="feature" data-aos="fade-right" data-aos-delay="200"><span class="check">✓</span> Только вы имеете доступ к данным</div>
+                    <div class="feature" data-aos="fade-left" data-aos-delay="100"><span class="check">✓</span> Работает на телефоне и компьютере</div>
+                    <div class="feature" data-aos="fade-left" data-aos-delay="200"><span class="check">✓</span> Экспорт в Excel одной кнопкой</div>
+                    <div class="feature" data-aos="fade-right" data-aos-delay="150"><span class="check">✓</span> Удобная админ-панель с фильтрами</div>
+                    <div class="feature" data-aos="fade-left" data-aos-delay="150"><span class="check">✓</span> Бесплатно для гостей</div>
                 </div>
             </div>
         </section>
@@ -157,23 +198,23 @@
         <div class="section-divider"></div>
 
         <!-- Для кого -->
-        <section class="section">
+        <section class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2>Для кого этот сервис</h2>
+                    <h2 data-aos="fade-up">Для кого этот сервис</h2>
                 </div>
                 <div class="grid-3">
-                    <div class="pain-card glass">
+                    <div class="pain-card glass" data-aos="flip-left" data-aos-delay="100">
                         <div class="pain-icon" style="font-size:2.5rem;">🎯</div>
                         <h3>Для организаторов</h3>
                         <p>Автоматизируйте сбор ответов и экономьте до 20 часов на каждой свадьбе.</p>
                     </div>
-                    <div class="pain-card glass">
+                    <div class="pain-card glass" data-aos="flip-up" data-aos-delay="200">
                         <div class="pain-icon" style="font-size:2.5rem;">💕</div>
                         <h3>Для молодожёнов</h3>
                         <p>Создайте красивое онлайн-приглашение и соберите ответы без стресса.</p>
                     </div>
-                    <div class="pain-card glass">
+                    <div class="pain-card glass" data-aos="flip-right" data-aos-delay="300">
                         <div class="pain-icon" style="font-size:2.5rem;">🏢</div>
                         <h3>Для event-менеджеров</h3>
                         <p>Управляйте списком гостей в реальном времени и экспортируйте данные для ресторана.</p>
@@ -186,11 +227,11 @@
         <div class="section-divider"></div>
 
         <!-- Пример админ-панели -->
-        <section class="section section-bg-light">
+        <section class="section">
             <div class="container" style="text-align: center;">
-                <h2>Как выглядит админ-панель</h2>
-                <p class="section-subtitle">Все ответы гостей в одной таблице</p>
-                <div class="stats-preview glass">
+                <h2 data-aos="fade-up">Как выглядит админ-панель</h2>
+                <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Все ответы гостей в одной таблице</p>
+                <div class="stats-preview glass" data-aos="zoom-in" data-aos-delay="200">
                     <div style="display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; margin-bottom: 24px;">
                         <div style="background: #F8F5F0; padding: 12px 24px; border-radius: 16px;">
                             <div style="font-size: 1.5rem; font-weight: 700; color: #1C2E4A;">28</div>
@@ -234,11 +275,11 @@
         <section id="pricing" class="section section-bg-light">
             <div class="container">
                 <div class="section-header">
-                    <h2>Выберите свой пакет</h2>
-                    <p>Стандарт — наши готовые шаблоны. Премиум — дизайн под вашу свадьбу</p>
+                    <h2 data-aos="fade-up">Выберите свой пакет</h2>
+                    <p data-aos="fade-up" data-aos-delay="100">Стандарт — наши готовые шаблоны. Премиум — дизайн под вашу свадьбу</p>
                 </div>
                 <div class="pricing-grid">
-                    <div class="pricing-card glass">
+                    <div class="pricing-card glass" data-aos="flip-left" data-aos-delay="200">
                         <h3>Стандарт</h3>
                         <div class="price">4 990 ₽ <small>на свадьбу</small></div>
                         <div class="package-badge">🎨 Наши шаблоны</div>
@@ -250,7 +291,7 @@
                         </ul>
                         <button class="btn btn-outline w-100 demo-single">Выбрать Стандарт</button>
                     </div>
-                    <div class="pricing-card popular glass">
+                    <div class="pricing-card popular glass" data-aos="flip-up" data-aos-delay="300">
                         <div class="popular-badge">🔥 Популярный</div>
                         <h3>Премиум</h3>
                         <div class="price">10 990 ₽ <small>на свадьбу</small></div>
@@ -274,7 +315,7 @@
         <!-- Форма захвата -->
         <section id="demo" class="section">
             <div class="container">
-                <div class="form-card glass">
+                <div class="form-card glass" data-aos="fade-up" data-aos-duration="800">
                     <h2 style="text-align: center; margin-bottom: 8px;">Создайте своё приглашение</h2>
                     <p style="text-align: center; margin-bottom: 28px;">Оставьте контакты — и мы поможем вам начать</p>
                     <form id="leadForm">
@@ -318,6 +359,7 @@
         </div>
     </footer>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="js/script.js"></script>
 </body>
 </html>

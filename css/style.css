@@ -1165,3 +1165,170 @@ footer {
         font-size: 0.85rem;
     }
 }
+
+/* =====================================================
+   БЛОК ШАБЛОНОВ
+   ===================================================== */
+
+.templates-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+@media (min-width: 768px) {
+    .templates-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        padding: 0;
+    }
+}
+
+.template-card {
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.template-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-hover);
+}
+
+.template-card.popular {
+    border-top: 5px solid var(--rose-gold);
+}
+
+.template-preview {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    position: relative;
+}
+
+.template-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Классический шаблон (розовый) */
+.template-classic {
+    background: linear-gradient(135deg, #F5EDE6 0%, #E8DDD4 100%);
+}
+
+.template-classic .template-label {
+    color: #8B7A6B;
+}
+
+.template-classic .template-overlay {
+    background: linear-gradient(180deg, transparent 0%, rgba(28, 46, 74, 0.6) 100%);
+}
+
+/* Премиум шаблон (тёмный) */
+.template-premium {
+    background: linear-gradient(135deg, #1C2E4A 0%, #2C4A6E 100%);
+}
+
+.template-premium .template-label {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.template-premium .template-overlay {
+    background: linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.template-label {
+    position: absolute;
+    top: 16px;
+    right: 20px;
+    font-size: 0.7rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.template-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 30px 24px 24px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.template-icon {
+    font-size: 2.5rem;
+    margin-bottom: 4px;
+}
+
+.template-name {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: white;
+    letter-spacing: 1px;
+}
+
+.template-desc {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 4px;
+}
+
+.template-info {
+    padding: 24px 24px 28px;
+}
+
+.template-info h3 {
+    font-family: 'Unbounded', sans-serif;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.template-info p {
+    color: #6B7A8A;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+.template-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 20px;
+}
+
+.tag {
+    padding: 4px 14px;
+    background: #F5F0EB;
+    border-radius: 40px;
+    font-size: 0.7rem;
+    color: #6B7A8A;
+    font-weight: 500;
+}
+
+.template-card.popular .tag {
+    background: rgba(212, 165, 165, 0.15);
+    color: #1C2E4A;
+}
+
+@media (max-width: 480px) {
+    .template-info {
+        padding: 20px 16px 24px;
+    }
+    .template-name {
+        font-size: 1rem;
+    }
+}
