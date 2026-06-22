@@ -1,6 +1,5 @@
 // =====================================================
-// Weddy — Админ-панель (универсальная)
-// Показывает ВСЕ колонки из Google Таблицы
+// Weddy — Админ-панель (исправленная)
 // =====================================================
 
 // Проверка авторизации
@@ -38,13 +37,22 @@ function loadGuestsFromSheet() {
         .then(data => {
             // data = { headers: [...], rows: [...] }
             if (data.headers) {
-                headers = data.headers;
-                guests = data.rows;
+                // Фильтруем заголовки: убираем пустые и дублирующиеся
+                headers = data.headers.filter(h => h && h.trim() !== '');
+                guests = data.rows.map(row => {
+                    const newRow = {};
+                    headers.forEach(h => {
+                        newRow[h] = row[h] || '—';
+                    });
+                    return newRow;
+                });
             } else {
                 // Если данные без заголовков — используем старый формат
                 guests = data;
+                headers = guests.length > 0 ? Object.keys(guests[0]) : ['Имя', 'Статус'];
             }
             console.log('✅ Данные загружены из таблицы:', guests.length, 'записей');
+            console.log('📋 Заголовки:', headers);
             renderTable();
             updateStats();
         })
@@ -73,7 +81,7 @@ let currentFilter = 'all';
 let searchQuery = '';
 
 // =====================================================
-// РЕНДЕР ТАБЛИЦЫ (универсальный)
+// РЕНДЕР ТАБЛИЦЫ (исправленный)
 // =====================================================
 function renderTable() {
     const tbody = document.getElementById('tableBody');
@@ -84,8 +92,7 @@ function renderTable() {
         return;
     }
     
-    // Если есть заголовки — используем их
-    let filtered = guests;
+    // Используем отфильтрованные заголовки
     let headerKeys = headers;
     
     // Если заголовков нет — определяем из данных
@@ -97,7 +104,9 @@ function renderTable() {
         }
     }
     
-    // Фильтрация (если есть поле status)
+    // Фильтрация
+    let filtered = guests;
+    
     if (currentFilter !== 'all') {
         filtered = filtered.filter(g => {
             const status = g.status || g.Статус || '';
@@ -105,7 +114,6 @@ function renderTable() {
         });
     }
     
-    // Поиск по имени (если есть поле name)
     if (searchQuery.trim()) {
         const query = searchQuery.trim().toLowerCase();
         filtered = filtered.filter(g => {
@@ -117,7 +125,7 @@ function renderTable() {
     if (filtered.length === 0) {
         tbody.innerHTML = `
             <tr>
-                <td colspan="${headerKeys.length}" style="text-align: center; padding: 40px; color: #6B7A8A;">
+                <td colspan="${headerKeys.length + 1}" style="text-align: center; padding: 40px; color: #6B7A8A;">
                     Нет записей, соответствующих фильтрам
                 </td>
             </tr>
@@ -131,12 +139,28 @@ function renderTable() {
         html += '<tr>';
         html += `<td>${index + 1}</td>`;
         
-        // Показываем все поля
+        // Показываем только нужные колонки
         headerKeys.forEach(key => {
-            const value = guest[key] !== undefined ? guest[key] : '—';
+            let value = guest[key] !== undefined && guest[key] !== '—' ? guest[key] : '—';
+            // Форматируем дату
+            if (key === 'Дата' || key === 'date' || key === 'timestamp') {
+                if (value && value !== '—') {
+                    try {
+                        const d = new Date(value);
+                        if (!isNaN(d.getTime())) {
+                            value = d.toLocaleDateString('ru-RU') + ' ' + d.toLocaleTimeString('ru-RU', {hour: '2-digit', minute: '2-digit'});
+                        }
+                    } catch(e) {}
+                }
+            }
             // Делаем первую колонку жирной (если это имя)
             if (key === 'name' || key === 'Имя') {
                 html += `<td><strong>${value}</strong></td>`;
+            } else if (key === 'status' || key === 'Статус') {
+                const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт', 'Идёт': 'Идёт', 'Не идёт': 'Не идёт' };
+                value = statusMap[value] || value;
+                const statusClass = value === 'Идёт' ? 'coming' : 'not';
+                html += `<td><span class="status-badge ${statusClass}">${value}</span></td>`;
             } else {
                 html += `<td>${value}</td>`;
             }
@@ -155,7 +179,7 @@ function renderTable() {
 function updateStats() {
     const total = guests.length;
     
-    // Считаем статусы (если есть поле status)
+    // Считаем статусы
     const coming = guests.filter(g => {
         const status = g.status || g.Статус || '';
         return status === 'coming' || status === 'Идёт';
@@ -166,13 +190,17 @@ function updateStats() {
         return status === 'not' || status === 'Не идёт';
     }).length;
     
-    // Считаем детей (если есть поле children)
-    const children = guests.reduce((sum, g) => sum + (parseInt(g.children) || 0), 0);
+    // Считаем детей
+    const children = guests.reduce((sum, g) => {
+        const val = parseInt(g.children) || parseInt(g.Детей) || 0;
+        return sum + val;
+    }, 0);
     
-    // Считаем алкоголь (если есть поле alcohol)
+    // Считаем алкоголь
     const alcoholOrders = guests.reduce((sum, g) => {
-        if (g.alcohol && g.alcohol !== '—') {
-            return sum + g.alcohol.split(',').length;
+        const alcohol = g.alcohol || g.Алкоголь || '';
+        if (alcohol && alcohol !== '—' && alcohol !== 'Не выбрано') {
+            return sum + alcohol.split(',').length;
         }
         return sum;
     }, 0);
