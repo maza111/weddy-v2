@@ -66,7 +66,6 @@ if (openMapBtn) {
 // =====================================================
 
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfnFsgnechM1v6ZOh_cN9Mvcqw-xxQKI5u0HoLEi9eemBFJleXI-WRLLlDuWOnCPTsyg/exec';
-
 // =====================================================
 // ПОПАПЫ
 // =====================================================
