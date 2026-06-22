@@ -27,6 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 let guests = [];
 let headers = [];
+let allHeaders = [];
 
 // =====================================================
 // ЗАГРУЗКА ДАННЫХ ИЗ ТАБЛИЦЫ
@@ -37,22 +38,31 @@ function loadGuestsFromSheet() {
         .then(data => {
             // data = { headers: [...], rows: [...] }
             if (data.headers) {
-                // Фильтруем заголовки: убираем пустые и дублирующиеся
-                headers = data.headers.filter(h => h && h.trim() !== '');
+                // Сохраняем все заголовки
+                allHeaders = data.headers;
+                // Фильтруем заголовки: убираем пустые и служебные
+                headers = data.headers.filter(h => {
+                    return h && h.trim() !== '' && 
+                           h.trim() !== 'ID' && 
+                           h.trim() !== 'id' &&
+                           h.trim() !== '№';
+                });
                 guests = data.rows.map(row => {
                     const newRow = {};
-                    headers.forEach(h => {
-                        newRow[h] = row[h] || '—';
+                    data.headers.forEach(h => {
+                        newRow[h] = row[h] !== undefined ? row[h] : '—';
                     });
                     return newRow;
                 });
+                console.log('✅ Все заголовки:', allHeaders);
+                console.log('✅ Отображаемые заголовки:', headers);
             } else {
                 // Если данные без заголовков — используем старый формат
                 guests = data;
-                headers = guests.length > 0 ? Object.keys(guests[0]) : ['Имя', 'Статус'];
+                headers = guests.length > 0 ? Object.keys(guests[0]).filter(h => h !== 'id' && h !== 'ID') : ['Имя', 'Статус'];
+                allHeaders = headers;
             }
             console.log('✅ Данные загружены из таблицы:', guests.length, 'записей');
-            console.log('📋 Заголовки:', headers);
             renderTable();
             updateStats();
         })
@@ -70,10 +80,10 @@ function loadGuestsFromSheet() {
 // =====================================================
 function getDemoData() {
     return [
-        { id: 1, name: "Анна Иванова", guests: 1, children: 0, alcohol: "вино", allergies: "Нет", comment: "—", status: "coming", date: "15.08.2026" },
-        { id: 2, name: "Дмитрий Петров", guests: 2, children: 0, alcohol: "водка, вино", allergies: "Нет", comment: "Будем рады увидеть всех!", status: "coming", date: "15.08.2026" },
-        { id: 3, name: "Елена Смирнова", guests: 0, children: 0, alcohol: "—", allergies: "Орехи", comment: "—", status: "not", date: "14.08.2026" },
-        { id: 4, name: "Михаил Козлов", guests: 1, children: 1, alcohol: "пиво", allergies: "Нет", comment: "—", status: "coming", date: "15.08.2026" }
+        { Имя: "Анна Иванова", Гостей: 1, Детей: 0, Алкоголь: "вино", Аллергии: "Нет", Комментарий: "—", Статус: "Идёт", Дата: "15.08.2026" },
+        { Имя: "Дмитрий Петров", Гостей: 2, Детей: 0, Алкоголь: "водка, вино", Аллергии: "Нет", Комментарий: "Будем рады увидеть всех!", Статус: "Идёт", Дата: "15.08.2026" },
+        { Имя: "Елена Смирнова", Гостей: 0, Детей: 0, Алкоголь: "—", Аллергии: "Орехи", Комментарий: "—", Статус: "Не идёт", Дата: "14.08.2026" },
+        { Имя: "Михаил Козлов", Гостей: 1, Детей: 1, Алкоголь: "пиво", Аллергии: "Нет", Комментарий: "—", Статус: "Идёт", Дата: "15.08.2026" }
     ];
 }
 
@@ -93,23 +103,14 @@ function renderTable() {
     }
     
     // Используем отфильтрованные заголовки
-    let headerKeys = headers;
-    
-    // Если заголовков нет — определяем из данных
-    if (!headerKeys || headerKeys.length === 0) {
-        if (guests.length > 0) {
-            headerKeys = Object.keys(guests[0]);
-        } else {
-            headerKeys = ['Имя', 'Статус'];
-        }
-    }
+    let headerKeys = headers.length > 0 ? headers : ['Имя', 'Статус'];
     
     // Фильтрация
     let filtered = guests;
     
     if (currentFilter !== 'all') {
         filtered = filtered.filter(g => {
-            const status = g.status || g.Статус || '';
+            const status = g.Статус || g.status || '';
             return status === currentFilter;
         });
     }
@@ -117,7 +118,7 @@ function renderTable() {
     if (searchQuery.trim()) {
         const query = searchQuery.trim().toLowerCase();
         filtered = filtered.filter(g => {
-            const name = g.name || g.Имя || '';
+            const name = g.Имя || g.name || '';
             return name.toLowerCase().includes(query);
         });
     }
@@ -142,8 +143,9 @@ function renderTable() {
         // Показываем только нужные колонки
         headerKeys.forEach(key => {
             let value = guest[key] !== undefined && guest[key] !== '—' ? guest[key] : '—';
+            
             // Форматируем дату
-            if (key === 'Дата' || key === 'date' || key === 'timestamp') {
+            if (key === 'Дата' || key === 'date' || key === 'timestamp' || key === 'Date') {
                 if (value && value !== '—') {
                     try {
                         const d = new Date(value);
@@ -153,10 +155,11 @@ function renderTable() {
                     } catch(e) {}
                 }
             }
+            
             // Делаем первую колонку жирной (если это имя)
-            if (key === 'name' || key === 'Имя') {
+            if (key === 'Имя' || key === 'name') {
                 html += `<td><strong>${value}</strong></td>`;
-            } else if (key === 'status' || key === 'Статус') {
+            } else if (key === 'Статус' || key === 'status') {
                 const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт', 'Идёт': 'Идёт', 'Не идёт': 'Не идёт' };
                 value = statusMap[value] || value;
                 const statusClass = value === 'Идёт' ? 'coming' : 'not';
@@ -181,24 +184,24 @@ function updateStats() {
     
     // Считаем статусы
     const coming = guests.filter(g => {
-        const status = g.status || g.Статус || '';
+        const status = g.Статус || g.status || '';
         return status === 'coming' || status === 'Идёт';
     }).length;
     
     const not = guests.filter(g => {
-        const status = g.status || g.Статус || '';
+        const status = g.Статус || g.status || '';
         return status === 'not' || status === 'Не идёт';
     }).length;
     
     // Считаем детей
     const children = guests.reduce((sum, g) => {
-        const val = parseInt(g.children) || parseInt(g.Детей) || 0;
+        const val = parseInt(g.Детей) || parseInt(g.children) || 0;
         return sum + val;
     }, 0);
     
     // Считаем алкоголь
     const alcoholOrders = guests.reduce((sum, g) => {
-        const alcohol = g.alcohol || g.Алкоголь || '';
+        const alcohol = g.Алкоголь || g.alcohol || '';
         if (alcohol && alcohol !== '—' && alcohol !== 'Не выбрано') {
             return sum + alcohol.split(',').length;
         }
@@ -216,18 +219,13 @@ function updateStats() {
 // ЭКСПОРТ В CSV
 // =====================================================
 function exportToCSV(filename = 'guests_list.csv') {
-    const headerKeys = headers.length > 0 ? headers : (guests.length > 0 ? Object.keys(guests[0]) : []);
-    const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
+    const headerKeys = headers.length > 0 ? headers : ['Имя', 'Статус'];
     
     let csv = headerKeys.join(';') + '\n';
     
     guests.forEach((guest) => {
         const row = headerKeys.map(key => {
             let value = guest[key] !== undefined ? guest[key] : '—';
-            // Преобразуем статус
-            if (key === 'status' || key === 'Статус') {
-                value = statusMap[value] || value;
-            }
             return value;
         });
         csv += row.join(';') + '\n';
@@ -247,8 +245,7 @@ function exportToCSV(filename = 'guests_list.csv') {
 // ЭКСПОРТ В EXCEL
 // =====================================================
 function exportToExcel() {
-    const headerKeys = headers.length > 0 ? headers : (guests.length > 0 ? Object.keys(guests[0]) : []);
-    const statusMap = { 'coming': 'Идёт', 'not': 'Не идёт' };
+    const headerKeys = headers.length > 0 ? headers : ['Имя', 'Статус'];
     
     let html = `
         <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
@@ -269,9 +266,6 @@ function exportToExcel() {
         html += `<tr><td>${index + 1}</td>`;
         headerKeys.forEach(key => {
             let value = guest[key] !== undefined ? guest[key] : '—';
-            if (key === 'status' || key === 'Статус') {
-                value = statusMap[value] || value;
-            }
             html += `<td>${value}</td>`;
         });
         html += '</tr>';
@@ -304,7 +298,7 @@ function logout() {
 // ИНИЦИАЛИЗАЦИЯ
 // =====================================================
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Админ-панель загружена');
+    console.log('🚀 Админ-панель загружена (v2)');
     console.log('📁 Проект:', PROJECT_NAME);
     console.log('🔗 URL:', SCRIPT_URL);
     
