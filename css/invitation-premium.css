@@ -1230,3 +1230,82 @@ h2 {
         grid-template-columns: 1fr;
     }
 }
+
+/* =====================================================
+   ИСПРАВЛЕНИЕ ПУСТОГО ПРОСТРАНСТВА В МОБИЛЬНОЙ ВЕРСИИ
+   ===================================================== */
+
+html, body {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+}
+
+.container,
+.venue-section,
+.gifts-section,
+.schedule-section,
+.story-section,
+.gallery-section,
+.rsvp-section,
+.qr-section,
+.footer-section,
+.playlist-section,
+.rules-section,
+.timeline-section,
+.hero-section {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+}
+
+/* Исправление для блока "Для души" и других секций */
+.gifts-grid,
+.venue-content,
+.story-grid,
+.gallery-grid,
+.playlist-grid,
+.rules-grid,
+.timeline,
+.qr-content {
+    overflow-x: hidden !important;
+    max-width: 100% !important;
+}
+
+@media (max-width: 768px) {
+    .gifts-grid {
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16px !important;
+        padding: 0 !important;
+        max-width: 100% !important;
+    }
+    
+    .gift-card {
+        padding: 20px 16px !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    .container {
+        padding: 0 16px !important;
+        max-width: 100% !important;
+    }
+    
+    .story-img {
+        max-width: 100% !important;
+    }
+    
+    .story-img img {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .gifts-grid {
+        grid-template-columns: 1fr !important;
+        gap: 16px !important;
+    }
+    
+    .gift-card {
+        padding: 16px !important;
+    }
+}
