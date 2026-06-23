@@ -1232,12 +1232,19 @@ h2 {
 }
 
 /* =====================================================
-   ИСПРАВЛЕНИЕ ПУСТОГО ПРОСТРАНСТВА В МОБИЛЬНОЙ ВЕРСИИ
+   ИСПРАВЛЕНИЕ ПУСТОГО ПРОСТРАНСТВА И ПРОКРУТКИ
    ===================================================== */
 
 html, body {
     overflow-x: hidden !important;
     max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+* {
+    max-width: 100% !important;
+    box-sizing: border-box !important;
 }
 
 .container,
@@ -1257,7 +1264,6 @@ html, body {
     max-width: 100% !important;
 }
 
-/* Исправление для блока "Для души" и других секций */
 .gifts-grid,
 .venue-content,
 .story-grid,
@@ -1287,6 +1293,7 @@ html, body {
     .container {
         padding: 0 16px !important;
         max-width: 100% !important;
+        overflow-x: hidden !important;
     }
     
     .story-img {
@@ -1296,6 +1303,21 @@ html, body {
     .story-img img {
         max-width: 100% !important;
         height: auto !important;
+    }
+    
+    .venue-map iframe {
+        max-width: 100% !important;
+        height: 200px !important;
+    }
+    
+    .qr-content {
+        flex-direction: column !important;
+        gap: 20px !important;
+    }
+    
+    .qr-photo {
+        max-width: 120px !important;
+        margin: 0 auto !important;
     }
 }
 
