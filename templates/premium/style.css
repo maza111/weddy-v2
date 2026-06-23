@@ -20,10 +20,15 @@ body {
     position: relative;
 }
 
+/* =====================================================
+   ОСНОВНОЙ КОНТЕЙНЕР — ГЛАВНОЕ ОГРАНИЧЕНИЕ
+   ===================================================== */
+
 .container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 24px;
+    max-width: 1200px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 24px !important;
 }
 
 /* =====================================================
@@ -133,7 +138,7 @@ body {
     align-items: center;
     justify-content: center;
     text-align: center;
-    padding: 60px 24px;
+    padding: 60px 20px;
     background-size: cover;
     background-position: center;
     overflow: hidden;
@@ -173,7 +178,9 @@ body {
 .hero-content {
     position: relative;
     z-index: 1;
-    max-width: 700px;
+    max-width: 700px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
 .hero-badge {
@@ -320,6 +327,7 @@ h2 {
     letter-spacing: 2px;
     text-align: center;
     margin-bottom: 8px;
+    max-width: 100% !important;
 }
 
 .section-subtitle {
@@ -327,6 +335,9 @@ h2 {
     color: #8B7A6B;
     font-weight: 300;
     margin-bottom: 48px;
+    max-width: 600px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
 }
 
 /* =====================================================
@@ -341,8 +352,9 @@ h2 {
 }
 
 .timeline {
-    max-width: 700px;
-    margin: 0 auto;
+    max-width: 700px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
     position: relative;
 }
 
@@ -419,10 +431,6 @@ h2 {
     color: #8B7A6B;
 }
 
-.timeline-photo-placeholder span {
-    font-size: 2rem;
-}
-
 .timeline-icon {
     font-size: 1.8rem;
     margin-bottom: 8px;
@@ -484,6 +492,9 @@ h2 {
     flex-wrap: wrap;
     gap: 40px;
     align-items: stretch;
+    max-width: 1100px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
 .venue-info {
@@ -570,6 +581,9 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 30px;
+    max-width: 900px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
 .rule-item {
@@ -622,8 +636,9 @@ h2 {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 16px;
-    max-width: 900px;
-    margin: 0 auto;
+    max-width: 900px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
 .instagram-item {
@@ -663,8 +678,9 @@ h2 {
 }
 
 .playlist-grid {
-    max-width: 600px;
-    margin: 0 auto;
+    max-width: 600px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
 .playlist-item {
@@ -714,6 +730,9 @@ h2 {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 30px;
+    max-width: 900px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
 .gift-card {
@@ -761,8 +780,9 @@ h2 {
 }
 
 .rsvp-card {
-    max-width: 700px;
-    margin: 0 auto;
+    max-width: 700px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
     background: #F8F4F0;
     padding: 40px;
     border-radius: 24px;
@@ -817,10 +837,6 @@ h2 {
     flex: 1;
     min-width: 140px;
 }
-
-/* =====================================================
-   КНОПКИ RSVP
-   ===================================================== */
 
 .rsvp-buttons {
     display: flex;
@@ -967,8 +983,9 @@ h2 {
     align-items: center;
     justify-content: center;
     gap: 40px;
-    max-width: 800px;
-    margin: 0 auto;
+    max-width: 800px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
 }
 
 .qr-photo {
@@ -1199,15 +1216,33 @@ h2 {
     .hero-text {
         font-size: 0.95rem;
     }
+    
     .container {
-        padding: 0 16px;
+        padding: 0 16px !important;
     }
+    
     .rules-grid {
-        grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16px !important;
     }
+    
     .gifts-grid {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 16px !important;
+    }
+    
+    .instagram-grid {
+        gap: 10px !important;
+    }
+    
+    .venue-map iframe {
+        height: 200px !important;
+    }
+    
+    .qr-photo {
+        width: 100px !important;
+        height: 100px !important;
+        margin: 0 auto !important;
     }
 }
 
@@ -1223,23 +1258,23 @@ h2 {
         padding: 14px 32px;
         font-size: 0.85rem;
     }
+    
     .rules-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
+    
     .gifts-grid {
-        grid-template-columns: 1fr;
+        grid-template-columns: 1fr !important;
     }
 }
 
 /* =====================================================
-   ИСПРАВЛЕНИЕ ПУСТОГО ПРОСТРАНСТВА И ПРОКРУТКИ
+   ЗАПРЕТ РАСТЯГИВАНИЯ
    ===================================================== */
 
 html, body {
     overflow-x: hidden !important;
     max-width: 100% !important;
-    margin: 0 !important;
-    padding: 0 !important;
 }
 
 * {
@@ -1247,87 +1282,9 @@ html, body {
     box-sizing: border-box !important;
 }
 
-.container,
-.venue-section,
-.gifts-section,
-.schedule-section,
-.story-section,
-.gallery-section,
-.rsvp-section,
-.qr-section,
-.footer-section,
-.playlist-section,
-.rules-section,
-.timeline-section,
-.hero-section {
-    overflow-x: hidden !important;
+img,
+iframe,
+svg {
     max-width: 100% !important;
-}
-
-.gifts-grid,
-.venue-content,
-.story-grid,
-.gallery-grid,
-.playlist-grid,
-.rules-grid,
-.timeline,
-.qr-content {
-    overflow-x: hidden !important;
-    max-width: 100% !important;
-}
-
-@media (max-width: 768px) {
-    .gifts-grid {
-        grid-template-columns: 1fr 1fr !important;
-        gap: 16px !important;
-        padding: 0 !important;
-        max-width: 100% !important;
-    }
-    
-    .gift-card {
-        padding: 20px 16px !important;
-        max-width: 100% !important;
-        box-sizing: border-box !important;
-    }
-    
-    .container {
-        padding: 0 16px !important;
-        max-width: 100% !important;
-        overflow-x: hidden !important;
-    }
-    
-    .story-img {
-        max-width: 100% !important;
-    }
-    
-    .story-img img {
-        max-width: 100% !important;
-        height: auto !important;
-    }
-    
-    .venue-map iframe {
-        max-width: 100% !important;
-        height: 200px !important;
-    }
-    
-    .qr-content {
-        flex-direction: column !important;
-        gap: 20px !important;
-    }
-    
-    .qr-photo {
-        max-width: 120px !important;
-        margin: 0 auto !important;
-    }
-}
-
-@media (max-width: 480px) {
-    .gifts-grid {
-        grid-template-columns: 1fr !important;
-        gap: 16px !important;
-    }
-    
-    .gift-card {
-        padding: 16px !important;
-    }
+    height: auto !important;
 }
