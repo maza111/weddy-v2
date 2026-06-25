@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Анна & Дмитрий | Приглашение на свадьбу</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Unbounded:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+<body>
+
+        <!-- =====================================================
+    HERO — ВИДЕО НА ФОНЕ (НОВЫЙ ДИЗАЙН)
+    ===================================================== -->
+    <section class="hero-section">
+        <video class="hero-video" autoplay muted loop playsinline>
+            <source src="../../assets/video/your-video.mp4" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+
+        <div class="floating-hearts" id="floatingHearts"></div>
+
+        <div class="hero-content">
+            <div class="hero-text-block" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="200">
+                <span class="hero-greeting">Дорогие родные и близкие!</span>
+            </div>
+
+            <div class="hero-title-block" data-aos="fade-up" data-aos-duration="2200" data-aos-delay="500">
+                <h1 class="hero-title">
+                    <span class="hero-name">Анна</span>
+                    <span class="hero-ampersand">&</span>
+                    <span class="hero-name">Дмитрий</span>
+                </h1>
+            </div>
+
+            <div class="hero-text-block" data-aos="fade-up" data-aos-duration="1800" data-aos-delay="800">
+                <p class="hero-text">Приглашаем вас разделить с нами радость самого важного дня в нашей жизни</p>
+            </div>
+
+            <div class="hero-date-block" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1000">
+                <div class="hero-date">
+                    <span>15 августа 2026</span>
+                    <span class="hero-date-divider">•</span>
+                    <span>17:00</span>
+                </div>
+            </div>
+
+            <div class="hero-timer" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="1200" id="heroTimer">
+                <div class="timer-item">
+                    <span class="timer-number" id="heroDays">00</span>
+                    <span class="timer-label">Дней</span>
+                </div>
+                <div class="timer-item">
+                    <span class="timer-number" id="heroHours">00</span>
+                    <span class="timer-label">Часов</span>
+                </div>
+                <div class="timer-item">
+                    <span class="timer-number" id="heroMinutes">00</span>
+                    <span class="timer-label">Минут</span>
+                </div>
+                <div class="timer-item">
+                    <span class="timer-number" id="heroSeconds">00</span>
+                    <span class="timer-label">Секунд</span>
+                </div>
+            </div>
+
+            <div class="hero-btn-block" data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1500">
+                <a href="#rsvp" class="hero-btn">Подтвердить присутствие</a>
+            </div>
+        </div>
+
+        <div class="scroll-indicator" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="2000">
+            <span>Листайте вниз</span>
+            <div class="scroll-mouse"></div>
+        </div>
+    </section>
+    
+    <!-- =====================================================
+    РАЗДЕЛИТЕЛЬ #1 — ДИАГОНАЛЬ (Hero → Место) — прозрачный
+    ===================================================== -->
+    <div class="divider-diagonal" style="background: #FDF8F6;">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <polygon points="0,80 1440,0 1440,80" fill="transparent"/>
+        </svg>
+    </div>
+
+    <!-- =====================================================
+    МЕСТО ПРОВЕДЕНИЯ
+    ===================================================== -->
+    <section class="venue-section">
+        <div class="container">
+            <div class="venue-content" data-aos="fade-up">
+                <div class="venue-card">
+                    <div class="venue-icon">📍</div>
+                    <h3>Место проведения</h3>
+                    <p class="venue-address">Банкетный зал «Grand Hall»<br>г. Москва, ул. Салманова, 6</p>
+                    <button class="map-btn" id="openMapBtn">Открыть карту</button>
+                </div>
+                <div class="venue-card">
+                    <div class="venue-icon">📅</div>
+                    <h3>Дата и время</h3>
+                    <p class="venue-address">15 августа 2026<br>Сбор гостей в 16:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+    РАЗДЕЛИТЕЛЬ #2 — ДИАГОНАЛЬ (Место → Программа)
+    ===================================================== -->
+    <div class="divider-diagonal" style="background: #FDF8F6">
+        <svg viewBox="0 0 1440 100" preserveAspectRatio="none">
+            <polygon points="0,100 1440,20 1440,100" fill="#2A1415"/>
+        </svg>
+    </div>
+
+    <!-- =====================================================
+    ПРОГРАММА ДНЯ
+    ===================================================== -->
+    <section class="schedule-section">
+        <div class="container">
+            <h2 data-aos="fade-up">Программа дня</h2>
+            <p class="section-subtitle" data-aos="fade-up" data-aos-delay="100">Как будет проходить наш праздничный день</p>
+            <div class="schedule-grid">
+                <div class="schedule-card" data-aos="fade-up" data-aos-delay="50">
+                    <div class="schedule-time">16:00</div>
+                    <div class="schedule-icon">🍷</div>
+                    <h4>Сбор гостей</h4>
+                    <p>Уютный аперитив, объятия и первые кадры на память.</p>
+                </div>
+                <div class="schedule-card" data-aos="fade-up" data-aos-delay="150">
+                    <div class="schedule-time">17:00</div>
+                    <div class="schedule-icon">💍</div>
+                    <h4>Регистрация</h4>
+                    <p>Трогательный миг, когда два сердца становятся одним целым.</p>
+                </div>
+                <div class="schedule-card" data-aos="fade-up" data-aos-delay="250">
+                    <div class="schedule-time">18:00</div>
+                    <div class="schedule-icon">🍽️</div>
+                    <h4>Свадебный ужин</h4>
+                    <p>Долгие тосты, вкусная еда, горячие танцы и сладкий торт.</p>
+                </div>
+                <div class="schedule-card" data-aos="fade-up" data-aos-delay="350">
+                    <div class="schedule-time">23:00</div>
+                    <div class="schedule-icon">🎆</div>
+                    <h4>Фейерверк</h4>
+                    <p>Яркое завершение вечера. Салют и запуск небесных фонариков.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+    РАЗДЕЛИТЕЛЬ #3 — ДИАГОНАЛЬ (Программа → Дресс-код)
+    ===================================================== -->
+    <div class="divider-diagonal" style="background: #2A1415;">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <polygon points="0,80 1440,0 1440,80" fill="#FDF8F6"/>
+        </svg>
+    </div>
+
+    <!-- =====================================================
+    ДРЕСС-КОД
+    ===================================================== -->
+    <section class="dresscode-section">
+        <div class="container">
+            <div class="dresscode-wrapper" data-aos="fade-up">
+                <h2>Дресс-код</h2>
+                <p class="section-subtitle">Нам будет очень приятно, если вы учтёте наши пожелания</p>
+                <div class="dresscode-content">
+                    <div class="dresscode-colors">
+                        <div class="color-circle" style="background: #2A1415;"></div>
+                        <div class="color-circle" style="background: #B3474A;"></div>
+                        <div class="color-circle" style="background: #F0E0DC;"></div>
+                        <div class="color-circle" style="background: #FDF8F6; border-color: #F0E0DC;"></div>
+                    </div>
+                    <p>Приветствуются элегантные вечерние наряды в представленной выше гамме.<br>Пожалуйста, воздержитесь от белого цвета для невесты.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+    РАЗДЕЛИТЕЛЬ #4 — ДИАГОНАЛЬ (Дресс-код → Подарки)
+    ===================================================== -->
+    <div class="divider-diagonal" style="background: #FDF8F6;">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <polygon points="0,0 1440,80 0,80" fill="#2A1415"/>
+        </svg>
+    </div>
+
+    <!-- =====================================================
+    ПОДАРКИ
+    ===================================================== -->
+    <section class="gifts-section">
+        <div class="container">
+            <div class="gifts-wrapper" data-aos="fade-up">
+                <h2>Пожелания по подаркам</h2>
+                <div class="gifts-content">
+                    <p>Пожалуйста, не ломайте голову над подарками!<br>Мы будем очень рады вашему приятному вкладу в наше свадебное путешествие.</p>
+                    <div class="gifts-divider">✦</div>
+                    <p class="gifts-note">Сразу после свадьбы мы улетаем в свадебное путешествие, поэтому не успеем насладиться красотой подаренных цветов и будем рады, если вместо цветов вы решите подарить нам бутылочку вина.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+    РАЗДЕЛИТЕЛЬ #5 — ДИАГОНАЛЬ (Подарки → RSVP)
+    ===================================================== -->
+    <div class="divider-diagonal" style="background: #2A1415;">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+            <polygon points="0,80 1440,0 1440,80" fill="#FDF8F6"/>
+        </svg>
+    </div>
+
+    <!-- =====================================================
+    RSVP — ФОРМА
+    ===================================================== -->
+    <section id="rsvp" class="rsvp-section">
+        <div class="container">
+            <div class="rsvp-wrapper" data-aos="fade-up">
+                <h2>Подтвердите своё присутствие</h2>
+                <p class="section-subtitle">Пожалуйста, ответьте до 1 августа 2026</p>
+                <div class="rsvp-card">
+                    <form id="rsvpFormAura">
+                        <div class="form-group">
+                            <label>Ваше имя и фамилия <span class="required">*</span></label>
+                            <input type="text" id="guestName" placeholder="Например: Анна Иванова" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Планируете ли вы присутствовать на росписи?</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="ceremony" value="Да"> Да
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="ceremony" value="Нет"> Нет
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Нужен ли будет вам трансфер?</label>
+                                <div class="radio-group">
+                                    <label class="radio-label">
+                                        <input type="radio" name="transfer" value="Да"> Да
+                                    </label>
+                                    <label class="radio-label">
+                                        <input type="radio" name="transfer" value="Нет"> Нет
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Уточните ваши предпочтения в алкоголе</label>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="alcohol" value="Водка"> Водка
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="alcohol" value="Вино"> Вино
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="alcohol" value="Пиво"> Пиво
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="alcohol" value="Виски/Коньяк"> Виски/Коньяк
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" name="alcohol" value="Без алкоголя"> Без алкоголя
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ваше пожелание молодожёнам</label>
+                            <textarea id="wish" rows="3" placeholder="Напишите что-то тёплое и искреннее"></textarea>
+                        </div>
+
+                        <div class="rsvp-buttons">
+                            <button type="submit" class="rsvp-btn yes" id="rsvpYesAura">Буду с радостью</button>
+                            <button type="button" class="rsvp-btn no" id="rsvpNoAura">Не смогу прийти</button>
+                        </div>
+                    </form>
+                    <div id="rsvpResult" class="rsvp-result-message"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- =====================================================
+    БУРГЕР-МЕНЮ
+    ===================================================== -->
+    <div class="burger-menu" id="burgerMenu">
+        <div class="burger-menu-inner">
+            <button class="burger-close" id="burgerClose">✕</button>
+            <nav class="burger-nav">
+                <a href="#rsvp" class="burger-link">Подтвердить присутствие</a>
+                <a href="../../landing/index.html" class="burger-link">На главную</a>
+            </nav>
+        </div>
+    </div>
+
+    <button class="burger-toggle" id="burgerToggle">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+
+    <!-- =====================================================
+    ФУТЕР
+    ===================================================== -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-hearts">
+                <span>❤</span>
+                <span>❤</span>
+                <span>❤</span>
+            </div>
+            <p class="footer-text">С любовью, Анна и Дмитрий</p>
+            <div class="footer-social">
+                <a href="#" class="social-link">Telegram</a>
+                <a href="#" class="social-link">VK</a>
+            </div>
+            <p class="footer-copy">© 2026 — Wedding dream</p>
+            <p class="footer-link"><a href="../../landing/index.html">← Вернуться на главную</a></p>
+        </div>
+    </footer>
+
+    <!-- =====================================================
+    ПОПАПЫ
+    ===================================================== -->
+    <div class="popup-overlay" id="popupSuccess">
+        <div class="popup">
+            <div class="popup-icon">🎉</div>
+            <h2 class="popup-title">Спасибо за ответ!</h2>
+            <p class="popup-text" id="popupMessage">Мы очень рады, что вы будете с нами в этот особенный день!</p>
+            <button class="popup-btn" onclick="closePopup('popupSuccess')">Отлично</button>
+        </div>
+    </div>
+    <div class="popup-overlay" id="popupError">
+        <div class="popup">
+            <div class="popup-icon">😕</div>
+            <h2 class="popup-title">Что-то пошло не так</h2>
+            <p class="popup-text">Не удалось отправить ответ. Попробуйте ещё раз.</p>
+            <button class="popup-btn popup-btn-error" onclick="closePopup('popupError')">Попробовать снова</button>
+        </div>
+    </div>
+    <div class="popup-overlay" id="popupDecline">
+        <div class="popup">
+            <div class="popup-icon">💔</div>
+            <h2 class="popup-title">Мы будем скучать!</h2>
+            <p class="popup-text">Очень жаль, что вы не сможете быть с нами. Обязательно встретимся в другой раз!</p>
+            <button class="popup-btn" onclick="closePopup('popupDecline')">Обнимаем</button>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
